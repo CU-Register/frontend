@@ -63,7 +63,5 @@ jobs:
           key: ${{ secrets.EC2_SSH_KEY }}
           port: 22
           script: |
-            cd backend
-            docker pull ghcr.io/cu-register/frontend:master
-            docker-compose up -d --build frontend
-            docker images -f "dangling=true" -q
+            cd curegister
+            make frontend
