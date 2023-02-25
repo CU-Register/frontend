@@ -9,8 +9,8 @@ import type { NextPage } from 'next'
 // 	bg-purple-600 h-24 rounded-3xl transition-all duration-100
 // 	hover:(bg-purple-400 rounded-md)
 // `
-const LoginPage: NextPage = () => {
-  return <>Login Page</>
+const LogoutPage: NextPage = () => {
+  return <>Logout Page</>
 }
 
-export default LoginPage
+export default LogoutPage

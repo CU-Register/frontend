@@ -9,8 +9,9 @@ import type { NextPage } from 'next'
 // 	bg-purple-600 h-24 rounded-3xl transition-all duration-100
 // 	hover:(bg-purple-400 rounded-md)
 // `
-const HomePage: NextPage = () => {
+interface IHomePageProps {}
+
+const HomePage: NextPage<IHomePageProps> = () => {
   return <>Home Page</>
 }
-
 export default HomePage
