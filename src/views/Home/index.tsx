@@ -1,4 +1,5 @@
 import type { NextPage } from 'next'
+import tw from 'twin.macro'
 
 // const Head = tw.div`
 // 	bg-purple-300 grid grid-cols-1 gap-2 p-2
@@ -6,12 +7,16 @@ import type { NextPage } from 'next'
 // `
 
 // const Item = tw.div`
-// 	bg-purple-600 h-24 rounded-3xl transition-all duration-100
-// 	hover:(bg-purple-400 rounded-md)
+//  h-24 rounded-3xl
 // `
+
+const TestDiv = tw.div`
+  bg-gray
+`
+
 interface IHomePageProps {}
 
 const HomePage: NextPage<IHomePageProps> = () => {
-  return <>Home Page</>
+  return <TestDiv>Home Page</TestDiv>
 }
 export default HomePage
