@@ -17,6 +17,6 @@ const TestDiv = tw.div`
 interface IHomePageProps {}
 
 const HomePage: NextPage<IHomePageProps> = () => {
-  return <TestDiv>Home Page</TestDiv>
+  return <TestDiv>Home หน้าโฮม</TestDiv>
 }
 export default HomePage

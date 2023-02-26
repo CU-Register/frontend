@@ -1,3 +1,30 @@
+@font-face {
+  font-family: CHULALONGKORN;
+  src: url('/fonts/CHULALONGKORNReg.ttf');
+  format: ('truetype');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: CHULALONGKORN;
+  src: url('/fonts/CHULALONGKORNBold.ttf');
+  format: ('truetype');
+  font-weight: bold;
+  font-style: normal;
+  font-display: swap;
+}
+
+html,
+body {
+  padding: 0;
+  margin: 0;
+  font-family: CHULALONGKORN, sans-serif !important;
+  -ms-overflow-style: none; /* Internet Explorer, Edge */
+  scrollbar-width: none; /* Firefox */
+}
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
