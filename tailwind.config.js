@@ -47,6 +47,18 @@ module.exports = {
       white: '#FFFFFF',
       gray: '#808080',
     },
+    fontSize: {
+      homeMenu: '55px',
+      h1: '34px',
+      h2: '20px',
+      body: '13px',
+    },
+    fontWeight: {
+      homeMenu: '700',
+      h1: '700',
+      h2: '700',
+      body: '400',
+    },
     extend: {},
   },
   plugins: [],

@@ -10,13 +10,23 @@ import tw from 'twin.macro'
 //  h-24 rounded-3xl
 // `
 
+const TestGrid = tw.div`
+  grid grid-rows-2 grid-flow-col gap-4 bg-normal-30
+`
 const TestDiv = tw.div`
-  bg-gray
+  bg-cu-gold
 `
 
 interface IHomePageProps {}
 
 const HomePage: NextPage<IHomePageProps> = () => {
-  return <TestDiv>Home หน้าโฮม</TestDiv>
+  return (
+    <TestGrid>
+      <TestDiv className="text-homeMenu font-homeMenu">Home หน้าโฮม</TestDiv>
+      <TestDiv className="text-h1 font-h1">Home หน้าโฮม</TestDiv>
+      <TestDiv className="text-h2 font-h2">Home หน้าโฮม</TestDiv>
+      <TestDiv className="text-body font-body">Home หน้าโฮม</TestDiv>
+    </TestGrid>
+  )
 }
 export default HomePage
