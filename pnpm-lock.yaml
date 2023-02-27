@@ -7,6 +7,7 @@ specifiers:
   '@emotion/react': ^11.10.4
   '@emotion/server': ^11.10.0
   '@emotion/styled': ^11.10.4
+  '@headlessui/react': ^1.7.12
   '@types/node': 18.7.14
   '@types/react': 18.0.18
   '@types/react-dom': 18.0.6
@@ -32,6 +33,7 @@ dependencies:
   '@emotion/react': 11.10.4_yyzgvvdztuql4unevpajads2di
   '@emotion/server': 11.10.0_@emotion+css@11.10.0
   '@emotion/styled': 11.10.4_dxdmejv3ckzuyywagdebgl5rpu
+  '@headlessui/react': 1.7.12_biqbaboplfbrettd7655fr4n2y
   babel-plugin-macros: 3.1.0
   next: 12.2.5_afkme7j4tdqggmfp5oigvz3wqy
   prettier: 2.8.4
@@ -500,6 +502,19 @@ packages:
     transitivePeerDependencies:
       - supports-color
     dev: true
+
+  /@headlessui/react/1.7.12_biqbaboplfbrettd7655fr4n2y:
+    resolution:
+      { integrity: sha512-FhSx5V+Qp0GvbTpaxyS+ymGDDNntCacClWsk/d8Upbr19g3AsPbjfPk4+m2CgJGcuCB5Dz7LpUIOAbvQTyjL2g== }
+    engines: { node: '>=10' }
+    peerDependencies:
+      react: ^16 || ^17 || ^18
+      react-dom: ^16 || ^17 || ^18
+    dependencies:
+      client-only: 0.0.1
+      react: 18.2.0
+      react-dom: 18.2.0_react@18.2.0
+    dev: false
 
   /@humanwhocodes/config-array/0.10.4:
     resolution:
@@ -1165,6 +1180,11 @@ packages:
   /clean-set/1.1.2:
     resolution:
       { integrity: sha512-cA8uCj0qSoG9e0kevyOWXwPaELRPVg5Pxp6WskLMwerx257Zfnh8Nl0JBH59d7wQzij2CK7qEfJQK3RjuKKIug== }
+    dev: false
+
+  /client-only/0.0.1:
+    resolution:
+      { integrity: sha512-IV3Ou0jSMzZrd3pZ48nLkT9DA7Ag1pnPzaiQhpW7c3RbcqqzvzzVu+L8gfqMp/8IM2MQtSiqaCxrrcfu8I8rMA== }
     dev: false
 
   /color-convert/1.9.3:
