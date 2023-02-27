@@ -68,7 +68,10 @@ const LanguageListBox: FC = () => {
   return (
     <div>
       <Listbox value={selectedLanguage} onChange={setSelectedLanguage}>
-        <Listbox.Button tw="bg-cu-pink p-2 h-7 text-white text-h2 font-h2 rounded drop-shadow-md flex flex-row gap-1 items-center">
+        <Listbox.Button
+          tw="bg-cu-pink p-2 h-7 text-white text-h2 font-h2 rounded flex flex-row gap-1 items-center"
+          className="drop-shadow-[0_4px_4px_rgba(0,0,0,0.25)]"
+        >
           <span>{selectedLanguage}</span>
           <FontAwesomeIcon icon={faCaretDown} tw="text-[16px]" />
         </Listbox.Button>
