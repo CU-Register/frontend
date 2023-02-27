@@ -7,6 +7,9 @@ specifiers:
   '@emotion/react': ^11.10.4
   '@emotion/server': ^11.10.0
   '@emotion/styled': ^11.10.4
+  '@fortawesome/fontawesome-svg-core': ^6.3.0
+  '@fortawesome/free-solid-svg-icons': ^6.3.0
+  '@fortawesome/react-fontawesome': ^0.2.0
   '@headlessui/react': ^1.7.12
   '@types/node': 18.7.14
   '@types/react': 18.0.18
@@ -33,6 +36,9 @@ dependencies:
   '@emotion/react': 11.10.4_yyzgvvdztuql4unevpajads2di
   '@emotion/server': 11.10.0_@emotion+css@11.10.0
   '@emotion/styled': 11.10.4_dxdmejv3ckzuyywagdebgl5rpu
+  '@fortawesome/fontawesome-svg-core': 6.3.0
+  '@fortawesome/free-solid-svg-icons': 6.3.0
+  '@fortawesome/react-fontawesome': 0.2.0_d5rbrisxfyemehbvmdbryvgjte
   '@headlessui/react': 1.7.12_biqbaboplfbrettd7655fr4n2y
   babel-plugin-macros: 3.1.0
   next: 12.2.5_afkme7j4tdqggmfp5oigvz3wqy
@@ -502,6 +508,43 @@ packages:
     transitivePeerDependencies:
       - supports-color
     dev: true
+
+  /@fortawesome/fontawesome-common-types/6.3.0:
+    resolution:
+      { integrity: sha512-4BC1NMoacEBzSXRwKjZ/X/gmnbp/HU5Qqat7E8xqorUtBFZS+bwfGH5/wqOC2K6GV0rgEobp3OjGRMa5fK9pFg== }
+    engines: { node: '>=6' }
+    requiresBuild: true
+    dev: false
+
+  /@fortawesome/fontawesome-svg-core/6.3.0:
+    resolution:
+      { integrity: sha512-uz9YifyKlixV6AcKlOX8WNdtF7l6nakGyLYxYaCa823bEBqyj/U2ssqtctO38itNEwXb8/lMzjdoJ+aaJuOdrw== }
+    engines: { node: '>=6' }
+    requiresBuild: true
+    dependencies:
+      '@fortawesome/fontawesome-common-types': 6.3.0
+    dev: false
+
+  /@fortawesome/free-solid-svg-icons/6.3.0:
+    resolution:
+      { integrity: sha512-x5tMwzF2lTH8pyv8yeZRodItP2IVlzzmBuD1M7BjawWgg9XAvktqJJ91Qjgoaf8qJpHQ8FEU9VxRfOkLhh86QA== }
+    engines: { node: '>=6' }
+    requiresBuild: true
+    dependencies:
+      '@fortawesome/fontawesome-common-types': 6.3.0
+    dev: false
+
+  /@fortawesome/react-fontawesome/0.2.0_d5rbrisxfyemehbvmdbryvgjte:
+    resolution:
+      { integrity: sha512-uHg75Rb/XORTtVt7OS9WoK8uM276Ufi7gCzshVWkUJbHhh3svsUUeqXerrM96Wm7fRiDzfKRwSoahhMIkGAYHw== }
+    peerDependencies:
+      '@fortawesome/fontawesome-svg-core': ~1 || ~6
+      react: '>=16.3'
+    dependencies:
+      '@fortawesome/fontawesome-svg-core': 6.3.0
+      prop-types: 15.8.1
+      react: 18.2.0
+    dev: false
 
   /@headlessui/react/1.7.12_biqbaboplfbrettd7655fr4n2y:
     resolution:
@@ -3028,7 +3071,6 @@ packages:
       loose-envify: 1.4.0
       object-assign: 4.1.1
       react-is: 16.13.1
-    dev: true
 
   /pump/3.0.0:
     resolution:
