@@ -1,10 +1,8 @@
-import { faCaretDown } from '@fortawesome/free-solid-svg-icons'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { Listbox } from '@headlessui/react'
 import { Language } from 'enums/language'
 import Image from 'next/image'
 import { FC, useState } from 'react'
 import 'twin.macro'
+import tw from 'twin.macro'
 interface ISideMenu {}
 const SideMenu: FC<ISideMenu> = () => {
   const homePageButtonHandler = (event: React.MouseEvent<HTMLButtonElement>) => {
@@ -44,7 +42,7 @@ const SideMenu: FC<ISideMenu> = () => {
           <SideMenuButton text="ข้อมูลผู้ใช้" onClick={profilePageButtonHandler} />
         </div>
       </div>
-      <LanguageListBox />
+      <LanguageToggleSwitch />
     </div>
   )
 }
@@ -63,27 +61,37 @@ const SideMenuButton: FC<ISideMenuButtonProps> = ({ text, onClick }) => {
   )
 }
 
-const LanguageListBox: FC = () => {
+const LanguageToggleSwitch: FC = () => {
   const [selectedLanguage, setSelectedLanguage] = useState<Language>(Language.TH)
+
+  const thLanguageButtonHandler = (event: React.MouseEvent<HTMLButtonElement>) => {
+    setSelectedLanguage(Language.TH)
+  }
+
+  const enLanguageButtonHandler = (event: React.MouseEvent<HTMLButtonElement>) => {
+    setSelectedLanguage(Language.EN)
+  }
+
   return (
-    <div>
-      <Listbox value={selectedLanguage} onChange={setSelectedLanguage}>
-        <Listbox.Button
-          tw="bg-cu-pink p-2 h-7 text-white text-h2 font-h2 rounded flex flex-row gap-1 items-center"
-          className="drop-shadow-[0_4px_4px_rgba(0,0,0,0.25)]"
-        >
-          <span>{selectedLanguage}</span>
-          <FontAwesomeIcon icon={faCaretDown} tw="text-[16px]" />
-        </Listbox.Button>
-        <Listbox.Options tw="bg-alternateBackground-100 mt-2 rounded w-16">
-          <Listbox.Option tw="p-1" value={Language.EN}>
-            en
-          </Listbox.Option>
-          <Listbox.Option tw="p-1" value={Language.TH}>
-            th
-          </Listbox.Option>
-        </Listbox.Options>
-      </Listbox>
+    <div tw="bg-cu-pink w-16 h-6 p-[1px] rounded-xl flex justify-between items-center">
+      <button
+        css={[
+          tw`text-h3 font-h3 w-[50%] flex justify-center rounded-xl text-white`,
+          selectedLanguage == Language.TH && tw`text-cu-pink bg-white`,
+        ]}
+        onClick={thLanguageButtonHandler}
+      >
+        TH
+      </button>
+      <button
+        css={[
+          tw`text-h3 font-h3 w-[50%] flex justify-center rounded-xl text-white`,
+          selectedLanguage == Language.EN && tw`text-cu-pink bg-white`,
+        ]}
+        onClick={enLanguageButtonHandler}
+      >
+        EN
+      </button>
     </div>
   )
 }
