@@ -21,6 +21,8 @@ export default class MyDocument extends Document {
       <Html lang="en">
         <Head>
           <style data-emotion-css={this.props.ids?.join(' ')} dangerouslySetInnerHTML={{ __html: this.props.css }} />
+          <link rel="preload" href="/fonts/CHULALONGKORNReg.ttf" as="font" type="font/ttf" crossOrigin="" />
+          <link rel="preload" href="/fonts/CHULALONGKORNBold.ttf" as="font" type="font/ttf" crossOrigin="" />
         </Head>
         <body>
           <Main />
