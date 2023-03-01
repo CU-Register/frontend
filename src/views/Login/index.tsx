@@ -12,7 +12,7 @@ const LoginPage: NextPage<ILoginPageProps> = () => {
 
   return (
     <MainLayout>
-      <div tw="p-[50px] flex flex-col min-h-full">
+      <div tw="flex flex-col min-h-full">
         <div>
           <PinkButton text={'ข้อกำหนด'} onClick={policyButtonHandler} />
         </div>

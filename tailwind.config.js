@@ -47,6 +47,7 @@ module.exports = {
         black: '#000000',
         white: '#FFFFFF',
         gray: '#808080',
+        divider: '#ECEDF1',
       },
       fontSize: {
         homeMenu: '55px',
