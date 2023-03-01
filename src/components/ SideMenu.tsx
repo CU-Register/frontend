@@ -3,6 +3,7 @@ import Image from 'next/image'
 import { FC, useState } from 'react'
 import 'twin.macro'
 import tw from 'twin.macro'
+
 interface ISideMenu {}
 const SideMenu: FC<ISideMenu> = () => {
   const homePageButtonHandler = (event: React.MouseEvent<HTMLButtonElement>) => {
@@ -26,9 +27,9 @@ const SideMenu: FC<ISideMenu> = () => {
   }
 
   return (
-    <div tw="h-full w-[280px] p-[50px] bg-cu-pinkLd flex flex-col justify-between">
+    <div tw="min-h-screen w-[280px] p-[50px] bg-cu-pinkLd  justify-between flex flex-col">
       <div tw="w-full">
-        <div tw="flex flex-col justify-center items-center w-full">
+        <div tw="flex flex-col justify-center items-center">
           <div tw="w-[83px] h-[126px] relative">
             <Image src="/assets/chula-icon.png" layout="fill" alt="chula-icon" />
           </div>
