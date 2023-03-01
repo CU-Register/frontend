@@ -1,16 +1,36 @@
-import type { NextPage } from 'next'
+import PinkButton from 'components/PinkButton'
+import MainLayout from 'layouts/MainLayout'
+import { NextPage } from 'next'
+import 'twin.macro'
+import ConnectChulaSSOButton from './components/ConnectChulaSSOButton'
 
-// const Head = tw.div`
-// 	bg-purple-300 grid grid-cols-1 gap-2 p-2
-// 	md:(bg-purple-300 grid-cols-3)
-// `
+interface ILoginPageProps {}
+const LoginPage: NextPage<ILoginPageProps> = () => {
+  const policyButtonHandler = (event: React.MouseEvent<HTMLButtonElement>) => {
+    console.log('policy button clicked')
+  }
 
-// const Item = tw.div`
-// 	bg-purple-600 h-24 rounded-3xl transition-all duration-100
-// 	hover:(bg-purple-400 rounded-md)
-// `
-const LoginPage: NextPage = () => {
-  return <>Login Page</>
+  return (
+    <MainLayout>
+      <div tw="p-[50px] flex flex-col min-h-full">
+        <div>
+          <PinkButton text={'ข้อกำหนด'} onClick={policyButtonHandler} />
+        </div>
+        <div tw="mt-12">
+          <div tw="p-6 w-full flex flex-col justify-center items-center gap-20">
+            <div tw="text-h1 font-h1 text-black">เข้าสู่ระบบการยื่นคำร้องเพื่อขอเอกสารสำคัญทางการศึกษา</div>
+            <div tw="flex flex-col justify-center items-center gap-4">
+              <div tw="text-body font-body text-black">กรุณาทำการเข้าสู่ระบบผ่านระบบ Chula SSO</div>
+              <ConnectChulaSSOButton />
+            </div>
+          </div>
+        </div>
+        <div className="grow" />
+        <div tw="text-body font-body text-gray">
+          ระบบการยื่นคำร้องเพื่อขอเอกสารสำคัญทางการศึกษา CU Academic Document Request System (CUADRS)
+        </div>
+      </div>
+    </MainLayout>
+  )
 }
-
 export default LoginPage
