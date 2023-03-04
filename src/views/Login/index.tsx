@@ -1,5 +1,5 @@
 import PinkButton from 'components/PinkButton'
-import MainLayout from 'layouts/MainLayout'
+import PreAuthLayout from 'layouts/PreAuthLayout'
 import { NextPage } from 'next'
 import 'twin.macro'
 import ConnectChulaSSOButton from './components/ConnectChulaSSOButton'
@@ -11,7 +11,7 @@ const LoginPage: NextPage<ILoginPageProps> = () => {
   }
 
   return (
-    <MainLayout>
+    <PreAuthLayout>
       <div tw="flex flex-col min-h-full">
         <div>
           <PinkButton text={'ข้อกำหนด'} onClick={policyButtonHandler} />
@@ -25,12 +25,8 @@ const LoginPage: NextPage<ILoginPageProps> = () => {
             </div>
           </div>
         </div>
-        <div className="grow" />
-        <div tw="text-body font-body text-gray">
-          ระบบการยื่นคำร้องเพื่อขอเอกสารสำคัญทางการศึกษา CU Academic Document Request System (CUADRS)
-        </div>
       </div>
-    </MainLayout>
+    </PreAuthLayout>
   )
 }
 export default LoginPage
