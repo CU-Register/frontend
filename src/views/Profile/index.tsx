@@ -1,4 +1,3 @@
-import HorizontalDivider from 'components/Dividers/HorizontalDivider'
 import VerticalDivider from 'components/Dividers/VerticalDivider'
 import PinkButton from 'components/PinkButton'
 import MainLayout from 'layouts/MainLayout'
@@ -36,6 +35,9 @@ const ProfilePage: NextPage = () => {
           <ProfileDetails label="คณะ" value="คณะวิศวกรรมศาสตร์" />
           <ProfileDetails label="ภาควิชา" value="วิศวกรรมคอมพิวเตอร์" />
           <ProfileDetails label="วิชาเอก/โท" value="วิชาเอกไม่มี วิชาโทไม่มี" />
+          <div tw="mt-10">
+            <ProfileDetails label="สถานภาพ" value="ปกติ" valueColor="text-green-600" />
+          </div>
         </div>
         <VerticalDivider />
         <div tw="bg-interactive-100 flex flex-col gap-2">
@@ -43,18 +45,6 @@ const ProfilePage: NextPage = () => {
           <ProfileDetails label="เบอร์โทรศัพท์" value="061 447 5178" />
           <ProfileDetails label="อีเมล์" value="sudlhorpromptleaw@gmail.com" />
         </div>
-      </div>
-      <div tw="mt-6 bg-cu-pinkLight">
-        <ProfileDetails label="สถานภาพ" value="ปกติ" valueColor="text-green-600" />
-      </div>
-      <div className="grow" />
-      <HorizontalDivider />
-      <div tw="mt-5 font-body text-body text-black">
-        นิสิตสามารถติดต่อเรื่องการยื่นคำร้องเพื่อขอเอกสารสำคัญทางการศึกษา ได้ที่สำนักบริหารเทคโนโลยีสารสนเทศ
-        อาคารจามจุรี 3 ชั้น 4. โทร. 02- 218-3314 อีเมล์ help@chula.ac.th
-      </div>
-      <div tw="text-body font-body text-gray">
-        ระบบการยื่นคำร้องเพื่อขอเอกสารสำคัญทางการศึกษา CU Academic Document Request System (CUADRS)
       </div>
     </MainLayout>
   )
