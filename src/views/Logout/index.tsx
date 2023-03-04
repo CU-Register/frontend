@@ -1,4 +1,4 @@
-import Divider from 'components/Divider'
+import Divider from 'components/Dividers/HorizontalDivider'
 import PinkButton from 'components/PinkButton'
 import MainLayout from 'layouts/MainLayout'
 import { NextPage } from 'next'
