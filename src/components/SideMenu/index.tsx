@@ -1,29 +1,42 @@
-import { Language } from 'enums/language'
 import Image from 'next/image'
-import { FC, useState } from 'react'
+import { useRouter } from 'next/router'
+import { FC } from 'react'
 import 'twin.macro'
-import tw from 'twin.macro'
+import LanguageToggleSwitch from './LanguageToggleSwitch'
+import SideMenuButton from './SideMenuButton'
 
 interface ISideMenu {}
 const SideMenu: FC<ISideMenu> = () => {
+  const router = useRouter()
+
   const homePageButtonHandler = (event: React.MouseEvent<HTMLButtonElement>) => {
-    console.log('mainPageButtonHandler')
+    event.preventDefault()
+    router.push('/')
   }
 
   const requestPageButtonHandler = (event: React.MouseEvent<HTMLButtonElement>) => {
-    console.log('requestPageButtonHandler')
+    event.preventDefault()
+    router.push('/request')
   }
 
   const draftPageButtonHandler = (event: React.MouseEvent<HTMLButtonElement>) => {
-    console.log('draftPageButtonHandler')
+    event.preventDefault()
+    router.push('/draft')
   }
 
   const statusPageButtonHandler = (event: React.MouseEvent<HTMLButtonElement>) => {
-    console.log('statusPageButtonHandler')
+    event.preventDefault()
+    router.push('/status')
   }
 
   const profilePageButtonHandler = (event: React.MouseEvent<HTMLButtonElement>) => {
-    console.log('profilePageButtonHandler')
+    event.preventDefault()
+    router.push('/profile')
+  }
+
+  const logoutPageButtonHandler = (event: React.MouseEvent<HTMLButtonElement>) => {
+    event.preventDefault()
+    router.push('/logout')
   }
 
   return (
@@ -41,6 +54,7 @@ const SideMenu: FC<ISideMenu> = () => {
           <SideMenuButton text="โครงร่างคำร้อง" onClick={draftPageButtonHandler} />
           <SideMenuButton text="ตรวจสอบสถานะ" onClick={statusPageButtonHandler} />
           <SideMenuButton text="ข้อมูลผู้ใช้" onClick={profilePageButtonHandler} />
+          <SideMenuButton text="ออกจากระบบ" onClick={logoutPageButtonHandler} />
         </div>
       </div>
       <LanguageToggleSwitch />
@@ -49,50 +63,3 @@ const SideMenu: FC<ISideMenu> = () => {
 }
 
 export default SideMenu
-
-interface ISideMenuButtonProps {
-  text: string
-  onClick?: (event: React.MouseEvent<HTMLButtonElement>) => void
-}
-const SideMenuButton: FC<ISideMenuButtonProps> = ({ text, onClick }) => {
-  return (
-    <button tw="font-h2 text-h2 text-white hover:text-cu-pink" onClick={onClick}>
-      {text}
-    </button>
-  )
-}
-
-const LanguageToggleSwitch: FC = () => {
-  const [selectedLanguage, setSelectedLanguage] = useState<Language>(Language.TH)
-
-  const thLanguageButtonHandler = (event: React.MouseEvent<HTMLButtonElement>) => {
-    setSelectedLanguage(Language.TH)
-  }
-
-  const enLanguageButtonHandler = (event: React.MouseEvent<HTMLButtonElement>) => {
-    setSelectedLanguage(Language.EN)
-  }
-
-  return (
-    <div tw="bg-cu-pink w-16 h-6 p-[1px] rounded-xl flex justify-between items-center">
-      <button
-        css={[
-          tw`text-h3 font-h3 w-[50%] flex justify-center rounded-xl text-white`,
-          selectedLanguage == Language.TH && tw`text-cu-pink bg-white`,
-        ]}
-        onClick={thLanguageButtonHandler}
-      >
-        TH
-      </button>
-      <button
-        css={[
-          tw`text-h3 font-h3 w-[50%] flex justify-center rounded-xl text-white`,
-          selectedLanguage == Language.EN && tw`text-cu-pink bg-white`,
-        ]}
-        onClick={enLanguageButtonHandler}
-      >
-        EN
-      </button>
-    </div>
-  )
-}
