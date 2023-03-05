@@ -20,8 +20,8 @@ const SearchAndQuerySection: FC = () => {
         })
 
   return (
-    <div tw="flex flex-col bg-cu-gold">
-      <div tw="bg-cu-copper flex gap-5">
+    <div tw="flex flex-col">
+      <div tw="flex gap-5">
         <div tw="font-h2 text-h2 text-black min-w-[100px]">ค้นหาคำร้อง</div>
         <div tw="relative w-full">
           <Combobox value={selectedRequestOptions} onChange={setSelectedRequestOptions}>
@@ -47,7 +47,7 @@ const SearchAndQuerySection: FC = () => {
           </Combobox>
         </div>
       </div>
-      <div tw="pl-[calc(100px + 1.25rem)] mt-5 bg-green-100 flex gap-4 items-center">
+      <div tw="pl-[calc(100px + 1.25rem)] mt-5 flex gap-4 items-center">
         <div tw="font-h2 text-h2 text-black">เรียงลำดับ:</div>
         <button
           css={[
