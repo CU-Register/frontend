@@ -1,4 +1,4 @@
-import { Language } from 'enums/language'
+import { Language } from 'enums/Language'
 import { FC, useState } from 'react'
 import 'twin.macro'
 import tw from 'twin.macro'

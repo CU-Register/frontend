@@ -9,8 +9,6 @@ interface IMainLayoutProps {
   studentId?: string
 }
 const MainLayout: FC<IMainLayoutProps> = ({ children, header, studentId }) => {
-  console.log(header, studentId)
-
   return (
     <div tw="min-h-screen flex">
       <SideMenu />

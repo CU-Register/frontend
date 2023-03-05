@@ -1,10 +1,18 @@
 import MainLayout from 'layouts/MainLayout'
 import { NextPage } from 'next'
+import { useRouter } from 'next/router'
 import 'twin.macro'
-import RequestCard from './components/RequestCard'
+import RequestCard from '../../components/RequestCard'
 import RequestHistoryTable from './components/RequestHistoryTable'
 
 const HomePage: NextPage = () => {
+  const router = useRouter()
+
+  const otherRequestButtonHandler = (event: React.MouseEvent<HTMLButtonElement>) => {
+    event.preventDefault()
+    router.push('/request')
+  }
+
   return (
     <MainLayout header="ระบบการยื่นคำร้องเพื่อขอเอกสารสำคัญทางการศึกษา" studentId="6231354721">
       <div tw="flex flex-col gap-8">
@@ -16,7 +24,7 @@ const HomePage: NextPage = () => {
             <RequestCard requestName="คำร้องที่เป็นที่นิยม 1" requestNumber={1} />
             <RequestCard requestName="คำร้องแนะนำที่ 2" requestNumber={99} />
             <RequestCard requestName="คำร้องขอลงทะเบียนเรียน" requestNumber={46} />
-            <RequestCard requestName="เขียนคำร้องอื่น ๆ" />
+            <RequestCard requestName="เขียนคำร้องอื่น ๆ" onClick={otherRequestButtonHandler} />
           </div>
         </div>
         <div tw="flex flex-col gap-4">
