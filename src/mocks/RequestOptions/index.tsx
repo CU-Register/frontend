@@ -1,6 +1,6 @@
-import { IRequestOptions } from 'interfaces/RequestOptions'
+import { IRequestOption } from 'interfaces/RequestOption'
 
-const mockRequestOptions: IRequestOptions[] = [
+const mockRequestOptions: IRequestOption[] = [
   {
     requestName: 'คำร้องที่ขอเข้าสังกัด หรือเปลี่ยนสังกัด',
     requestNumber: 5,

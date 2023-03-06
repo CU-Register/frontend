@@ -16,6 +16,7 @@ specifiers:
   '@types/react-dom': 18.0.6
   autoprefixer: ^10.4.8
   babel-plugin-macros: ^3.1.0
+  dayjs: ^1.11.7
   eslint: 8.23.0
   eslint-config-next: 12.2.5
   husky: ^7.0.0
@@ -41,6 +42,7 @@ dependencies:
   '@fortawesome/react-fontawesome': 0.2.0_d5rbrisxfyemehbvmdbryvgjte
   '@headlessui/react': 1.7.12_biqbaboplfbrettd7655fr4n2y
   babel-plugin-macros: 3.1.0
+  dayjs: 1.11.7
   next: 12.2.5_afkme7j4tdqggmfp5oigvz3wqy
   prettier: 2.8.4
   react: 18.2.0
@@ -1362,6 +1364,11 @@ packages:
     resolution:
       { integrity: sha512-sdQSFB7+llfUcQHUQO3+B8ERRj0Oa4w9POWMI/puGtuf7gFywGmkaLCElnudfTiKZV+NvHqL0ifzdrI8Ro7ESA== }
     dev: true
+
+  /dayjs/1.11.7:
+    resolution:
+      { integrity: sha512-+Yw9U6YO5TQohxLcIkrXBeY73WP3ejHWVvx8XCk3gxvQDCTEmS48ZrSZCKciI7Bhl/uCMyxYtE9UqRILmFphkQ== }
+    dev: false
 
   /debug/2.6.9:
     resolution:
