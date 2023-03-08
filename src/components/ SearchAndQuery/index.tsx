@@ -3,26 +3,25 @@ import { FilterRequest } from 'enums/Filters/Request'
 import { FilterRequestOption } from 'enums/Filters/RequestOption'
 import { IRequest } from 'interfaces/Request'
 import { IRequestOption } from 'interfaces/RequestOption'
-import { Dispatch, FC, SetStateAction } from 'react'
+import { Dispatch, SetStateAction } from 'react'
 import tw from 'twin.macro'
 
-interface ISearchAndQueryProps {
-  value?: IRequestOption | IRequest | null
-  onChangeValue?: Dispatch<SetStateAction<IRequestOption | null>> // test with setState of useState
-  // onChangeValue?: () => void
+interface ISearchAndQueryProps<ValueT, FilterT> {
+  value?: ValueT | null
+  onChangeValue?: Dispatch<SetStateAction<ValueT | null>>
   onChangeInput?: (event: React.ChangeEvent<HTMLInputElement>) => void
-  options?: IRequestOption[] | IRequest[]
-  filters?: { method: FilterRequestOption | FilterRequest; onClick: () => void }[]
-  selectedFilter?: FilterRequestOption | FilterRequest
+  options?: ValueT[]
+  filters?: { method: FilterT; onClick: () => void }[]
+  selectedFilter?: FilterT
 }
-const SearchAndQuery: FC<ISearchAndQueryProps> = ({
+const SearchAndQuery = <ValueT extends IRequest | IRequestOption, FilterT extends FilterRequest | FilterRequestOption>({
   value,
   onChangeValue,
   onChangeInput,
   options,
   filters,
   selectedFilter,
-}) => {
+}: ISearchAndQueryProps<ValueT, FilterT>) => {
   return (
     <div tw="flex flex-col">
       <div tw="flex gap-5">
@@ -39,10 +38,10 @@ const SearchAndQuery: FC<ISearchAndQueryProps> = ({
                 <div css={[options && options.length > 0 && tw`p-4 bg-white rounded-lg`]}>
                   {options &&
                     options.length > 0 &&
-                    options.map((requestOption, index) => (
+                    options.map((option, index) => (
                       <div key={index} tw="py-1">
-                        <Combobox.Option key={requestOption.requestName} value={requestOption.requestName}>
-                          {requestOption.requestName}
+                        <Combobox.Option key={index} value={option.requestName}>
+                          {option.requestName}
                         </Combobox.Option>
                       </div>
                     ))}

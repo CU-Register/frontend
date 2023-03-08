@@ -7,7 +7,7 @@ import { FC, useState } from 'react'
 const SearchAndQuerySection: FC = () => {
   const [selectedRequestOptions, setSelectedRequestOptions] = useState<IRequestOption | null>(null)
   const [query, setQuery] = useState<string>('')
-  const [selectedFilterRequestMethod, setSelectedFilterRequestMethod] = useState<FilterRequestOption>(
+  const [selectedFilterRequestOption, setSelectedFilterRequestOption] = useState<FilterRequestOption>(
     FilterRequestOption.ALPHABETICAL,
   )
 
@@ -27,14 +27,14 @@ const SearchAndQuerySection: FC = () => {
       filters={[
         {
           method: FilterRequestOption.ALPHABETICAL,
-          onClick: () => setSelectedFilterRequestMethod(FilterRequestOption.ALPHABETICAL),
+          onClick: () => setSelectedFilterRequestOption(FilterRequestOption.ALPHABETICAL),
         },
         {
           method: FilterRequestOption.REQUEST_NUMBER,
-          onClick: () => setSelectedFilterRequestMethod(FilterRequestOption.REQUEST_NUMBER),
+          onClick: () => setSelectedFilterRequestOption(FilterRequestOption.REQUEST_NUMBER),
         },
       ]}
-      selectedFilter={selectedFilterRequestMethod}
+      selectedFilter={selectedFilterRequestOption}
     />
   )
 }
