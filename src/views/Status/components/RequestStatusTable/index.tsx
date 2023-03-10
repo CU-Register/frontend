@@ -17,7 +17,7 @@ const RequestStatusTable: FC<IRequestStatusTableProps> = () => {
           <th className="text-start">สถานะการดำเนินการ</th>
         </tr>
       </thead>
-      <tbody tw="h-[400px]">
+      <tbody>
         {mockRequests.map((request, index) => {
           return (
             <tr key={index} tw="text-black font-h2 text-h2" className="group">
