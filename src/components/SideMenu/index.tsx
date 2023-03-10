@@ -1,3 +1,4 @@
+import ROUTES from 'constants/Routes'
 import Image from 'next/image'
 import { useRouter } from 'next/router'
 import { FC } from 'react'
@@ -49,12 +50,32 @@ const SideMenu: FC<ISideMenu> = () => {
           <div tw="text-h1 font-h1 text-white">CUADRS</div>
         </div>
         <div tw="mt-8 flex flex-col items-start gap-5">
-          <SideMenuButton text="หน้าหลัก" onClick={homePageButtonHandler} />
-          <SideMenuButton text="ยิื่นคำร้อง" onClick={requestPageButtonHandler} />
-          <SideMenuButton text="โครงร่างคำร้อง" onClick={draftPageButtonHandler} />
-          <SideMenuButton text="ตรวจสอบสถานะ" onClick={statusPageButtonHandler} />
-          <SideMenuButton text="ข้อมูลผู้ใช้" onClick={profilePageButtonHandler} />
-          <SideMenuButton text="ออกจากระบบ" onClick={logoutPageButtonHandler} />
+          <SideMenuButton text="หน้าหลัก" onClick={homePageButtonHandler} isFocused={router.pathname === '/'} />
+          <SideMenuButton
+            text="ยิื่นคำร้อง"
+            onClick={requestPageButtonHandler}
+            isFocused={router.pathname === ROUTES.REQUEST}
+          />
+          <SideMenuButton
+            text="โครงร่างคำร้อง"
+            onClick={draftPageButtonHandler}
+            isFocused={router.pathname === ROUTES.DRAFT}
+          />
+          <SideMenuButton
+            text="ตรวจสอบสถานะ"
+            onClick={statusPageButtonHandler}
+            isFocused={router.pathname === ROUTES.STATUS}
+          />
+          <SideMenuButton
+            text="ข้อมูลผู้ใช้"
+            onClick={profilePageButtonHandler}
+            isFocused={router.pathname === ROUTES.PROFILE}
+          />
+          <SideMenuButton
+            text="ออกจากระบบ"
+            onClick={logoutPageButtonHandler}
+            isFocused={router.pathname === ROUTES.LOGOUT}
+          />
         </div>
       </div>
       <LanguageToggleSwitch />
