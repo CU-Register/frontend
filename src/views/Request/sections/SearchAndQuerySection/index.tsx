@@ -1,4 +1,4 @@
-import SearchAndQuery from 'components/ SearchAndQuery'
+import SearchAndQuery from 'components/SearchAndQuery'
 import { FilterRequestOption } from 'enums/Filters/RequestOption'
 import { IRequestOption } from 'interfaces/RequestOption'
 import mockRequestOptions from 'mocks/RequestOptions'

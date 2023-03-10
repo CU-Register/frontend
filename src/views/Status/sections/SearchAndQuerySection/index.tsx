@@ -1,4 +1,4 @@
-import SearchAndQuery from 'components/ SearchAndQuery'
+import SearchAndQuery from 'components/SearchAndQuery'
 import { FilterRequest } from 'enums/Filters/Request'
 import { IRequest } from 'interfaces/Request'
 
