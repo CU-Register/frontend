@@ -41,7 +41,7 @@ const SideMenu: FC<ISideMenu> = () => {
   }
 
   return (
-    <div tw="min-h-screen w-[280px] p-[50px] bg-cu-pinkLd  justify-between flex flex-col">
+    <div tw="h-screen w-[280px] p-[50px] bg-cu-pinkLd  justify-between flex flex-col">
       <div tw="w-full">
         <div tw="flex flex-col justify-center items-center">
           <div tw="w-[83px] h-[126px] relative">
