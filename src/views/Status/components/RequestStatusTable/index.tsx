@@ -3,7 +3,7 @@ import mockRequests from 'mocks/Requests'
 import { FC } from 'react'
 import 'twin.macro'
 import tw from 'twin.macro'
-import { dateFormatter } from 'utils/formats/Date'
+import { dateFormatter } from 'utils/formats'
 
 interface IRequestStatusTableProps {}
 const RequestStatusTable: FC<IRequestStatusTableProps> = () => {

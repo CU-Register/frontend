@@ -1,6 +1,7 @@
 import HorizontalDivider from 'components/Dividers/HorizontalDivider'
 import { FC } from 'react'
 import 'twin.macro'
+
 const MainFooter: FC = () => {
   return (
     <>
