@@ -1,7 +1,7 @@
 import { Dialog, Transition } from '@headlessui/react'
 import { IRequestOption } from 'interfaces/RequestOption'
 import { FC, Fragment } from 'react'
-
+import 'twin.macro'
 /**
  * @todo update to generic interface at selectedValue param
  */
@@ -27,7 +27,7 @@ const ActionDialog: FC<IActionDialogProps> = ({ isOpen, onClose, selectedValue }
               leaveFrom="opacity-100"
               leaveTo="opacity-0"
             >
-              <div className="fixed inset-0 bg-black bg-opacity-25" />
+              <div className="fixed inset-0 bg-black bg-opacity-30 backdrop-blur-sm" />
             </Transition.Child>
 
             <div className="fixed inset-0 overflow-y-auto">
@@ -41,24 +41,34 @@ const ActionDialog: FC<IActionDialogProps> = ({ isOpen, onClose, selectedValue }
                   leaveFrom="opacity-100 scale-100"
                   leaveTo="opacity-0 scale-95"
                 >
-                  <Dialog.Panel className="w-full max-w-md transform overflow-hidden rounded-2xl bg-white p-6 text-left align-middle shadow-xl transition-all">
-                    <Dialog.Title className="text-lg font-medium leading-6 text-gray-900">
+                  <Dialog.Panel className="w-full max-w-lg transform overflow-hidden rounded-2xl bg-white text-left align-middle shadow-xl transition-all">
+                    <Dialog.Title tw="p-2 text-h1 font-h1 text-cu-grey flex justify-center">
                       {selectedValue.requestName}
                     </Dialog.Title>
-                    <div className="mt-2">
-                      <p className="text-sm text-gray-500">
-                        Your payment has been successfully submitted. We’ve sent you an email with all of the details of
-                        your order.
-                      </p>
-                    </div>
-
-                    <div className="mt-4">
+                    <Dialog.Description tw="text-h2 font-h2 text-cu-grey flex justify-center">
+                      ยืนยันที่จะสร้างโครงร่างคำร้อง
+                    </Dialog.Description>
+                    <div tw="flex">
                       <button
+                        tw="text-cu-pink font-h2 text-h2 p-2"
+                        className="grow"
                         type="button"
-                        className="inline-flex justify-center rounded-md border border-transparent bg-blue-100 px-4 py-2 text-sm font-medium text-blue-900 hover:bg-blue-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2"
-                        // onClick={closeModal}
+                        onClick={() => {
+                          console.log('confirm')
+                        }}
                       >
-                        Got it, thanks!
+                        ตกลง
+                      </button>
+                      {/* <VerticalDivider /> */}
+                      <button
+                        tw="text-gray font-h2 text-h2 p-2"
+                        className="grow"
+                        type="button"
+                        onClick={() => {
+                          console.log('cancel')
+                        }}
+                      >
+                        ยกเลิก
                       </button>
                     </div>
                   </Dialog.Panel>
