@@ -54,27 +54,27 @@ const SideMenu: FC<ISideMenu> = () => {
           <SideMenuButton
             text="ยิื่นคำร้อง"
             onClick={requestPageButtonHandler}
-            isFocused={router.pathname === ROUTES.REQUEST}
+            isFocused={router.pathname.includes(ROUTES.REQUEST)}
           />
           <SideMenuButton
             text="โครงร่างคำร้อง"
             onClick={draftPageButtonHandler}
-            isFocused={router.pathname === ROUTES.DRAFT}
+            isFocused={router.pathname.includes(ROUTES.DRAFT)}
           />
           <SideMenuButton
             text="ตรวจสอบสถานะ"
             onClick={statusPageButtonHandler}
-            isFocused={router.pathname === ROUTES.STATUS}
+            isFocused={router.pathname.includes(ROUTES.STATUS)}
           />
           <SideMenuButton
             text="ข้อมูลผู้ใช้"
             onClick={profilePageButtonHandler}
-            isFocused={router.pathname === ROUTES.PROFILE}
+            isFocused={router.pathname.includes(ROUTES.PROFILE)}
           />
           <SideMenuButton
             text="ออกจากระบบ"
             onClick={logoutPageButtonHandler}
-            isFocused={router.pathname === ROUTES.LOGOUT}
+            isFocused={router.pathname.includes(ROUTES.LOGOUT)}
           />
         </div>
       </div>
