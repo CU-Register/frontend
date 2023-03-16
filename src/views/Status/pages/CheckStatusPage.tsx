@@ -1,3 +1,4 @@
+import Stepper from 'components/Stepper'
 import MainLayout from 'layouts/MainLayout'
 import { NextPage } from 'next'
 import 'twin.macro'
@@ -5,7 +6,7 @@ const CheckStatusPage: NextPage = () => {
   return (
     <MainLayout header="ตรวจสอบสถานะการยื่นคำร้อง" studentId="6231354721">
       <div tw="flex w-full">
-        <div tw="flex flex-col gap-10 w-[70%]">
+        <div tw="flex flex-col gap-10 w-[75%]">
           <div tw="font-h1 text-h1 text-black">คำร้องที่ขอเข้าสังกัดหรือเปลี่ยนสังกัด (จท12)</div>
           <div tw="flex flex-col gap-3 pl-5 text-h2 font-h2 text-black">
             <div tw="grid grid-cols-2">
@@ -28,7 +29,9 @@ const CheckStatusPage: NextPage = () => {
             </div>
           </div>
         </div>
-        <div tw="flex flex-col w-[30%] bg-cu-gold">for stepper</div>
+        <div tw="flex flex-col w-[25%]">
+          <Stepper />
+        </div>
       </div>
     </MainLayout>
   )

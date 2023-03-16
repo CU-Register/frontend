@@ -42,10 +42,10 @@ const ActionDialog: FC<IActionDialogProps> = ({ isOpen, onClose, selectedValue }
                   leaveTo="opacity-0 scale-95"
                 >
                   <Dialog.Panel className="w-full max-w-lg transform overflow-hidden rounded-2xl bg-white text-left align-middle shadow-xl transition-all">
-                    <Dialog.Title tw="p-2 text-h1 font-h1 text-cu-grey flex justify-center">
+                    <Dialog.Title tw="p-2 text-h1 font-h1 text-white flex justify-center bg-cu-pink">
                       {selectedValue.requestName}
                     </Dialog.Title>
-                    <Dialog.Description tw="text-h2 font-h2 text-cu-grey flex justify-center">
+                    <Dialog.Description tw="mt-2 text-h2 font-h2 text-cu-grey flex justify-center">
                       ยืนยันที่จะสร้างโครงร่างคำร้อง
                     </Dialog.Description>
                     <div tw="flex">
