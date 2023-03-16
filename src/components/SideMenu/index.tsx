@@ -1,3 +1,4 @@
+import ROUTES from 'constants/Routes'
 import Image from 'next/image'
 import { useRouter } from 'next/router'
 import { FC } from 'react'
@@ -40,7 +41,7 @@ const SideMenu: FC<ISideMenu> = () => {
   }
 
   return (
-    <div tw="min-h-screen w-[280px] p-[50px] bg-cu-pinkLd  justify-between flex flex-col">
+    <div tw="h-screen w-[280px] p-[50px] bg-cu-pinkLd  justify-between flex flex-col">
       <div tw="w-full">
         <div tw="flex flex-col justify-center items-center">
           <div tw="w-[83px] h-[126px] relative">
@@ -49,12 +50,32 @@ const SideMenu: FC<ISideMenu> = () => {
           <div tw="text-h1 font-h1 text-white">CUADRS</div>
         </div>
         <div tw="mt-8 flex flex-col items-start gap-5">
-          <SideMenuButton text="หน้าหลัก" onClick={homePageButtonHandler} />
-          <SideMenuButton text="ยิื่นคำร้อง" onClick={requestPageButtonHandler} />
-          <SideMenuButton text="โครงร่างคำร้อง" onClick={draftPageButtonHandler} />
-          <SideMenuButton text="ตรวจสอบสถานะ" onClick={statusPageButtonHandler} />
-          <SideMenuButton text="ข้อมูลผู้ใช้" onClick={profilePageButtonHandler} />
-          <SideMenuButton text="ออกจากระบบ" onClick={logoutPageButtonHandler} />
+          <SideMenuButton text="หน้าหลัก" onClick={homePageButtonHandler} isFocused={router.pathname === '/'} />
+          <SideMenuButton
+            text="ยิื่นคำร้อง"
+            onClick={requestPageButtonHandler}
+            isFocused={router.pathname.includes(ROUTES.REQUEST)}
+          />
+          <SideMenuButton
+            text="โครงร่างคำร้อง"
+            onClick={draftPageButtonHandler}
+            isFocused={router.pathname.includes(ROUTES.DRAFT)}
+          />
+          <SideMenuButton
+            text="ตรวจสอบสถานะ"
+            onClick={statusPageButtonHandler}
+            isFocused={router.pathname.includes(ROUTES.STATUS)}
+          />
+          <SideMenuButton
+            text="ข้อมูลผู้ใช้"
+            onClick={profilePageButtonHandler}
+            isFocused={router.pathname.includes(ROUTES.PROFILE)}
+          />
+          <SideMenuButton
+            text="ออกจากระบบ"
+            onClick={logoutPageButtonHandler}
+            isFocused={router.pathname.includes(ROUTES.LOGOUT)}
+          />
         </div>
       </div>
       <LanguageToggleSwitch />

@@ -1,14 +1,26 @@
-import { FC } from 'react'
+import { IRequestOption } from 'interfaces/RequestOption'
 import 'twin.macro'
 
-interface IRequestCardProps {
+interface IRequestCardProps<ValT> {
+  // value: ValT
+  // value: number
+  dataObject?: string
   requestName: string
   requestNumber?: number
   onClick?: (event: React.MouseEvent<HTMLButtonElement>) => void
 }
-const RequestCard: FC<IRequestCardProps> = ({ requestName, requestNumber, onClick }) => {
+const RequestCard = <ValT extends IRequestOption>({
+  dataObject,
+  requestName,
+  requestNumber,
+  onClick,
+}: IRequestCardProps<ValT>) => {
   return (
-    <button tw="bg-cu-pinkLd rounded-md flex justify-between p-4 items-center hover:bg-cu-pink" onClick={onClick}>
+    <button
+      tw="bg-cu-pinkLd rounded-md flex justify-between p-4 items-center hover:bg-cu-pink"
+      onClick={onClick}
+      data-object={dataObject}
+    >
       <div tw="text-h2 font-h2 text-white w-[50%]" className="text-start">
         {requestName}
       </div>
