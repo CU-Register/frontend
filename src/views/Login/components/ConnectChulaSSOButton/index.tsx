@@ -1,10 +1,12 @@
 import Image from 'next/image'
+import { useRouter } from 'next/router'
 import { FC } from 'react'
 import 'twin.macro'
 
 const ConnectChulaSSOButton: FC = () => {
+  const router = useRouter()
   const connectChulaSSOButtonHandler = (event: React.MouseEvent<HTMLButtonElement>) => {
-    console.log('connect chula sso button clicked')
+    router.push(process.env.NEXT_PUBLIC_CUSSO_URL as string)
   }
 
   return (
