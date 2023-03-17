@@ -50,6 +50,16 @@ const ActionDialog: FC<IActionDialogProps> = ({ isOpen, onClose, selectedValue }
                     </Dialog.Description>
                     <div tw="flex">
                       <button
+                        tw="text-gray font-h2 text-h2 p-2"
+                        className="grow"
+                        type="button"
+                        onClick={() => {
+                          console.log('cancel')
+                        }}
+                      >
+                        ยกเลิก
+                      </button>
+                      <button
                         tw="text-cu-pink font-h2 text-h2 p-2"
                         className="grow"
                         type="button"
@@ -60,16 +70,6 @@ const ActionDialog: FC<IActionDialogProps> = ({ isOpen, onClose, selectedValue }
                         ตกลง
                       </button>
                       {/* <VerticalDivider /> */}
-                      <button
-                        tw="text-gray font-h2 text-h2 p-2"
-                        className="grow"
-                        type="button"
-                        onClick={() => {
-                          console.log('cancel')
-                        }}
-                      >
-                        ยกเลิก
-                      </button>
                     </div>
                   </Dialog.Panel>
                 </Transition.Child>
