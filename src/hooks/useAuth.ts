@@ -11,7 +11,7 @@ const useAuth = () => {
       const result = await authService.loginWithChulaSSOToken(ticket)
       const { accessToken, refreshToken } = result
       authStore.setAccessToken(accessToken)
-      localStorage.setItem('refreshToken', refreshToken)
+      localStorage.setItem('cuadrs-refreshToken', refreshToken)
       router.push('/')
     } catch (error) {
       console.log(error)
