@@ -2,7 +2,6 @@ import axiosInstance from 'lib/axios'
 
 const healthCheck = async () => {
   const path = 'health-check'
-  console.log(axiosInstance)
   try {
     const result = await axiosInstance.get(path)
     return result
