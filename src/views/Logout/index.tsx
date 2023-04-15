@@ -9,7 +9,7 @@ const LogoutPage: NextPage = () => {
 
   const toLoginPageButtonHandler = (event: React.MouseEvent<HTMLButtonElement>) => {
     event.preventDefault()
-    router.push('/login')
+    router.replace('/login')
   }
 
   return (

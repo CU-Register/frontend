@@ -1,4 +1,5 @@
 import ROUTES from 'constants/Routes'
+import useAuth from 'hooks/useAuth'
 import Image from 'next/image'
 import { useRouter } from 'next/router'
 import { FC } from 'react'
@@ -8,6 +9,8 @@ import SideMenuButton from './SideMenuButton'
 
 interface ISideMenu {}
 const SideMenu: FC<ISideMenu> = () => {
+  const { logout } = useAuth()
+
   const router = useRouter()
 
   const homePageButtonHandler = (event: React.MouseEvent<HTMLButtonElement>) => {
@@ -37,7 +40,7 @@ const SideMenu: FC<ISideMenu> = () => {
 
   const logoutPageButtonHandler = (event: React.MouseEvent<HTMLButtonElement>) => {
     event.preventDefault()
-    router.push('/logout')
+    logout()
   }
 
   return (

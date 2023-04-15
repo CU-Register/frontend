@@ -1,3 +1,4 @@
+import ROUTES from 'constants/Routes'
 import { useRouter } from 'next/router'
 import authService from 'services/auth.service'
 import { useAuthStore } from 'stores/auth.stores'
@@ -12,14 +13,20 @@ const useAuth = () => {
       const { accessToken, refreshToken } = result
       authStore.setAccessToken(accessToken)
       localStorage.setItem('cuadrs-refreshToken', refreshToken)
-      router.push('/')
+      router.push(ROUTES.HOME)
     } catch (error) {
-      console.log(error)
-      router.push('/login')
+      console.error(error)
+      router.push(ROUTES.LOGIN)
     }
   }
 
-  return { login }
+  const logout = () => {
+    localStorage.removeItem('cuadrs-refreshToken')
+    authStore.setAccessToken(null)
+    router.replace(ROUTES.LOGOUT)
+  }
+
+  return { login, logout }
 }
 
 export default useAuth
