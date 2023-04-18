@@ -1,3 +1,4 @@
+import withAuth from 'components/Auth/withAuth'
 import MainLayout from 'layouts/MainLayout'
 import { NextPage } from 'next'
 import { useRouter } from 'next/router'
@@ -8,7 +9,7 @@ import RequestHistoryTable from './components/RequestHistoryTable'
 const HomePage: NextPage = () => {
   const router = useRouter()
 
-  const otherRequestButtonHandler = (event: React.MouseEvent<HTMLButtonElement>) => {
+  function otherRequestButtonHandler(event: React.MouseEvent<HTMLButtonElement>) {
     event.preventDefault()
     router.push('/request')
   }
@@ -42,4 +43,4 @@ const HomePage: NextPage = () => {
   )
 }
 
-export default HomePage
+export default withAuth(HomePage)

@@ -15,8 +15,20 @@ const useAuth = () => {
       localStorage.setItem('cuadrs-refreshToken', refreshToken)
       router.push(PROTECTED_ROUTES.HOME)
     } catch (error) {
-      console.error(error)
-      router.push(COMMON_ROUTES.LOGIN)
+      console.error('login error:', error)
+      router.replace(COMMON_ROUTES.LOGIN)
+    }
+  }
+
+  const refreshUserToken = async (refreshToken: string | null) => {
+    try {
+      const result = await authService.refreshUserToken(refreshToken)
+      const { accessToken: newAccessToken, refreshToken: newRefreshToken } = result
+      authStore.setAccessToken(newAccessToken)
+      localStorage.setItem('cuadrs-refreshToken', newRefreshToken)
+    } catch (error) {
+      console.error('refresh token error:', error)
+      router.replace(COMMON_ROUTES.LOGIN)
     }
   }
 
@@ -26,7 +38,7 @@ const useAuth = () => {
     router.replace(PROTECTED_ROUTES.LOGOUT)
   }
 
-  return { login, logout }
+  return { login, refreshUserToken, logout }
 }
 
 export default useAuth

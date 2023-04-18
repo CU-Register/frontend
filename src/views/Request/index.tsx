@@ -3,6 +3,7 @@ import type { NextPage } from 'next'
 import 'twin.macro'
 import RequestListSection from './sections/RequestListSection'
 import SearchAndQuerySection from './sections/SearchAndQuerySection'
+import withAuth from 'components/Auth/withAuth'
 
 const RequestPage: NextPage = () => {
   return (
@@ -13,4 +14,4 @@ const RequestPage: NextPage = () => {
   )
 }
 
-export default RequestPage
+export default withAuth(RequestPage)
