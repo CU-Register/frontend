@@ -17,7 +17,7 @@ const RequestCard = <ValT extends IRequestOption>({
 }: IRequestCardProps<ValT>) => {
   return (
     <button
-      tw="bg-cu-pinkLd rounded-md flex justify-between p-4 items-center hover:bg-cu-pink"
+      tw="bg-cu-pinkLd rounded-md flex justify-between p-4 items-center hover:(bg-cu-pink shadow-md) transition-all"
       onClick={onClick}
       data-object={dataObject}
     >

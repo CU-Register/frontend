@@ -1,13 +1,15 @@
 import ROUTES from 'constants/Routes'
 import Image from 'next/image'
 import { useRouter } from 'next/router'
-import { FC } from 'react'
-import 'twin.macro'
+import { FC, useState } from 'react'
+import tw from 'twin.macro'
 import LanguageToggleSwitch from './LanguageToggleSwitch'
 import SideMenuButton from './SideMenuButton'
 
-interface ISideMenu {}
-const SideMenu: FC<ISideMenu> = () => {
+interface ISideMenu {
+  isShow: boolean
+}
+const SideMenu: FC<ISideMenu> = (props) => {
   const router = useRouter()
 
   const homePageButtonHandler = (event: React.MouseEvent<HTMLButtonElement>) => {
@@ -41,7 +43,12 @@ const SideMenu: FC<ISideMenu> = () => {
   }
 
   return (
-    <div tw="h-screen w-[280px] p-[50px] bg-cu-pinkLd  justify-between flex flex-col">
+    <div
+      css={[
+        tw`h-screen w-[280px] transition-all p-[50px] bg-cu-pinkLd shadow-2xl justify-between flex flex-col absolute z-10 md:(relative shadow-none)`,
+        !props.isShow && tw`-translate-x-full md:(translate-x-0)`,
+      ]}
+    >
       <div tw="w-full">
         <div tw="flex flex-col justify-center items-center">
           <div tw="w-[83px] h-[126px] relative">

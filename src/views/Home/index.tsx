@@ -18,7 +18,7 @@ const HomePage: NextPage = () => {
       <div tw="flex flex-col gap-8">
         <div tw="flex flex-col gap-2">
           <div tw="font-h2 text-h2 text-black">คลิ้กเพื่อยื่นคำร้อง</div>
-          <div tw="grid grid-cols-2 grid-flow-row gap-5 px-[100px]">
+          <div tw="grid grid-cols-1 gap-5 grid-flow-row md:(grid-cols-2)">
             <RequestCard requestName="คำร้องที่ขอเข้าสังกัด หรือเปลี่ยนสังกัด" requestNumber={5} />
             <RequestCard requestName="คำร้องขอลาออก" requestNumber={31} />
             <RequestCard requestName="คำร้องที่เป็นที่นิยม 1" requestNumber={1} />
