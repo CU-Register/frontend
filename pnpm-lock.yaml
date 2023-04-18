@@ -55,6 +55,9 @@ dependencies:
   twin.macro:
     specifier: ^2.8.2
     version: 2.8.2
+  uuid:
+    specifier: ^9.0.0
+    version: 9.0.0
   zustand:
     specifier: ^4.3.6
     version: 4.3.6(react@18.2.0)
@@ -69,6 +72,9 @@ devDependencies:
   '@types/react-dom':
     specifier: 18.0.6
     version: 18.0.6
+  '@types/uuid':
+    specifier: ^9.0.1
+    version: 9.0.1
   autoprefixer:
     specifier: ^10.4.8
     version: 10.4.8(postcss@8.4.16)
@@ -882,6 +888,11 @@ packages:
   /@types/scheduler@0.16.2:
     resolution:
       { integrity: sha512-hppQEBDmlwhFAXKJX2KnWLYu5yMfi91yazPb2l+lbJiwW+wdo1gNeRA+3RgNSO39WYX2euey41KEwnqesU2Jew== }
+
+  /@types/uuid@9.0.1:
+    resolution:
+      { integrity: sha512-rFT3ak0/2trgvp4yYZo5iKFEPsET7vKydKF+VRCxlQ9bpheehyAJH89dAkaLEq/j/RZXJIqcgsmPJKUP1Z28HA== }
+    dev: true
 
   /@typescript-eslint/parser@5.36.1(eslint@8.23.0)(typescript@4.8.2):
     resolution:
@@ -3801,6 +3812,12 @@ packages:
   /util-deprecate@1.0.2:
     resolution:
       { integrity: sha512-EPD5q1uXyFxJpCrLnCc1nHnq3gOa6DZBocAIiI2TaSCA7VCJ1UJDMagCzIkXNsUYfD1daK//LTEQ8xiIbrHtcw== }
+
+  /uuid@9.0.0:
+    resolution:
+      { integrity: sha512-MXcSTerfPa4uqyzStbRoTgt5XIe3x5+42+q1sDuy3R5MDk66URdLMOZe5aPX/SQd+kuYAh0FdP/pO28IkQyTeg== }
+    hasBin: true
+    dev: false
 
   /which-boxed-primitive@1.0.2:
     resolution:
