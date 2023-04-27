@@ -1,11 +1,11 @@
+import withAuth from 'components/Auth/withAuth'
 import VerticalDivider from 'components/Dividers/VerticalDivider'
 import PinkButton from 'components/PinkButton'
 import MainLayout from 'layouts/MainLayout'
 import type { NextPage } from 'next'
-import Image from 'next/image'
 import 'twin.macro'
 import ProfileDetails from './components/ProfileDetails'
-import withAuth from 'components/Auth/withAuth'
+
 const ProfilePage: NextPage = () => {
   return (
     <MainLayout header="ข้อมูลทั่วไปและส่วนบุคคล" studentId="6231354721">
@@ -20,11 +20,6 @@ const ProfilePage: NextPage = () => {
           </div>
           <div tw="max-w-[54px]">
             <PinkButton text="แก้ไข" />
-          </div>
-        </div>
-        <div>
-          <div tw="w-[129px] h-[178px] relative">
-            <Image src="/assets/mock-profile-pic.png" layout="fill" alt="chula-icon" />
           </div>
         </div>
       </div>
