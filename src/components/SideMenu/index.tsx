@@ -8,7 +8,7 @@ import LanguageToggleSwitch from './LanguageToggleSwitch'
 import SideMenuButton from './SideMenuButton'
 
 interface ISideMenu {
-  isShow: boolean
+  isShow?: boolean
 }
 const SideMenu: FC<ISideMenu> = (props) => {
   const { logout } = useAuth()
