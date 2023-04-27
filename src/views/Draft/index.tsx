@@ -2,6 +2,7 @@ import MainLayout from 'layouts/MainLayout'
 import { NextPage } from 'next'
 import RequestDraftSection from './sections/RequestDraftSection'
 import SearchAndQuerySection from './sections/SearchAndQuerySection'
+import withAuth from 'components/Auth/withAuth'
 
 const DraftPage: NextPage = () => {
   return (
@@ -12,4 +13,4 @@ const DraftPage: NextPage = () => {
   )
 }
 
-export default DraftPage
+export default withAuth(DraftPage)

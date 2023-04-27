@@ -5,6 +5,7 @@ import type { NextPage } from 'next'
 import Image from 'next/image'
 import 'twin.macro'
 import ProfileDetails from './components/ProfileDetails'
+import withAuth from 'components/Auth/withAuth'
 const ProfilePage: NextPage = () => {
   return (
     <MainLayout header="ข้อมูลทั่วไปและส่วนบุคคล" studentId="6231354721">
@@ -50,4 +51,4 @@ const ProfilePage: NextPage = () => {
   )
 }
 
-export default ProfilePage
+export default withAuth(ProfilePage)

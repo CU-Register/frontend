@@ -2,7 +2,7 @@ import { create } from 'zustand'
 
 interface IAuthStore {
   accessToken: string | null
-  setAccessToken: (accessToken: string) => void
+  setAccessToken: (accessToken: string | null) => void
 }
 
 const initialState = {
@@ -11,5 +11,5 @@ const initialState = {
 
 export const useAuthStore = create<IAuthStore>((set, get) => ({
   ...initialState,
-  setAccessToken: (accessToken: string) => set({ accessToken }),
+  setAccessToken: (accessToken) => set({ accessToken }),
 }))

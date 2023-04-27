@@ -1,3 +1,4 @@
+import withAuth from 'components/Auth/withAuth'
 import Stepper from 'components/Stepper'
 import MainLayout from 'layouts/MainLayout'
 import { NextPage } from 'next'
@@ -37,4 +38,4 @@ const CheckStatusPage: NextPage = () => {
   )
 }
 
-export default CheckStatusPage
+export default withAuth(CheckStatusPage)
