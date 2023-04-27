@@ -3,10 +3,16 @@ import VerticalDivider from 'components/Dividers/VerticalDivider'
 import PinkButton from 'components/PinkButton'
 import MainLayout from 'layouts/MainLayout'
 import type { NextPage } from 'next'
+import { useEffect } from 'react'
+import profileService from 'services/profile.service'
 import 'twin.macro'
 import ProfileDetails from './components/ProfileDetails'
 
 const ProfilePage: NextPage = () => {
+  const { getUserProfile } = profileService
+  useEffect(() => {
+    getUserProfile()
+  })
   return (
     <MainLayout header="ข้อมูลทั่วไปและส่วนบุคคล" studentId="6231354721">
       <div tw=" flex justify-between">
