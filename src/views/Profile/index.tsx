@@ -4,12 +4,12 @@ import PinkButton from 'components/PinkButton'
 import MainLayout from 'layouts/MainLayout'
 import type { NextPage } from 'next'
 import { useEffect } from 'react'
-import profileService from 'services/profile.service'
+import userProfileService from 'services/user-profile.service'
 import 'twin.macro'
 import ProfileDetails from './components/ProfileDetails'
 
 const ProfilePage: NextPage = () => {
-  const { getUserProfile } = profileService
+  const { getUserProfile } = userProfileService
   useEffect(() => {
     getUserProfile()
   })
@@ -36,10 +36,6 @@ const ProfilePage: NextPage = () => {
           <ProfileDetails label="หลักสูตร" value="วิศวกรรมศาสตร์บัณฑิต" valueColor="text-gray" />
           <ProfileDetails label="คณะ" value="คณะวิศวกรรมศาสตร์" />
           <ProfileDetails label="ภาควิชา" value="วิศวกรรมคอมพิวเตอร์" />
-          <ProfileDetails label="วิชาเอก/โท" value="วิชาเอกไม่มี วิชาโทไม่มี" />
-          <div tw="mt-10">
-            <ProfileDetails label="สถานภาพ" value="ปกติ" valueColor="text-green-600" />
-          </div>
         </div>
         <VerticalDivider />
         <div tw="flex flex-col gap-2">

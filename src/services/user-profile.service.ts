@@ -7,8 +7,8 @@ const getUserProfile = async () => {
   return result
 }
 
-const profileService = {
+const userProfileService = {
   getUserProfile,
 }
 
-export default profileService
+export default userProfileService
