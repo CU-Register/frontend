@@ -41,7 +41,10 @@ interface IUserProfile {
     }
   }
   telephone: string | null
-  address: string | null
+  address: {
+    th: string | null
+    en: string | null
+  }
 }
 
 export default IUserProfile
