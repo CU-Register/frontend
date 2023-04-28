@@ -1,50 +1,28 @@
 import { UserRole } from 'enums/UserRole'
 
+interface IUserDetail {
+  th: string
+  en: string
+}
+
+interface IUserOption {
+  id: string
+  name: IUserDetail
+}
+
 interface IUserProfile {
-  firstName: {
-    th: string | null
-    en: string | null
-  }
-  lastName: {
-    th: string | null
-    en: string | null
-  }
-  email: string | null
-  uid: string | null
-  role: UserRole | null
-  faculty: {
-    id: string | null
-    name: {
-      th: string | null
-      en: string | null
-    }
-  }
-  department: {
-    id: string | null
-    name: {
-      th: string | null
-      en: string | null
-    }
-  }
-  academicSystem: {
-    id: string | null
-    name: {
-      th: string | null
-      en: string | null
-    }
-  }
-  studentLevel: {
-    id: string | null
-    name: {
-      th: string | null
-      en: string | null
-    }
-  }
-  telephone: string | null
-  address: {
-    th: string | null
-    en: string | null
-  }
+  salutation: IUserOption
+  firstname: IUserDetail
+  lastname: IUserDetail
+  email: string
+  uid: string
+  role: UserRole
+  faculty: IUserOption
+  department: IUserOption
+  academicSystem: IUserOption
+  studentLevel: IUserOption
+  telephone: string
+  address: IUserDetail
 }
 
 export default IUserProfile

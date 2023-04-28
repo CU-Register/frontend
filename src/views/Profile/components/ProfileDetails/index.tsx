@@ -8,8 +8,8 @@ interface IProfileDetailsProps {
 }
 const ProfileDetails: FC<IProfileDetailsProps> = ({ label, value, valueColor }) => {
   return (
-    <div tw="grid grid-cols-2 text-h2 font-h2 text-black gap-12">
-      <div>{label}</div>
+    <div tw="grid grid-cols-2 text-h2 font-h2 text-black gap-8">
+      <div tw="text-gray">{label}</div>
       <div
         css={[
           tw`flex break-all`,

@@ -2,15 +2,16 @@ import IUserProfile from 'interfaces/UserProfile'
 import { create } from 'zustand'
 
 interface IUserProfileStore {
-  profile: IUserProfile | null
-  setUserProfile: (profile: IUserProfile | null) => void
+  userProfile: IUserProfile | null
+  setUserProfile: (userProfile: IUserProfile | null) => void
+  // editableOptions:
 }
 
 const initialState = {
-  profile: null,
+  userProfile: null,
 }
 
 export const useUserProfileStore = create<IUserProfileStore>((set, get) => ({
   ...initialState,
-  setUserProfile: (profile) => set({ profile }),
+  setUserProfile: (userProfile) => set({ userProfile }),
 }))

@@ -12,4 +12,11 @@ const stringToJson = (string: string) => {
   return JSON.parse(string)
 }
 
-export { dateFormatter, jsonToString, stringToJson }
+const fullNameFormatter = (firstName?: string | null, lastName?: string | null) => {
+  console.log(firstName, lastName)
+
+  if (!firstName || !lastName) return '-'
+  return `${firstName} ${lastName}`
+}
+
+export { dateFormatter, jsonToString, stringToJson, fullNameFormatter }
