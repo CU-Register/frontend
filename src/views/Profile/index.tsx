@@ -10,13 +10,17 @@ import 'twin.macro'
 import { fullNameFormatter } from 'utils/formats'
 import ProfileDetails from './components/ProfileDetails'
 const ProfilePage: NextPage = () => {
-  const [isUserEditMode, setIsUserEditMode] = useState<boolean>(false)
-  const { fetchUserProfile, fetchUserProfileOption } = useProfile()
+  const [isEditMode, setIsEditMode] = useState<boolean>(false)
+  const { fetchUserProfileOption } = useProfile()
   const { userProfile, userProfileOption } = useProfileStore()
 
   useEffect(() => {
     Promise.all([fetchUserProfileOption()])
   }, [])
+
+  const editButtonHandler = (event: React.MouseEvent<HTMLButtonElement>) => {
+    setIsEditMode(!isEditMode)
+  }
 
   return (
     <MainLayout header="ข้อมูลทั่วไปและส่วนบุคคล">
@@ -31,23 +35,57 @@ const ProfilePage: NextPage = () => {
           </div>
         </div>
         <div>
-          <PinkButton text="แก้ไข" />
+          <PinkButton text="แก้ไข" onClick={editButtonHandler} />
         </div>
       </div>
       <div tw="mt-6  grid gap-3" className="grid-cols-[1fr_2px_1fr]">
         <div tw=" flex flex-col gap-2">
-          <ProfileDetails label="คำนำหน้่าชื่อ" value={userProfile?.salutation?.name?.th || '-'} />
-          <ProfileDetails label="นิสิตระดับ" value={userProfile?.studentLevel.name.th || '-'} />
-          <ProfileDetails label="ระบบการศึกษา" value={userProfile?.academicSystem.name.th || '-'} />
-          {/* <ProfileDetails label="หลักสูตร" value={userProfile?.department.name.th || '-'} /> */}
-          <ProfileDetails label="คณะ" value={userProfile?.faculty.name.th || '-'} />
-          <ProfileDetails label="ภาควิชา/สาขาวิชา" value={userProfile?.department.name.th || '-'} />
+          <ProfileDetails
+            label="คำนำหน้่าชื่อ"
+            value={userProfile?.salutation?.name?.th || '-'}
+            isEditMode={isEditMode}
+            isEditAsOption
+          />
+          <ProfileDetails
+            label="นิสิตระดับ"
+            value={userProfile?.studentLevel.name.th || '-'}
+            isEditMode={isEditMode}
+            isEditAsOption
+          />
+          <ProfileDetails
+            label="ระบบการศึกษา"
+            value={userProfile?.academicSystem.name.th || '-'}
+            isEditMode={isEditMode}
+            isEditAsOption
+          />
+          <ProfileDetails
+            label="คณะ"
+            value={userProfile?.faculty.name.th || '-'}
+            isEditMode={isEditMode}
+            isEditAsOption
+          />
+          <ProfileDetails
+            label="ภาควิชา/สาขาวิชา"
+            value={userProfile?.department.name.th || '-'}
+            isEditMode={isEditMode}
+            isEditAsOption
+          />
         </div>
         <VerticalDivider />
         <div tw="flex flex-col gap-2">
-          <ProfileDetails label="เบอร์โทรศัพท์" value={userProfile?.telephone || '-'} />
-          <ProfileDetails label="อีเมล์" value={userProfile?.email || '-'} />
-          <ProfileDetails label="ที่อยู่" value={userProfile?.address.th || '-'} />
+          <ProfileDetails
+            label="เบอร์โทรศัพท์"
+            value={userProfile?.telephone || '-'}
+            isEditMode={isEditMode}
+            isEditAsTextArea
+          />
+          <ProfileDetails label="อีเมล์" value={userProfile?.email || '-'} isEditMode={isEditMode} isEditAsTextArea />
+          <ProfileDetails
+            label="ที่อยู่"
+            value={userProfile?.address.th || '-'}
+            isEditMode={isEditMode}
+            isEditAsTextArea
+          />
         </div>
       </div>
     </MainLayout>
