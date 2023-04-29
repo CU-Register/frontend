@@ -1,4 +1,4 @@
-import userProfileService from 'services/profile.service'
+import profileService from 'services/profile.service'
 import { useUserProfileStore } from 'stores/profile.stores'
 
 const useUserProfile = () => {
@@ -6,7 +6,7 @@ const useUserProfile = () => {
 
   const setUserProfile = async () => {
     try {
-      const profile = await userProfileService.getUserProfile()
+      const profile = await profileService.getUserProfile()
       userProfileStore.setUserProfile(profile)
     } catch {
       console.error('setUserProfile error')
