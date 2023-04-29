@@ -9,14 +9,13 @@ import { useProfileStore } from 'stores/profile.stores'
 import 'twin.macro'
 import { fullNameFormatter } from 'utils/formats'
 import ProfileDetails from './components/ProfileDetails'
-
 const ProfilePage: NextPage = () => {
   const [isUserEditMode, setIsUserEditMode] = useState<boolean>(false)
-  const { setUserProfile } = useProfile()
-  const { userProfile } = useProfileStore()
+  const { fetchUserProfile, fetchUserProfileOption } = useProfile()
+  const { userProfile, userProfileOption } = useProfileStore()
 
   useEffect(() => {
-    setUserProfile()
+    Promise.all([fetchUserProfileOption()])
   }, [])
 
   return (

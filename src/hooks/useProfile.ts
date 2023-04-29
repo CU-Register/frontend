@@ -4,16 +4,25 @@ import { useProfileStore } from 'stores/profile.stores'
 const useProfile = () => {
   const profileStore = useProfileStore()
 
-  const setUserProfile = async () => {
+  const fetchUserProfile = async () => {
     try {
       const profile = await profileService.getUserProfile()
       profileStore.setUserProfile(profile)
     } catch {
-      console.error('setUserProfile error')
+      console.error('fetchUserProfile error')
     }
   }
 
-  return { setUserProfile }
+  const fetchUserProfileOption = async () => {
+    try {
+      const profileOption = await profileService.getUserProfileOption()
+      profileStore.setUserProfileOption(profileOption)
+    } catch {
+      console.error('fetchUserProfileOption error')
+    }
+  }
+
+  return { fetchUserProfile, fetchUserProfileOption }
 }
 
 export default useProfile
