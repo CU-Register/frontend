@@ -1,19 +1,19 @@
 import withAuth from 'components/Auth/withAuth'
 import VerticalDivider from 'components/Dividers/VerticalDivider'
 import PinkButton from 'components/PinkButton'
-import useUserProfile from 'hooks/useProfile'
+import useProfile from 'hooks/useProfile'
 import MainLayout from 'layouts/MainLayout'
 import type { NextPage } from 'next'
 import { useEffect, useState } from 'react'
-import { useUserProfileStore } from 'stores/profile.stores'
+import { useProfileStore } from 'stores/profile.stores'
 import 'twin.macro'
 import { fullNameFormatter } from 'utils/formats'
 import ProfileDetails from './components/ProfileDetails'
 
 const ProfilePage: NextPage = () => {
   const [isUserEditMode, setIsUserEditMode] = useState<boolean>(false)
-  const { setUserProfile } = useUserProfile()
-  const { userProfile } = useUserProfileStore()
+  const { setUserProfile } = useProfile()
+  const { userProfile } = useProfileStore()
 
   useEffect(() => {
     setUserProfile()

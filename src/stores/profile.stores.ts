@@ -1,7 +1,7 @@
 import { IUserProfile, IUserProfileOption } from 'interfaces/Profile'
 import { create } from 'zustand'
 
-interface IUserProfileStore {
+interface IProfileStore {
   userProfile: IUserProfile | null
   setUserProfile: (userProfile: IUserProfile | null) => void
   userProfileOption: IUserProfileOption | null
@@ -13,7 +13,7 @@ const initialState = {
   userProfileOption: null,
 }
 
-export const useUserProfileStore = create<IUserProfileStore>((set, get) => ({
+export const useProfileStore = create<IProfileStore>((set, get) => ({
   ...initialState,
   setUserProfile: (userProfile) => set({ userProfile }),
   setUserProfileOption: (userProfileOption) => set({ userProfileOption }),

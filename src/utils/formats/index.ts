@@ -13,8 +13,6 @@ const stringToJson = (string: string) => {
 }
 
 const fullNameFormatter = (firstName?: string | null, lastName?: string | null) => {
-  console.log(firstName, lastName)
-
   if (!firstName || !lastName) return '-'
   return `${firstName} ${lastName}`
 }
