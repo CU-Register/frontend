@@ -1,5 +1,5 @@
-import userProfileService from 'services/user-profile.service'
-import { useUserProfileStore } from 'stores/user-profile.stores'
+import userProfileService from 'services/profile.service'
+import { useUserProfileStore } from 'stores/profile.stores'
 
 const useUserProfile = () => {
   const userProfileStore = useUserProfileStore()

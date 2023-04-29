@@ -1,4 +1,4 @@
-import IUserProfile from 'interfaces/UserProfile'
+import { IUserProfile } from 'interfaces/Profile'
 import { create } from 'zustand'
 
 interface IUserProfileStore {

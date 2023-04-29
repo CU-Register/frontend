@@ -10,7 +10,7 @@ interface IUserOption {
   name: IUserDetail
 }
 
-interface IUserProfile {
+export interface IUserProfile {
   salutation: IUserOption
   firstname: IUserDetail
   lastname: IUserDetail
@@ -25,4 +25,15 @@ interface IUserProfile {
   address: IUserDetail
 }
 
-export default IUserProfile
+interface IFaculty {
+  id: string
+  name: IUserDetail
+  departments: IUserOption[]
+}
+
+export interface IUserProfileOption {
+  studentLevels: IUserOption[]
+  academicSystems: IUserOption[]
+  faculties: IFaculty[]
+  salutations: IUserOption[]
+}

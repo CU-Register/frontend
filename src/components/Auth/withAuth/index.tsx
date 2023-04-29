@@ -7,7 +7,7 @@ import { useAuthStore } from 'stores/auth.stores'
 const withAuth = (WrappedComponent: React.ComponentType<any>) => {
   const ComponentWithAuth = (props: any) => {
     const { accessToken } = useAuthStore()
-    // console.log(accessToken)
+    console.log(accessToken)
 
     const { refreshUserToken } = useAuth()
     const router = useRouter()
