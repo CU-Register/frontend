@@ -20,11 +20,7 @@ const withAuth = (WrappedComponent: React.ComponentType<any>) => {
     const checkCredentials = async () => {
       // React ^18 mounts component twice (first mount -> unmount -> second mount),
       // so we need to check if effect was executed
-      if (accessToken) {
-        if (userProfile) return
-        await setUserProfile()
-        return
-      }
+      if (accessToken) return
       if (effectExecuted.current) return
       const refreshToken = localStorage.getItem('cuadrs-refreshToken')
       if (!refreshToken) {
@@ -32,6 +28,7 @@ const withAuth = (WrappedComponent: React.ComponentType<any>) => {
         return
       }
       await refreshUserToken(refreshToken)
+      await setUserProfile()
     }
 
     useEffect(() => {
