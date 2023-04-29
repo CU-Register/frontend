@@ -4,10 +4,12 @@ import useProfile from 'hooks/useProfile'
 import { useRouter } from 'next/router'
 import { useEffect, useRef } from 'react'
 import { useAuthStore } from 'stores/auth.stores'
+import { useProfileStore } from 'stores/profile.stores'
 
 const withAuth = (WrappedComponent: React.ComponentType<any>) => {
   const ComponentWithAuth = (props: any) => {
     const { accessToken } = useAuthStore()
+    const { userProfile } = useProfileStore()
     const { setUserProfile } = useProfile()
     // console.log(accessToken)
 
@@ -19,7 +21,8 @@ const withAuth = (WrappedComponent: React.ComponentType<any>) => {
       // React ^18 mounts component twice (first mount -> unmount -> second mount),
       // so we need to check if effect was executed
       if (accessToken) {
-        // await
+        if (userProfile) return
+        await setUserProfile()
         return
       }
       if (effectExecuted.current) return

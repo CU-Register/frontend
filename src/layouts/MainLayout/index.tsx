@@ -6,9 +6,9 @@ import tw from 'twin.macro'
 interface IMainLayoutProps {
   children?: React.ReactNode
   header?: string
-  studentId?: string
 }
-const MainLayout: FC<IMainLayoutProps> = ({ children, header, studentId }) => {
+
+const MainLayout: FC<IMainLayoutProps> = ({ children, header }) => {
   const [showMenu, setShowMenu] = useState(false)
   const handleClick = () => {
     setShowMenu((isShow) => !isShow)
@@ -33,7 +33,7 @@ const MainLayout: FC<IMainLayoutProps> = ({ children, header, studentId }) => {
       >
         <div css={[tw`mb-8`]}>
           {header && <div tw="text-h1 font-h1 text-cu-pink">{header}</div>}
-          {studentId && <div tw="mt-2 text-h2 font-h2 text-black pl-4">{`เลขประจำตัว: ${studentId}`}</div>}
+          <div tw="mt-2 text-h2 font-h2 text-black pl-4">{`เลขประจำตัว: 1234234234`}</div>
         </div>
         <div className="flex flex-col flex-1 overflow-auto">{children}</div>
         <MainFooter />

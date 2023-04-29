@@ -20,7 +20,7 @@ const ProfilePage: NextPage = () => {
   }, [])
 
   return (
-    <MainLayout header="ข้อมูลทั่วไปและส่วนบุคคล" studentId="6231354721">
+    <MainLayout header="ข้อมูลทั่วไปและส่วนบุคคล">
       <div tw=" flex justify-between">
         <div tw=" flex flex-col justify-between">
           <div tw="flex gap-12  items-center">
