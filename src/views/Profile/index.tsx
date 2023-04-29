@@ -1,7 +1,7 @@
 import withAuth from 'components/Auth/withAuth'
 import VerticalDivider from 'components/Dividers/VerticalDivider'
 import PinkButton from 'components/PinkButton'
-import useUserProfile from 'hooks/useUserProfile'
+import useUserProfile from 'hooks/useProfile'
 import MainLayout from 'layouts/MainLayout'
 import type { NextPage } from 'next'
 import { useEffect, useState } from 'react'

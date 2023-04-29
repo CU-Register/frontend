@@ -16,8 +16,10 @@ const withAuth = (WrappedComponent: React.ComponentType<any>) => {
     const checkCredentials = async () => {
       // React ^18 mounts component twice (first mount -> unmount -> second mount),
       // so we need to check if effect was executed
+      if (accessToken) {
+        return
+      }
       if (effectExecuted.current) return
-      if (accessToken) return
       const refreshToken = localStorage.getItem('cuadrs-refreshToken')
       if (!refreshToken) {
         router.replace(COMMON_ROUTES.LOGIN)
