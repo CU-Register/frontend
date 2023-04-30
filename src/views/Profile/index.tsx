@@ -19,7 +19,22 @@ const ProfilePage: NextPage = () => {
   }, [])
 
   const editButtonHandler = (event: React.MouseEvent<HTMLButtonElement>) => {
-    setIsEditMode(!isEditMode)
+    console.log('edit pressed')
+    setIsEditMode(true)
+    // TODO: set tmpUserProfile =  userProfile
+  }
+
+  const confirmEditButtonHandler = (event: React.MouseEvent<HTMLButtonElement>) => {
+    console.log('confirm edit pressed')
+    setIsEditMode(false)
+    // TODO: request update user profile with tmpUserProfile
+    // TODO: fetch user profile
+  }
+
+  const cancelEditButtonHandler = (event: React.MouseEvent<HTMLButtonElement>) => {
+    console.log('cancel edit pressed')
+    setIsEditMode(false)
+    // TODO: reset tmpUserProfile to null
   }
 
   return (
@@ -34,9 +49,17 @@ const ProfilePage: NextPage = () => {
             </div>
           </div>
         </div>
-        <div>
-          <PinkButton text="แก้ไข" onClick={editButtonHandler} />
-        </div>
+        {!isEditMode && (
+          <div className="h-fit">
+            <PinkButton text="แก้ไข" onClick={editButtonHandler} />
+          </div>
+        )}
+        {isEditMode && (
+          <div tw="flex gap-2" className="h-fit">
+            <PinkButton text="ยกเลิก" onClick={cancelEditButtonHandler} />
+            <PinkButton text="ตกลง" onClick={confirmEditButtonHandler} />
+          </div>
+        )}
       </div>
       <div tw="mt-6  grid gap-3" className="grid-cols-[1fr_2px_1fr]">
         <div tw=" flex flex-col gap-2">
