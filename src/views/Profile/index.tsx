@@ -12,29 +12,31 @@ import ProfileDetails from './components/ProfileDetails'
 const ProfilePage: NextPage = () => {
   const [isEditMode, setIsEditMode] = useState<boolean>(false)
   const { fetchUserProfileOption } = useProfile()
-  const { userProfile, userProfileOption } = useProfileStore()
+  const { userProfile, userProfileOption, tmpUserProfile, setTmpUserProfile } = useProfileStore()
+
+  console.log('tmpUserProfile', tmpUserProfile)
 
   useEffect(() => {
     Promise.all([fetchUserProfileOption()])
   }, [])
 
   const editButtonHandler = (event: React.MouseEvent<HTMLButtonElement>) => {
-    console.log('edit pressed')
+    setTmpUserProfile(userProfile)
     setIsEditMode(true)
-    // TODO: set tmpUserProfile =  userProfile
   }
 
   const confirmEditButtonHandler = (event: React.MouseEvent<HTMLButtonElement>) => {
-    console.log('confirm edit pressed')
     setIsEditMode(false)
+    // TODO: show alert to confirm edit
     // TODO: request update user profile with tmpUserProfile
     // TODO: fetch user profile
+    setTmpUserProfile(null)
   }
 
   const cancelEditButtonHandler = (event: React.MouseEvent<HTMLButtonElement>) => {
-    console.log('cancel edit pressed')
     setIsEditMode(false)
-    // TODO: reset tmpUserProfile to null
+    // TODO: show alert to cancel edit
+    setTmpUserProfile(null)
   }
 
   return (
