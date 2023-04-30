@@ -100,11 +100,20 @@ const ProfilePage: NextPage = () => {
         <div tw="flex flex-col gap-2">
           <ProfileDetails
             label="เบอร์โทรศัพท์"
+            profileKey="telephone"
             value={userProfile?.telephone || '-'}
             isEditMode={isEditMode}
             isEditAsTextArea
+            editModeDefaultValue={tmpUserProfile?.telephone}
           />
-          <ProfileDetails label="อีเมล์" value={userProfile?.email || '-'} isEditMode={isEditMode} isEditAsTextArea />
+          <ProfileDetails
+            label="อีเมล์"
+            profileKey="email"
+            value={userProfile?.email || '-'}
+            isEditMode={isEditMode}
+            isEditAsTextArea
+            editModeDefaultValue={tmpUserProfile?.email}
+          />
           <ProfileDetails
             label="ที่อยู่"
             value={userProfile?.address.th || '-'}
