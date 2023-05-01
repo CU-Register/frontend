@@ -103,7 +103,7 @@ const ProfilePage: NextPage = () => {
             profileKey="telephone"
             value={userProfile?.telephone || '-'}
             isEditMode={isEditMode}
-            isEditAsTextArea
+            isEditAsInput
             editModeDefaultValue={tmpUserProfile?.telephone}
           />
           <ProfileDetails
@@ -111,14 +111,16 @@ const ProfilePage: NextPage = () => {
             profileKey="email"
             value={userProfile?.email || '-'}
             isEditMode={isEditMode}
-            isEditAsTextArea
+            isEditAsInput
             editModeDefaultValue={tmpUserProfile?.email}
           />
           <ProfileDetails
             label="ที่อยู่"
-            value={userProfile?.address.th || '-'}
+            profileKey="address"
+            value={userProfile?.address || '-'}
             isEditMode={isEditMode}
             isEditAsTextArea
+            editModeDefaultValue={tmpUserProfile?.address}
           />
         </div>
       </div>

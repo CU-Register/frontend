@@ -14,6 +14,7 @@ interface IProfileDetailsProps {
   valueColor?: 'text-gray' | 'text-green-600'
   isEditMode: boolean
   isEditAsOption?: boolean
+  isEditAsInput?: boolean
   isEditAsTextArea?: boolean
 }
 const ProfileDetails: FC<IProfileDetailsProps> = ({
@@ -24,17 +25,25 @@ const ProfileDetails: FC<IProfileDetailsProps> = ({
   valueColor,
   isEditMode,
   isEditAsOption,
+  isEditAsInput,
   isEditAsTextArea,
 }) => {
   const { tmpUserProfile, setTmpUserProfile } = useProfileStore()
 
-  const inputTextOnChangeHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const inputTextOnChangeHandler = (event: React.ChangeEvent<HTMLInputElement>) => {
     if (profileKey && ['telephone', 'email'].includes(profileKey)) {
-      const newTmpUserProfile = { ...tmpUserProfile, [profileKey]: e.target.value } as IUserProfile
+      const newTmpUserProfile = { ...tmpUserProfile, [profileKey]: event.target.value } as IUserProfile
       setTmpUserProfile(newTmpUserProfile)
     }
   }
-  const debouncedOnChangeHandler = _.debounce(inputTextOnChangeHandler, 300)
+  const textAreaOnchangeHandler = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
+    if (profileKey && ['address'].includes(profileKey)) {
+      const newTmpUserProfile = { ...tmpUserProfile, [profileKey]: event.target.value } as IUserProfile
+      setTmpUserProfile(newTmpUserProfile)
+    }
+  }
+  const debouncedInputOnChangeHandler = _.debounce(inputTextOnChangeHandler, 300)
+  const debouncedTextAreaOnChangeHandler = _.debounce(textAreaOnchangeHandler, 300)
 
   return (
     <div tw="grid grid-cols-[1fr 2fr] gap-4 text-h2 font-h2 text-black">
@@ -52,11 +61,20 @@ const ProfileDetails: FC<IProfileDetailsProps> = ({
         </div>
       )}
       {isEditMode && isEditAsOption && <div>edit as options</div>}
-      {isEditMode && isEditAsTextArea && (
+      {isEditMode && isEditAsInput && (
         <input
           tw="border-2"
-          onChange={(event) => debouncedOnChangeHandler(event)}
+          onChange={(event) => debouncedInputOnChangeHandler(event)}
           defaultValue={editModeDefaultValue}
+        />
+      )}
+
+      {isEditMode && isEditAsTextArea && (
+        <textarea
+          tw="border-2"
+          onChange={(event) => debouncedTextAreaOnChangeHandler(event)}
+          defaultValue={editModeDefaultValue}
+          rows={3}
         />
       )}
     </div>

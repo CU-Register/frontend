@@ -22,7 +22,7 @@ export interface IUserProfile {
   academicSystem: IUserOption
   studentLevel: IUserOption
   telephone: string
-  address: IUserDetail
+  address: string
 }
 
 interface IFaculty {
