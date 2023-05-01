@@ -82,6 +82,7 @@ const ProfilePage: NextPage = () => {
             value={userProfile?.studentLevel.name.th || '-'}
             isEditMode={isEditMode}
             isEditAsOption
+            editOptions={userProfileOption?.studentLevels}
           />
           <ProfileDetails
             label="ระบบการศึกษา"
@@ -89,6 +90,7 @@ const ProfilePage: NextPage = () => {
             value={userProfile?.academicSystem.name.th || '-'}
             isEditMode={isEditMode}
             isEditAsOption
+            editOptions={userProfileOption?.academicSystems}
           />
           <ProfileDetails
             label="คณะ"
