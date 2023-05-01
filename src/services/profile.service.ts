@@ -1,4 +1,4 @@
-import { IUserProfile, IUserProfileOption } from 'interfaces/Profile'
+import { IUpdateUserProfileDTO, IUserProfile, IUserProfileOption } from 'interfaces/Profile'
 import axiosInstance from 'lib/axios'
 
 const getUserProfile = async () => {
@@ -13,7 +13,7 @@ const getUserProfileOption = async () => {
   return result
 }
 
-const updateUserProfile = async (newProfile: any) => {
+const updateUserProfile = async (newProfile: IUpdateUserProfileDTO) => {
   const path = 'users/profile/me'
   await axiosInstance.put(path, newProfile)
 }

@@ -37,3 +37,12 @@ export interface IUserProfileOption {
   faculties: IFaculty[]
   salutations: IUserOption[]
 }
+
+export interface IUpdateUserProfileDTO
+  extends Omit<IUserProfile, 'salutation' | 'faculty' | 'department' | 'studentLevel' | 'academicSystem'> {
+  salutation: string
+  faculty: string
+  department: string
+  studentLevel: string
+  academicSystem: string
+}
