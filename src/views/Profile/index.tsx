@@ -13,6 +13,7 @@ const ProfilePage: NextPage = () => {
   const [isEditMode, setIsEditMode] = useState<boolean>(false)
   const { fetchUserProfileOption, fetchUserProfile, updateUserProfile } = useProfile()
   const { userProfile, userProfileOption, tmpUserProfile, setTmpUserProfile } = useProfileStore()
+  console.log('userprofileoption', userProfileOption)
 
   console.log('tmpUserProfile', tmpUserProfile)
 
@@ -69,30 +70,36 @@ const ProfilePage: NextPage = () => {
         <div tw=" flex flex-col gap-2">
           <ProfileDetails
             label="คำนำหน้่าชื่อ"
+            optionKey="salutation"
             value={userProfile?.salutation?.name?.th || '-'}
             isEditMode={isEditMode}
             isEditAsOption
+            editOptions={userProfileOption?.salutations}
           />
           <ProfileDetails
             label="นิสิตระดับ"
+            optionKey="studentLevel"
             value={userProfile?.studentLevel.name.th || '-'}
             isEditMode={isEditMode}
             isEditAsOption
           />
           <ProfileDetails
             label="ระบบการศึกษา"
+            optionKey="academicSystem"
             value={userProfile?.academicSystem.name.th || '-'}
             isEditMode={isEditMode}
             isEditAsOption
           />
           <ProfileDetails
             label="คณะ"
+            optionKey="faculty"
             value={userProfile?.faculty.name.th || '-'}
             isEditMode={isEditMode}
             isEditAsOption
           />
           <ProfileDetails
             label="ภาควิชา/สาขาวิชา"
+            optionKey="department"
             value={userProfile?.department.name.th || '-'}
             isEditMode={isEditMode}
             isEditAsOption
@@ -102,7 +109,7 @@ const ProfilePage: NextPage = () => {
         <div tw="flex flex-col gap-2">
           <ProfileDetails
             label="เบอร์โทรศัพท์"
-            profileKey="telephone"
+            inputKey="telephone"
             value={userProfile?.telephone || '-'}
             isEditMode={isEditMode}
             isEditAsInput
@@ -110,7 +117,7 @@ const ProfilePage: NextPage = () => {
           />
           <ProfileDetails
             label="อีเมล์"
-            profileKey="email"
+            inputKey="email"
             value={userProfile?.email || '-'}
             isEditMode={isEditMode}
             isEditAsInput
@@ -118,7 +125,7 @@ const ProfilePage: NextPage = () => {
           />
           <ProfileDetails
             label="ที่อยู่"
-            profileKey="address"
+            inputKey="address"
             value={userProfile?.address || '-'}
             isEditMode={isEditMode}
             isEditAsTextArea

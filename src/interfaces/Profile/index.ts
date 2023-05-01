@@ -5,7 +5,7 @@ interface IUserDetail {
   en: string
 }
 
-interface IUserOption {
+export interface IUserOption {
   id: string
   name: IUserDetail
 }

@@ -1,4 +1,7 @@
-import { IUserProfile } from 'interfaces/Profile'
+import { faCaretDown, faCaretUp } from '@fortawesome/free-solid-svg-icons'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { Listbox } from '@headlessui/react'
+import { IUserOption, IUserProfile } from 'interfaces/Profile'
 import _ from 'lodash'
 import { FC } from 'react'
 import { useProfileStore } from 'stores/profile.stores'
@@ -6,12 +9,11 @@ import 'twin.macro'
 import tw from 'twin.macro'
 interface IProfileDetailsProps {
   label: string
-  profileKey?: string
+  optionKey?: 'salutation' | 'faculty' | 'department' | 'academicSystem' | 'studentLevel'
+  inputKey?: 'telephone' | 'email' | 'address'
   value: string
   editModeDefaultValue?: string
-  //TODO: Fix editOptions type
-  editOptions?: any
-  valueColor?: 'text-gray' | 'text-green-600'
+  editOptions?: IUserOption[]
   isEditMode: boolean
   isEditAsOption?: boolean
   isEditAsInput?: boolean
@@ -19,10 +21,11 @@ interface IProfileDetailsProps {
 }
 const ProfileDetails: FC<IProfileDetailsProps> = ({
   label,
-  profileKey,
+  optionKey,
+  inputKey,
   value,
   editModeDefaultValue,
-  valueColor,
+  editOptions,
   isEditMode,
   isEditAsOption,
   isEditAsInput,
@@ -31,36 +34,61 @@ const ProfileDetails: FC<IProfileDetailsProps> = ({
   const { tmpUserProfile, setTmpUserProfile } = useProfileStore()
 
   const inputTextOnChangeHandler = (event: React.ChangeEvent<HTMLInputElement>) => {
-    if (profileKey && ['telephone', 'email'].includes(profileKey)) {
-      const newTmpUserProfile = { ...tmpUserProfile, [profileKey]: event.target.value } as IUserProfile
+    if (inputKey) {
+      const newTmpUserProfile = { ...tmpUserProfile, [inputKey]: event.target.value } as IUserProfile
       setTmpUserProfile(newTmpUserProfile)
     }
   }
-  const textAreaOnchangeHandler = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
-    if (profileKey && ['address'].includes(profileKey)) {
-      const newTmpUserProfile = { ...tmpUserProfile, [profileKey]: event.target.value } as IUserProfile
+  const textAreaOnChangeHandler = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
+    if (inputKey) {
+      const newTmpUserProfile = { ...tmpUserProfile, [inputKey]: event.target.value } as IUserProfile
+      setTmpUserProfile(newTmpUserProfile)
+    }
+  }
+  const optionOnChangeHandler = (newOption: IUserOption) => {
+    if (optionKey) {
+      const newTmpUserProfile = { ...tmpUserProfile, [optionKey]: newOption } as IUserProfile
       setTmpUserProfile(newTmpUserProfile)
     }
   }
   const debouncedInputOnChangeHandler = _.debounce(inputTextOnChangeHandler, 300)
-  const debouncedTextAreaOnChangeHandler = _.debounce(textAreaOnchangeHandler, 300)
+  const debouncedTextAreaOnChangeHandler = _.debounce(textAreaOnChangeHandler, 300)
 
   return (
     <div tw="grid grid-cols-[1fr 2fr] gap-4 text-h2 font-h2 text-black">
       <div tw="text-gray">{label}</div>
       {!isEditMode && (
-        <div
-          css={[
-            tw`flex break-all`,
-            valueColor == 'text-gray' && tw`text-gray`,
-            valueColor == 'text-green-600' && tw`text-green-600`,
-          ]}
-          className="text-start"
-        >
+        <div css={[tw`flex break-all`]} className="text-start">
           {value}
         </div>
       )}
-      {isEditMode && isEditAsOption && <div>edit as options</div>}
+
+      {isEditMode && isEditAsOption && tmpUserProfile && optionKey && (
+        <div tw="bg-cu-gold relative w-full">
+          <Listbox value={tmpUserProfile[optionKey]} onChange={(option) => optionOnChangeHandler(option)}>
+            {({ open }) => (
+              <>
+                <Listbox.Button tw="bg-cu-pinkLd flex justify-between py-1 px-2 rounded-md items-center gap-2 w-full">
+                  <div tw="bg-green-solid text-left break-all">{tmpUserProfile[optionKey].name.th}</div>
+                  <div tw="text-cu-pink w-3">
+                    {open && <FontAwesomeIcon icon={faCaretUp} />}
+                    {!open && <FontAwesomeIcon icon={faCaretDown} />}
+                  </div>
+                </Listbox.Button>
+                <Listbox.Options tw="bg-cu-copper absolute w-full z-10">
+                  {editOptions &&
+                    editOptions.map((option, index) => (
+                      <Listbox.Option key={index} value={option}>
+                        {option.name.th}
+                      </Listbox.Option>
+                    ))}
+                </Listbox.Options>
+              </>
+            )}
+          </Listbox>
+        </div>
+      )}
+
       {isEditMode && isEditAsInput && (
         <input
           tw="border-2 border-black py-1 px-2 rounded-md focus:border-cu-pink focus:outline-none focus:text-cu-pink"
