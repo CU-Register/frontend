@@ -13,9 +13,15 @@ const getUserProfileOption = async () => {
   return result
 }
 
+const updateUserProfile = async (newProfile: any) => {
+  const path = 'users/profile/me'
+  await axiosInstance.put(path, newProfile)
+}
+
 const profileService = {
   getUserProfile,
   getUserProfileOption,
+  updateUserProfile,
 }
 
 export default profileService

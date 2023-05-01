@@ -11,7 +11,7 @@ import { fullNameFormatter } from 'utils/formats'
 import ProfileDetails from './components/ProfileDetails'
 const ProfilePage: NextPage = () => {
   const [isEditMode, setIsEditMode] = useState<boolean>(false)
-  const { fetchUserProfileOption } = useProfile()
+  const { fetchUserProfileOption, fetchUserProfile, updateUserProfile } = useProfile()
   const { userProfile, userProfileOption, tmpUserProfile, setTmpUserProfile } = useProfileStore()
 
   console.log('tmpUserProfile', tmpUserProfile)
@@ -25,12 +25,14 @@ const ProfilePage: NextPage = () => {
     setIsEditMode(true)
   }
 
-  const confirmEditButtonHandler = (event: React.MouseEvent<HTMLButtonElement>) => {
+  const confirmEditButtonHandler = async (event: React.MouseEvent<HTMLButtonElement>) => {
     setIsEditMode(false)
     // TODO: show alert to confirm edit
-    // TODO: request update user profile with tmpUserProfile
-    // TODO: fetch user profile
+    if (tmpUserProfile) {
+      await updateUserProfile(tmpUserProfile)
+    }
     setTmpUserProfile(null)
+    await fetchUserProfile()
   }
 
   const cancelEditButtonHandler = (event: React.MouseEvent<HTMLButtonElement>) => {

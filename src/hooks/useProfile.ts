@@ -1,3 +1,4 @@
+import { IUserProfile } from 'interfaces/Profile'
 import profileService from 'services/profile.service'
 import { useProfileStore } from 'stores/profile.stores'
 
@@ -22,7 +23,22 @@ const useProfile = () => {
     }
   }
 
-  return { fetchUserProfile, fetchUserProfileOption }
+  const updateUserProfile = async (newProfile: IUserProfile) => {
+    try {
+      await profileService.updateUserProfile({
+        ...newProfile,
+        salutation: newProfile.salutation.id,
+        faculty: newProfile.faculty.id,
+        department: newProfile.department.id,
+        studentLevel: newProfile.studentLevel.id,
+        academicSystem: newProfile.academicSystem.id,
+      })
+    } catch {
+      console.error('updateUserProfile error')
+    }
+  }
+
+  return { fetchUserProfile, fetchUserProfileOption, updateUserProfile }
 }
 
 export default useProfile
