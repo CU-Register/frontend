@@ -63,7 +63,8 @@ const ProfileDetails: FC<IProfileDetailsProps> = ({
       {isEditMode && isEditAsOption && <div>edit as options</div>}
       {isEditMode && isEditAsInput && (
         <input
-          tw="border-2"
+          tw="border-2 border-black py-1 px-2 rounded-md focus:border-cu-pink focus:outline-none focus:text-cu-pink"
+          className="focus:border-pink-500"
           onChange={(event) => debouncedInputOnChangeHandler(event)}
           defaultValue={editModeDefaultValue}
         />
@@ -71,7 +72,7 @@ const ProfileDetails: FC<IProfileDetailsProps> = ({
 
       {isEditMode && isEditAsTextArea && (
         <textarea
-          tw="border-2"
+          tw="border-2 border-black py-1 px-2 rounded-md focus:border-cu-pink focus:outline-none focus:text-cu-pink"
           onChange={(event) => debouncedTextAreaOnChangeHandler(event)}
           defaultValue={editModeDefaultValue}
           rows={3}
