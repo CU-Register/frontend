@@ -1,4 +1,5 @@
 import axios from 'axios'
+import { useAuthStore } from 'stores/auth.stores'
 
 const axiosInstance = axios.create({
   baseURL: process.env.NEXT_PUBLIC_BASE_API_URL,
@@ -7,6 +8,10 @@ const axiosInstance = axios.create({
 
 axiosInstance.interceptors.request.use(
   async (config) => {
+    const { accessToken } = useAuthStore.getState()
+    if (accessToken) {
+      config.headers.Authorization = `Bearer ${accessToken}`
+    }
     return config
   },
   async (error) => {

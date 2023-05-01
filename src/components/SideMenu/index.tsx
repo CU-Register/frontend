@@ -2,9 +2,8 @@ import { COMMON_ROUTES, PROTECTED_ROUTES } from 'constants/Routes'
 import useAuth from 'hooks/useAuth'
 import Image from 'next/image'
 import { useRouter } from 'next/router'
-import { FC, useState } from 'react'
+import { FC } from 'react'
 import tw from 'twin.macro'
-import LanguageToggleSwitch from './LanguageToggleSwitch'
 import SideMenuButton from './SideMenuButton'
 
 interface ISideMenu {
@@ -113,7 +112,7 @@ const SideMenu: FC<ISideMenu> = (props) => {
           />
         </div>
       </div>
-      <LanguageToggleSwitch />
+      {/* <LanguageToggleSwitch /> */}
     </div>
   )
 }

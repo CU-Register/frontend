@@ -15,7 +15,7 @@ const HomePage: NextPage = () => {
   }
 
   return (
-    <MainLayout header="ระบบการยื่นคำร้องเพื่อขอเอกสารสำคัญทางการศึกษา" studentId="6231354721">
+    <MainLayout header="ระบบการยื่นคำร้องเพื่อขอเอกสารสำคัญทางการศึกษา">
       <div tw="flex flex-col gap-8">
         <div tw="flex flex-col gap-2">
           <div tw="font-h2 text-h2 text-black">คลิ้กเพื่อยื่นคำร้อง</div>

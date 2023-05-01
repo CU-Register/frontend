@@ -1,12 +1,17 @@
 import { COMMON_ROUTES } from 'constants/Routes'
 import useAuth from 'hooks/useAuth'
+import useProfile from 'hooks/useProfile'
 import { useRouter } from 'next/router'
 import { useEffect, useRef } from 'react'
 import { useAuthStore } from 'stores/auth.stores'
+import { useProfileStore } from 'stores/profile.stores'
 
 const withAuth = (WrappedComponent: React.ComponentType<any>) => {
   const ComponentWithAuth = (props: any) => {
     const { accessToken } = useAuthStore()
+    const { userProfile } = useProfileStore()
+    const { fetchUserProfile } = useProfile()
+    // console.log(accessToken)
 
     const { refreshUserToken } = useAuth()
     const router = useRouter()
@@ -16,13 +21,15 @@ const withAuth = (WrappedComponent: React.ComponentType<any>) => {
       // React ^18 mounts component twice (first mount -> unmount -> second mount),
       // so we need to check if effect was executed
       if (effectExecuted.current) return
-      if (accessToken) return
       const refreshToken = localStorage.getItem('cuadrs-refreshToken')
       if (!refreshToken) {
         router.replace(COMMON_ROUTES.LOGIN)
         return
       }
       await refreshUserToken(refreshToken)
+      if (!userProfile) {
+        await fetchUserProfile()
+      }
     }
 
     useEffect(() => {
