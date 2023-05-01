@@ -64,21 +64,24 @@ const ProfileDetails: FC<IProfileDetailsProps> = ({
       )}
 
       {isEditMode && isEditAsOption && tmpUserProfile && optionKey && (
-        <div tw="bg-cu-gold relative w-full">
+        <div tw="relative w-full">
           <Listbox value={tmpUserProfile[optionKey]} onChange={(option) => optionOnChangeHandler(option)}>
             {({ open }) => (
               <>
-                <Listbox.Button tw="bg-cu-pinkLd flex justify-between py-1 px-2 rounded-md items-center gap-2 w-full">
-                  <div tw="bg-green-solid text-left break-all">{tmpUserProfile[optionKey].name.th}</div>
+                <Listbox.Button
+                  tw="flex justify-between py-1 px-2 rounded-md items-center gap-2 w-full border border-black"
+                  css={[open && tw`border-cu-pink outline-none text-cu-pink`]}
+                >
+                  <div tw="text-left break-all">{tmpUserProfile[optionKey].name.th}</div>
                   <div tw="text-cu-pink w-3">
                     {open && <FontAwesomeIcon icon={faCaretUp} />}
                     {!open && <FontAwesomeIcon icon={faCaretDown} />}
                   </div>
                 </Listbox.Button>
-                <Listbox.Options tw="bg-cu-copper absolute w-full z-10">
+                <Listbox.Options tw="absolute w-full z-10 bg-white border border-cu-pink rounded-md mt-2">
                   {editOptions &&
                     editOptions.map((option, index) => (
-                      <Listbox.Option key={index} value={option}>
+                      <Listbox.Option key={index} value={option} tw="py-1 px-2 hover:bg-cu-pinkLight">
                         {option.name.th}
                       </Listbox.Option>
                     ))}
@@ -91,7 +94,7 @@ const ProfileDetails: FC<IProfileDetailsProps> = ({
 
       {isEditMode && isEditAsInput && (
         <input
-          tw="border-2 border-black py-1 px-2 rounded-md focus:border-cu-pink focus:outline-none focus:text-cu-pink"
+          tw="border border-black py-1 px-2 rounded-md focus:border-cu-pink focus:outline-none focus:text-cu-pink"
           className="focus:border-pink-500"
           onChange={(event) => debouncedInputOnChangeHandler(event)}
           defaultValue={editModeDefaultValue}
@@ -100,7 +103,7 @@ const ProfileDetails: FC<IProfileDetailsProps> = ({
 
       {isEditMode && isEditAsTextArea && (
         <textarea
-          tw="border-2 border-black py-1 px-2 rounded-md focus:border-cu-pink focus:outline-none focus:text-cu-pink"
+          tw="border border-black py-1 px-2 rounded-md focus:border-cu-pink focus:outline-none focus:text-cu-pink"
           onChange={(event) => debouncedTextAreaOnChangeHandler(event)}
           defaultValue={editModeDefaultValue}
           rows={3}
