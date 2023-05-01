@@ -78,14 +78,15 @@ const ProfileDetails: FC<IProfileDetailsProps> = ({
                     {!open && <FontAwesomeIcon icon={faCaretDown} />}
                   </div>
                 </Listbox.Button>
-                <Listbox.Options tw="absolute w-full z-10 bg-white border border-cu-pink rounded-md mt-2">
-                  {editOptions &&
-                    editOptions.map((option, index) => (
+                {editOptions && editOptions.length > 0 && (
+                  <Listbox.Options tw="absolute w-full z-10 border border-cu-pink rounded-md mt-2 bg-white max-h-[250px] overflow-auto">
+                    {editOptions.map((option, index) => (
                       <Listbox.Option key={index} value={option} tw="py-1 px-2 hover:bg-cu-pinkLight">
                         {option.name.th}
                       </Listbox.Option>
                     ))}
-                </Listbox.Options>
+                  </Listbox.Options>
+                )}
               </>
             )}
           </Listbox>

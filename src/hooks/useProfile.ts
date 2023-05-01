@@ -35,6 +35,7 @@ const useProfile = () => {
       })
     } catch {
       console.error('updateUserProfile error')
+      alert('เกิดข้อผิดพลาดในการอัพเดทข้อมูล')
     }
   }
 

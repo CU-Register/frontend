@@ -3,6 +3,7 @@ import VerticalDivider from 'components/Dividers/VerticalDivider'
 import PinkButton from 'components/PinkButton'
 import useProfile from 'hooks/useProfile'
 import MainLayout from 'layouts/MainLayout'
+import _ from 'lodash'
 import type { NextPage } from 'next'
 import { useEffect, useState } from 'react'
 import { useProfileStore } from 'stores/profile.stores'
@@ -13,9 +14,6 @@ const ProfilePage: NextPage = () => {
   const [isEditMode, setIsEditMode] = useState<boolean>(false)
   const { fetchUserProfileOption, fetchUserProfile, updateUserProfile } = useProfile()
   const { userProfile, userProfileOption, tmpUserProfile, setTmpUserProfile } = useProfileStore()
-  console.log('userprofileoption', userProfileOption)
-
-  console.log('tmpUserProfile', tmpUserProfile)
 
   useEffect(() => {
     Promise.all([fetchUserProfileOption()])
@@ -98,6 +96,7 @@ const ProfilePage: NextPage = () => {
             value={userProfile?.faculty.name.th || '-'}
             isEditMode={isEditMode}
             isEditAsOption
+            editOptions={_.map(userProfileOption?.faculties, (faculty) => _.pick(faculty, ['id', 'name']))}
           />
           <ProfileDetails
             label="ภาควิชา/สาขาวิชา"
@@ -105,6 +104,7 @@ const ProfilePage: NextPage = () => {
             value={userProfile?.department.name.th || '-'}
             isEditMode={isEditMode}
             isEditAsOption
+            editOptions={_.find(userProfileOption?.faculties, { id: tmpUserProfile?.faculty.id })?.departments}
           />
         </div>
         <VerticalDivider />
