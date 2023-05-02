@@ -4,7 +4,7 @@ import { Listbox } from '@headlessui/react'
 import { IUserOption, IUserProfile } from 'interfaces/Profile'
 import _ from 'lodash'
 import { FC } from 'react'
-import { useProfileStore } from 'stores/profile.stores'
+import { useProfileStore } from 'stores/profile.store'
 import 'twin.macro'
 import tw from 'twin.macro'
 interface IProfileDetailsProps {

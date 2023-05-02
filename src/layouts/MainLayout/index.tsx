@@ -1,7 +1,7 @@
 import MainFooter from 'components/Footers/MainFooter'
 import SideMenu from 'components/SideMenu'
 import { FC, useState } from 'react'
-import { useProfileStore } from 'stores/profile.stores'
+import { useProfileStore } from 'stores/profile.store'
 import 'twin.macro'
 import tw from 'twin.macro'
 interface IMainLayoutProps {

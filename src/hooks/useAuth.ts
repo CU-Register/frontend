@@ -1,7 +1,7 @@
 import { COMMON_ROUTES, PROTECTED_ROUTES } from 'constants/Routes'
 import { useRouter } from 'next/router'
 import authService from 'services/auth.service'
-import { useAuthStore } from 'stores/auth.stores'
+import { useAuthStore } from 'stores/auth.store'
 
 const useAuth = () => {
   const authStore = useAuthStore()
