@@ -1,4 +1,4 @@
-import { ITemplate } from 'interfaces/Request'
+import { ITemplate } from 'interfaces/Template'
 import { create } from 'zustand'
 
 interface ITemplateStore {

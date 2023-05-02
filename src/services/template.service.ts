@@ -1,4 +1,4 @@
-import { ITemplate } from 'interfaces/Request'
+import { ITemplate } from 'interfaces/Template'
 import axiosInstance from 'lib/axios'
 
 const getTemplates = async () => {
