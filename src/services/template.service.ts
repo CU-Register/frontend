@@ -7,3 +7,9 @@ const getTemplate = async () => {
 
   return result
 }
+
+const templateService = {
+  getTemplate,
+}
+
+export default templateService
