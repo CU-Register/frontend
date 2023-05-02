@@ -1,5 +1,6 @@
 import ActionDialog from 'components/Dialog/ActionDialog'
 import TemplateCard from 'components/TemplateCard'
+import useDocument from 'hooks/useDocument'
 import useTemplate from 'hooks/useTemplate'
 import { ITemplate } from 'interfaces/Template'
 import _ from 'lodash'
@@ -12,6 +13,7 @@ const TemplateListSection: FC = () => {
   const [selectedTemplate, setSelectedTemplate] = useState<Pick<ITemplate, 'templateType' | 'title'> | null>(null)
   const { fetchTemplates } = useTemplate()
   const { templates } = useTemplateStore()
+  const { createDocument } = useDocument()
 
   useEffect(() => {
     fetchTemplates()
@@ -35,8 +37,11 @@ const TemplateListSection: FC = () => {
   const onRejectDialogHandler = () => {
     setIsOpenDialog(false)
   }
-  const onConfirmDialogHandler = () => {
-    console.log('onconfirm')
+
+  const onConfirmDialogHandler = async () => {
+    if (!selectedTemplate) return
+    await createDocument(selectedTemplate.templateType)
+    setIsOpenDialog(false)
   }
 
   return (
