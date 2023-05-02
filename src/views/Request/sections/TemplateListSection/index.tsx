@@ -35,6 +35,9 @@ const TemplateListSection: FC = () => {
   const onRejectDialogHandler = () => {
     setIsOpenDialog(false)
   }
+  const onConfirmDialogHandler = () => {
+    console.log('onconfirm')
+  }
 
   return (
     <div tw="my-6 flex flex-col gap-5 flex-1 overflow-auto">
@@ -44,6 +47,7 @@ const TemplateListSection: FC = () => {
           isOpen={isOpenDialog}
           onClose={onCloseDialogHandler}
           onReject={onRejectDialogHandler}
+          onConfirm={onConfirmDialogHandler}
           title={`${selectedTemplate?.title.th} จท.${selectedTemplate?.templateType}`}
           description="ยืนยันที่จะสร้างโครงร่างคำร้อง"
         />
