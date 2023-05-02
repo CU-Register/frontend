@@ -1,14 +1,15 @@
+import { IDocument } from 'interfaces/Document'
 import axiosInstance from 'lib/axios'
 
 const getHoldingDocuments = async () => {
   const path = 'documents/holding'
-  const result = (await axiosInstance.get(path)).data
+  const result: IDocument[] = (await axiosInstance.get(path)).data
   return result
 }
 
 const getHistoryDocuments = async () => {
   const path = 'documents/history'
-  const result = (await axiosInstance.get(path)).data
+  const result: IDocument[] = (await axiosInstance.get(path)).data
   return result
 }
 

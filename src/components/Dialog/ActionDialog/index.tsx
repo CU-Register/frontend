@@ -12,7 +12,7 @@ interface IActionDialogProps {
   onConfirm?: () => void
   onReject?: () => void
 }
-const ActionDialog: FC<IActionDialogProps> = ({ isOpen, onClose, selectedValue }) => {
+const ActionDialog: FC<IActionDialogProps> = ({ isOpen, onClose, selectedValue, onConfirm, onReject }) => {
   return (
     <>
       {selectedValue && (

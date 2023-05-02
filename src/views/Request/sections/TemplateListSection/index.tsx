@@ -1,4 +1,4 @@
-import ActionDialog from 'components/Dialog'
+import ActionDialog from 'components/Dialog/ActionDialog'
 import TemplateCard from 'components/TemplateCard'
 import useTemplate from 'hooks/useTemplate'
 import { IRequestOption } from 'interfaces/RequestOption'
@@ -6,7 +6,7 @@ import { FC, useEffect, useState } from 'react'
 import { useTemplateStore } from 'stores/template.store'
 import 'twin.macro'
 
-const RequestListSection: FC = () => {
+const TemplateListSection: FC = () => {
   const [isOpenDialog, setIsOpenDialog] = useState<boolean>(false)
   const [selectedRequestOption, setSelectedRequestOption] = useState<IRequestOption | null>(null)
   const { fetchTemplates } = useTemplate()
@@ -17,7 +17,7 @@ const RequestListSection: FC = () => {
   }, [])
 
   const requestCardHandler = (event: React.MouseEvent<HTMLButtonElement>) => {
-    console.log('test')
+    console.log(event.currentTarget.value)
 
     // const selectedRequestOption: IRequestOption = stringToJson(event.currentTarget.dataset.object as string)
     // setIsOpenDialog(true)
@@ -42,8 +42,7 @@ const RequestListSection: FC = () => {
                   key={index}
                   title={template.title.th}
                   templateType={template.templateType}
-                  onClick={requestCardHandler}
-                  // dataObject={jsonToString(requestOption)}
+                  onClick={(event) => requestCardHandler(event)}
                 />
               )
             })}
@@ -54,4 +53,4 @@ const RequestListSection: FC = () => {
   )
 }
 
-export default RequestListSection
+export default TemplateListSection
