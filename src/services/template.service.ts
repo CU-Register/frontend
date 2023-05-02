@@ -4,8 +4,6 @@ import axiosInstance from 'lib/axios'
 const getTemplates = async () => {
   const path = 'templates'
   const result: ITemplate[] = (await axiosInstance.get(path)).data
-  console.log('getTemplates result:', result)
-
   return result
 }
 
