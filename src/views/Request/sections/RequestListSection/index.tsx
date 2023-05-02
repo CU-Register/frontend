@@ -1,13 +1,21 @@
 import ActionDialog from 'components/Dialog'
 import RequestCard from 'components/RequestCard'
+import useTemplate from 'hooks/useTemplate'
 import { IRequestOption } from 'interfaces/RequestOption'
 import mockRequestOptions from 'mocks/RequestOptions'
-import { FC, useState } from 'react'
+import { FC, useEffect, useState } from 'react'
+import { useTemplateStore } from 'stores/template.store'
 import 'twin.macro'
 import { jsonToString, stringToJson } from 'utils/formats'
 const RequestListSection: FC = () => {
   const [isOpenDialog, setIsOpenDialog] = useState<boolean>(false)
   const [selectedRequestOption, setSelectedRequestOption] = useState<IRequestOption | null>(null)
+  const { fetchTemplates } = useTemplate()
+  const { templates } = useTemplateStore()
+
+  useEffect(() => {
+    fetchTemplates()
+  }, [])
 
   const requestCardHandler = (event: React.MouseEvent<HTMLButtonElement>) => {
     const selectedRequestOption: IRequestOption = stringToJson(event.currentTarget.dataset.object as string)

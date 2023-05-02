@@ -16,6 +16,7 @@ const useAuth = () => {
       router.push(PROTECTED_ROUTES.HOME)
     } catch (error) {
       console.error('login error:', error)
+      alert('Login failed')
       router.replace(COMMON_ROUTES.LOGIN)
     }
   }
@@ -36,6 +37,7 @@ const useAuth = () => {
     localStorage.removeItem('cuadrs-refreshToken')
     authStore.setAccessToken(null)
     router.replace(PROTECTED_ROUTES.LOGOUT)
+    alert('Logout success')
   }
 
   return { login, refreshUserToken, logout }

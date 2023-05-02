@@ -1,15 +1,16 @@
+import { ITemplate } from 'interfaces/Request'
 import axiosInstance from 'lib/axios'
 
-const getTemplate = async () => {
+const getTemplates = async () => {
   const path = 'templates'
-  const result = (await axiosInstance.get(path)).data
-  console.log('getTemplate result:', result)
+  const result: ITemplate[] = (await axiosInstance.get(path)).data
+  console.log('getTemplates result:', result)
 
   return result
 }
 
 const templateService = {
-  getTemplate,
+  getTemplates,
 }
 
 export default templateService
