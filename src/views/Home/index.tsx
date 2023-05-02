@@ -1,5 +1,6 @@
 import withAuth from 'components/Auth/withAuth'
 import TemplateCard from 'components/TemplateCard'
+import { PROTECTED_ROUTES } from 'constants/Routes'
 import useTemplate from 'hooks/useTemplate'
 import MainLayout from 'layouts/MainLayout'
 import { NextPage } from 'next'
@@ -19,8 +20,10 @@ const HomePage: NextPage = () => {
   }, [])
 
   const otherRequestButtonHandler = (event: React.MouseEvent<HTMLButtonElement>) => {
-    event.preventDefault()
-    router.push('/request')
+    router.push(PROTECTED_ROUTES.REQUEST)
+  }
+  const otherStatusButtonHandler = (event: React.MouseEvent<HTMLButtonElement>) => {
+    router.push(PROTECTED_ROUTES.STATUS)
   }
 
   return (
@@ -51,7 +54,9 @@ const HomePage: NextPage = () => {
             <RequestHistoryTable />
           </div>
           <div tw="px-[100px]">
-            <button tw="font-h2 text-h2 text-cu-pink">{'ดูประวัติคำร้องอื่น ๆ >>'}</button>
+            <button tw="font-h2 text-h2 text-cu-pink" onClick={otherStatusButtonHandler}>
+              {'ดูประวัติคำร้องอื่น ๆ >>'}
+            </button>
           </div>
         </div>
         ​
