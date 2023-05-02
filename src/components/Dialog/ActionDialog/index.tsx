@@ -1,21 +1,21 @@
 import { Dialog, Transition } from '@headlessui/react'
-import { IRequestOption } from 'interfaces/RequestOption'
+import HorizontalDivider from 'components/Dividers/HorizontalDivider'
+import VerticalDivider from 'components/Dividers/VerticalDivider'
 import { FC, Fragment } from 'react'
 import 'twin.macro'
-/**
- * @todo update to generic interface at selectedValue param
- */
+
 interface IActionDialogProps {
   isOpen: boolean
-  selectedValue?: IRequestOption | null
+  title?: string
+  description: string
   onClose: () => void
   onConfirm?: () => void
   onReject?: () => void
 }
-const ActionDialog: FC<IActionDialogProps> = ({ isOpen, onClose, selectedValue, onConfirm, onReject }) => {
+const ActionDialog: FC<IActionDialogProps> = ({ isOpen, title, description, onClose, onConfirm, onReject }) => {
   return (
     <>
-      {selectedValue && (
+      {title && (
         <Transition appear show={isOpen} as={Fragment}>
           <Dialog as="div" className="relative z-10" onClose={onClose}>
             <Transition.Child
@@ -41,35 +41,20 @@ const ActionDialog: FC<IActionDialogProps> = ({ isOpen, onClose, selectedValue, 
                   leaveFrom="opacity-100 scale-100"
                   leaveTo="opacity-0 scale-95"
                 >
-                  <Dialog.Panel className="w-full max-w-lg transform overflow-hidden rounded-2xl bg-white text-left align-middle shadow-xl transition-all">
-                    <Dialog.Title tw="p-2 text-h1 font-h1 text-white flex justify-center bg-cu-pink">
-                      {selectedValue.requestName}
-                    </Dialog.Title>
-                    <Dialog.Description tw="mt-2 text-h2 font-h2 text-cu-grey flex justify-center">
-                      ยืนยันที่จะสร้างโครงร่างคำร้อง
+                  <Dialog.Panel className="w-full max-w-xl transform overflow-hidden rounded-2xl bg-white text-left align-middle shadow-xl transition-all">
+                    <Dialog.Title tw="p-2 text-h1 font-h1 text-white text-center bg-cu-pink">{title}</Dialog.Title>
+                    <Dialog.Description tw="mt-2 text-h2 font-h2 text-cu-grey flex justify-center  py-1">
+                      {description}
                     </Dialog.Description>
+                    <HorizontalDivider />
                     <div tw="flex">
-                      <button
-                        tw="text-gray font-h2 text-h2 p-2"
-                        className="grow"
-                        type="button"
-                        onClick={() => {
-                          console.log('cancel')
-                        }}
-                      >
+                      <button tw="text-gray font-h2 text-h2 p-2" className="grow" type="button" onClick={onReject}>
                         ยกเลิก
                       </button>
-                      <button
-                        tw="text-cu-pink font-h2 text-h2 p-2"
-                        className="grow"
-                        type="button"
-                        onClick={() => {
-                          console.log('confirm')
-                        }}
-                      >
+                      <VerticalDivider />
+                      <button tw="text-cu-pink font-h2 text-h2 p-2" className="grow" type="button" onClick={onConfirm}>
                         ตกลง
                       </button>
-                      {/* <VerticalDivider /> */}
                     </div>
                   </Dialog.Panel>
                 </Transition.Child>
