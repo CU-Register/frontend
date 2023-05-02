@@ -1,12 +1,11 @@
 import ActionDialog from 'components/Dialog'
-import RequestCard from 'components/RequestCard'
+import TemplateCard from 'components/TemplateCard'
 import useTemplate from 'hooks/useTemplate'
 import { IRequestOption } from 'interfaces/RequestOption'
-import mockRequestOptions from 'mocks/RequestOptions'
 import { FC, useEffect, useState } from 'react'
 import { useTemplateStore } from 'stores/template.store'
 import 'twin.macro'
-import { jsonToString, stringToJson } from 'utils/formats'
+
 const RequestListSection: FC = () => {
   const [isOpenDialog, setIsOpenDialog] = useState<boolean>(false)
   const [selectedRequestOption, setSelectedRequestOption] = useState<IRequestOption | null>(null)
@@ -18,9 +17,11 @@ const RequestListSection: FC = () => {
   }, [])
 
   const requestCardHandler = (event: React.MouseEvent<HTMLButtonElement>) => {
-    const selectedRequestOption: IRequestOption = stringToJson(event.currentTarget.dataset.object as string)
-    setIsOpenDialog(true)
-    setSelectedRequestOption(selectedRequestOption)
+    console.log('test')
+
+    // const selectedRequestOption: IRequestOption = stringToJson(event.currentTarget.dataset.object as string)
+    // setIsOpenDialog(true)
+    // setSelectedRequestOption(selectedRequestOption)
   }
 
   const onCloseDialog = () => {
@@ -33,19 +34,21 @@ const RequestListSection: FC = () => {
       <div tw="text-body font-body text-gray">สามารถคลิ้กที่กล่องคำร้อง เพื่อทำการยื่นคำร้องนั้นๆ</div>
       <div tw="flex-1 overflow-auto">
         <ActionDialog isOpen={isOpenDialog} onClose={onCloseDialog} selectedValue={selectedRequestOption} />
-        <div tw="grid grid-cols-1 md:grid-cols-2 grid-flow-row gap-5 ">
-          {mockRequestOptions.map((requestOption, index) => {
-            return (
-              <RequestCard
-                key={index}
-                requestName={requestOption.requestName}
-                requestNumber={requestOption.requestNumber}
-                onClick={requestCardHandler}
-                dataObject={jsonToString(requestOption)}
-              />
-            )
-          })}
-        </div>
+        {templates && templates.length > 0 && (
+          <div tw="grid grid-cols-1 md:grid-cols-2 grid-flow-row gap-5 ">
+            {templates.map((template, index) => {
+              return (
+                <TemplateCard
+                  key={index}
+                  title={template.title.th}
+                  templateType={template.templateType}
+                  onClick={requestCardHandler}
+                  // dataObject={jsonToString(requestOption)}
+                />
+              )
+            })}
+          </div>
+        )}
       </div>
     </div>
   )
