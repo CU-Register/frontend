@@ -2,14 +2,26 @@ import { IDocument } from 'interfaces/Document'
 import axiosInstance from 'lib/axios'
 
 const getHoldingDocuments = async () => {
-  const path = 'documents/holding'
-  const result: IDocument[] = (await axiosInstance.get(path)).data
+  const path = 'documents'
+  const result: IDocument[] = (
+    await axiosInstance.get(path, {
+      params: {
+        query: 'holding',
+      },
+    })
+  ).data
   return result
 }
 
 const getHistoryDocuments = async () => {
-  const path = 'documents/history'
-  const result: IDocument[] = (await axiosInstance.get(path)).data
+  const path = 'documents'
+  const result: IDocument[] = (
+    await axiosInstance.get(path, {
+      params: {
+        query: 'history',
+      },
+    })
+  ).data
   return result
 }
 
@@ -20,8 +32,8 @@ const createDocument = async (templateType: string) => {
 }
 
 const deleteDraftDocument = async (documentId: string) => {
-  const path = 'documents'
-  const result = (await axiosInstance.delete(path, { params: { documentId } })).data
+  const path = `documents/${documentId}`
+  const result = (await axiosInstance.delete(path)).data
   return result
 }
 
