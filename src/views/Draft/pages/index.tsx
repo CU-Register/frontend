@@ -3,7 +3,7 @@ import useDocument from 'hooks/useDocument'
 import MainLayout from 'layouts/MainLayout'
 import { NextPage } from 'next'
 import { useEffect } from 'react'
-import DocumentDraftSection from './sections/DocumentDraftSection'
+import DocumentDraftSection from '../sections/DocumentDraftSection'
 
 const DraftPage: NextPage = () => {
   const { fetchHoldingDocuments } = useDocument()
