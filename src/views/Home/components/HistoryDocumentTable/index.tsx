@@ -8,9 +8,10 @@ const HistoryDocumentTable: FC<IHistoryDocumentTableProps> = () => {
   return (
     <>
       {(!historyDocuments || historyDocuments.length === 0) && (
-        <div tw="text-h2 font-h2 text-gray flex justify-center">ไม่มีประวัติการยื่นคำร้อง</div>
+        <div tw="text-h2 font-h2 text-gray flex justify-center">ไม่พบประวัติการยื่นคำร้อง</div>
       )}
       {historyDocuments && historyDocuments.length > 0 && (
+        // TODO map history document fields to table body
         <table tw="table-auto w-full">
           <thead>
             <tr>
