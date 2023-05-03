@@ -1,6 +1,6 @@
 import { IUserProfile } from 'interfaces/Profile'
 import profileService from 'services/profile.service'
-import { useProfileStore } from 'stores/profile.stores'
+import { useProfileStore } from 'stores/profile.store'
 
 const useProfile = () => {
   const profileStore = useProfileStore()

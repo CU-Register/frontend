@@ -6,6 +6,7 @@ import { IRequestOption } from 'interfaces/RequestOption'
 import { Dispatch, SetStateAction } from 'react'
 import tw from 'twin.macro'
 
+// TODO: update and fix this
 interface ISearchAndQueryProps<ValueT, FilterT> {
   value?: ValueT | null
   onChangeValue?: Dispatch<SetStateAction<ValueT | null>>

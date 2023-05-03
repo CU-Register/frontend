@@ -1,7 +1,7 @@
 import { COMMON_ROUTES, PROTECTED_ROUTES } from 'constants/Routes'
 import { useRouter } from 'next/router'
 import authService from 'services/auth.service'
-import { useAuthStore } from 'stores/auth.stores'
+import { useAuthStore } from 'stores/auth.store'
 
 const useAuth = () => {
   const authStore = useAuthStore()
@@ -16,6 +16,7 @@ const useAuth = () => {
       router.push(PROTECTED_ROUTES.HOME)
     } catch (error) {
       console.error('login error:', error)
+      alert('Login failed')
       router.replace(COMMON_ROUTES.LOGIN)
     }
   }
@@ -36,6 +37,7 @@ const useAuth = () => {
     localStorage.removeItem('cuadrs-refreshToken')
     authStore.setAccessToken(null)
     router.replace(PROTECTED_ROUTES.LOGOUT)
+    alert('Logout success')
   }
 
   return { login, refreshUserToken, logout }

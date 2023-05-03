@@ -3,8 +3,8 @@ import useAuth from 'hooks/useAuth'
 import useProfile from 'hooks/useProfile'
 import { useRouter } from 'next/router'
 import { useEffect, useRef } from 'react'
-import { useAuthStore } from 'stores/auth.stores'
-import { useProfileStore } from 'stores/profile.stores'
+import { useAuthStore } from 'stores/auth.store'
+import { useProfileStore } from 'stores/profile.store'
 
 const withAuth = (WrappedComponent: React.ComponentType<any>) => {
   const ComponentWithAuth = (props: any) => {
