@@ -9,7 +9,7 @@ import { useRouter } from 'next/router'
 import { useEffect } from 'react'
 import { useTemplateStore } from 'stores/template.store'
 import 'twin.macro'
-import RequestHistoryTable from './components/RequestHistoryTable'
+import HistoryDocumentTable from './components/HistoryDocumentTable'
 
 const HomePage: NextPage = () => {
   const router = useRouter()
@@ -53,7 +53,7 @@ const HomePage: NextPage = () => {
         </div>
         <div tw="flex flex-col gap-3">
           <div tw="font-h2 text-h2 text-black">ประวัติการยื่นคำร้อง</div>
-          <RequestHistoryTable />
+          <HistoryDocumentTable />
           <div>
             <button tw="font-h2 text-h2 text-cu-pink" onClick={otherStatusButtonHandler}>
               {'ดูประวัติคำร้องอื่น ๆ >>'}

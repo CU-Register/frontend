@@ -2,8 +2,8 @@ import { FC } from 'react'
 import { useDocumentStore } from 'stores/document.store'
 import 'twin.macro'
 
-interface IRequestHistoryTableProps {}
-const RequestHistoryTable: FC<IRequestHistoryTableProps> = () => {
+interface IHistoryDocumentTableProps {}
+const HistoryDocumentTable: FC<IHistoryDocumentTableProps> = () => {
   const { historyDocuments } = useDocumentStore()
   return (
     <>
@@ -48,4 +48,4 @@ const RequestHistoryTable: FC<IRequestHistoryTableProps> = () => {
   )
 }
 
-export default RequestHistoryTable
+export default HistoryDocumentTable
