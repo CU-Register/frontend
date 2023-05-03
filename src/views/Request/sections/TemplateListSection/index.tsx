@@ -13,7 +13,7 @@ const TemplateListSection: FC = () => {
   const { templates } = useTemplateStore()
   const { createDocument } = useDocument()
 
-  const requestCardHandler = (event: React.MouseEvent<HTMLButtonElement>) => {
+  const templateCardHandler = (event: React.MouseEvent<HTMLButtonElement>) => {
     const selectedTitle = _.find(templates, { templateType: event.currentTarget.value })?.title
     if (!selectedTitle) return
     setSelectedTemplate({
@@ -58,7 +58,7 @@ const TemplateListSection: FC = () => {
                   key={index}
                   title={template.title.th}
                   templateType={template.templateType}
-                  onClick={(event) => requestCardHandler(event)}
+                  onClick={(event) => templateCardHandler(event)}
                 />
               )
             })}
