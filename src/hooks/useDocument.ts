@@ -25,7 +25,6 @@ const useDocument = () => {
   const createDocument = async (templateType: string) => {
     try {
       await documentService.createDocument(templateType)
-      alert('create document successful')
     } catch {
       console.error('createDocument error')
     }
@@ -34,7 +33,6 @@ const useDocument = () => {
   const deleteDraftDocument = async (documentId: string) => {
     try {
       await documentService.deleteDraftDocument(documentId)
-      alert('delete document successful')
     } catch {
       console.error('deleteDraftDocument error')
     }

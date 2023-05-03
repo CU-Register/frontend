@@ -17,6 +17,7 @@ const DocumentDraftPage: NextPage = () => {
     const pathToken = router.asPath.split('/')
     const documentId = pathToken[pathToken.length - 1]
     await deleteDraftDocument(documentId)
+    alert('delete document successful')
     router.replace(PROTECTED_ROUTES.DRAFT)
   }
 

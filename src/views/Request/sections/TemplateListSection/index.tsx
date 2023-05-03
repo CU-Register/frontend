@@ -35,6 +35,7 @@ const TemplateListSection: FC = () => {
   const onConfirmDialogHandler = async () => {
     if (!selectedTemplate) return
     await createDocument(selectedTemplate.templateType)
+    alert('create document successful')
     setIsOpenDialog(false)
   }
 
