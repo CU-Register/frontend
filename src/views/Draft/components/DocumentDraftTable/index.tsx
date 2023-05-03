@@ -3,8 +3,8 @@ import { useDocumentStore } from 'stores/document.store'
 import 'twin.macro'
 import { dateFormatter } from 'utils/formats'
 
-interface IRequestDraftTableProps {}
-const RequestDraftTable: FC<IRequestDraftTableProps> = () => {
+interface IDocumentDraftTableProps {}
+const DocumentDraftTable: FC<IDocumentDraftTableProps> = () => {
   const { holdingDocuments } = useDocumentStore()
 
   return (
@@ -49,4 +49,4 @@ const RequestDraftTable: FC<IRequestDraftTableProps> = () => {
   )
 }
 
-export default RequestDraftTable
+export default DocumentDraftTable

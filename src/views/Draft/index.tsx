@@ -3,7 +3,7 @@ import useDocument from 'hooks/useDocument'
 import MainLayout from 'layouts/MainLayout'
 import { NextPage } from 'next'
 import { useEffect } from 'react'
-import RequestDraftSection from './sections/RequestDraftSection'
+import DocumentDraftSection from './sections/DocumentDraftSection'
 
 const DraftPage: NextPage = () => {
   const { fetchHoldingDocuments } = useDocument()
@@ -14,7 +14,7 @@ const DraftPage: NextPage = () => {
   return (
     <MainLayout header="แก้ไขโครงร่างคำร้อง">
       {/* <SearchAndQuerySection /> */}
-      <RequestDraftSection />
+      <DocumentDraftSection />
     </MainLayout>
   )
 }
