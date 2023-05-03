@@ -31,7 +31,16 @@ const useDocument = () => {
     }
   }
 
-  return { fetchHoldingDocuments, fetchHistoryDocuments, createDocument }
+  const deleteDraftDocument = async (documentId: string) => {
+    try {
+      await documentService.deleteDraftDocument(documentId)
+      alert('delete document successful')
+    } catch {
+      console.error('deleteDraftDocument error')
+    }
+  }
+
+  return { fetchHoldingDocuments, fetchHistoryDocuments, createDocument, deleteDraftDocument }
 }
 
 export default useDocument

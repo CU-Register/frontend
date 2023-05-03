@@ -19,9 +19,16 @@ const createDocument = async (templateType: string) => {
   return result
 }
 
+const deleteDraftDocument = async (documentId: string) => {
+  const path = 'documents'
+  const result = (await axiosInstance.delete(path, { params: { documentId } })).data
+  return result
+}
+
 const documentService = {
   getHoldingDocuments,
   getHistoryDocuments,
   createDocument,
+  deleteDraftDocument,
 }
 export default documentService
