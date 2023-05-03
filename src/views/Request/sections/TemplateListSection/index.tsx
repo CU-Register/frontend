@@ -1,23 +1,17 @@
 import ActionDialog from 'components/Dialog/ActionDialog'
 import TemplateCard from 'components/TemplateCard'
 import useDocument from 'hooks/useDocument'
-import useTemplate from 'hooks/useTemplate'
 import { ITemplate } from 'interfaces/Template'
 import _ from 'lodash'
-import { FC, useEffect, useState } from 'react'
+import { FC, useState } from 'react'
 import { useTemplateStore } from 'stores/template.store'
 import 'twin.macro'
 
 const TemplateListSection: FC = () => {
   const [isOpenDialog, setIsOpenDialog] = useState<boolean>(false)
   const [selectedTemplate, setSelectedTemplate] = useState<Pick<ITemplate, 'templateType' | 'title'> | null>(null)
-  const { fetchTemplates } = useTemplate()
   const { templates } = useTemplateStore()
   const { createDocument } = useDocument()
-
-  useEffect(() => {
-    fetchTemplates()
-  }, [])
 
   const requestCardHandler = (event: React.MouseEvent<HTMLButtonElement>) => {
     const selectedTitle = _.find(templates, { templateType: event.currentTarget.value })?.title
