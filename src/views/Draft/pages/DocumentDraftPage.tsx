@@ -1,4 +1,5 @@
 import withAuth from 'components/Auth/withAuth'
+import ActionDialog from 'components/Dialog/ActionDialog'
 import VerticalDivider from 'components/Dividers/VerticalDivider'
 import NeutralButton from 'components/NeutralButton'
 import PinkButton from 'components/PinkButton'
@@ -23,6 +24,7 @@ const DocumentDraftPage: NextPage = () => {
   const { deleteDraftDocument } = useDocument()
   const { holdingDocuments } = useDocumentStore()
   const [currentDocument, setCurrentDocument] = useState<IDocument | null>(null)
+  const [isOpenDeleteDialog, setIsOpenDeleteDialog] = useState<boolean>(false)
 
   useEffect(() => {
     const pathTokens = router.asPath.split('/')
@@ -35,26 +37,38 @@ const DocumentDraftPage: NextPage = () => {
     setCurrentDocument(document)
   }, [])
 
-  // const DeleteDocumentDraftDialog = () => {
-  //   const [isOpenDialog, setIsOpenDialog] = useState<boolean>(false)
-  //   const [selectedTemplate, setSelectedTemplate] = useState<Pick<IDocument, 'docId' | 'template'> | null>(null)
-  //   const onCloseDialogHandler = () => {
-  //     setIsOpenDialog(false)
-  //   }
-  //   const onRejectDialogHandler = () => {
-  //     setIsOpenDialog(false)
-  //   }
-  //   const deleteDocumentHandler = async (event: React.MouseEvent<HTMLButtonElement>) => {
-  //     if (!selectedTemplate) return
-  //     const pathToken = router.asPath.split('/')
-  //     await deleteDraftDocument(selectedTemplate.docId)
-  //     alert('delete document successful')
-  //     router.replace(PROTECTED_ROUTES.DRAFT)
-  //   }
-  // }
+  const DeleteDocumentDraftDialog = () => {
+    const onCloseDialogHandler = () => {
+      setIsOpenDeleteDialog(false)
+    }
+    const onRejectDialogHandler = () => {
+      setIsOpenDeleteDialog(false)
+    }
+    const deleteDocumentHandler = async () => {
+      if (!currentDocument) return
+      await deleteDraftDocument(currentDocument.docId)
+      alert('delete document successful')
+      setIsOpenDeleteDialog(false)
+      router.replace(PROTECTED_ROUTES.DRAFT)
+    }
+    return (
+      <ActionDialog
+        isOpen={isOpenDeleteDialog}
+        onClose={onCloseDialogHandler}
+        onConfirm={deleteDocumentHandler}
+        onReject={onRejectDialogHandler}
+        title={`${currentDocument?.template.title.th} จท.${currentDocument?.template.templateType}`}
+        description="ยืนยันที่จะลบโครงร่างคำร้อง"
+      />
+    )
+  }
+  if (!currentDocument) {
+    return null
+  }
 
   return (
     <MainLayout header="แก้ไขโครงร่างคำร้อง">
+      <DeleteDocumentDraftDialog />
       <div tw="text-h1 font-h1 text-black">
         {`${currentDocument?.template.title.th} (จท${currentDocument?.template.templateType})`}
       </div>
@@ -68,7 +82,7 @@ const DocumentDraftPage: NextPage = () => {
           <NeutralButton
             text="ยกเลิกเอกสาร"
             iconSrc="/assets/delete-document-icon.png"
-            // onClick={(event) => deleteDocumentHandler(event)}
+            onClick={() => setIsOpenDeleteDialog(true)}
           />
           <VerticalDivider />
           <NeutralButton text="บันทึกและย้อนกลับ" />
