@@ -37,10 +37,17 @@ const deleteDraftDocument = async (documentId: string) => {
   return result
 }
 
+const getDocumentForm = async (documentId: string) => {
+  const path = `documents/${documentId}/form`
+  const result = (await axiosInstance.get(path, { responseType: 'arraybuffer' })).data
+  return result
+}
+
 const documentService = {
   getHoldingDocuments,
   getHistoryDocuments,
   createDocument,
   deleteDraftDocument,
+  getDocumentForm,
 }
 export default documentService

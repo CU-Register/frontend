@@ -38,7 +38,16 @@ const useDocument = () => {
     }
   }
 
-  return { fetchHoldingDocuments, fetchHistoryDocuments, createDocument, deleteDraftDocument }
+  const fetchDocumentForm = async (documentId: string) => {
+    try {
+      const documentForm = await documentService.getDocumentForm(documentId)
+      return documentForm
+    } catch {
+      console.error('fetchDocumentForm error')
+    }
+  }
+
+  return { fetchHoldingDocuments, fetchHistoryDocuments, createDocument, deleteDraftDocument, fetchDocumentForm }
 }
 
 export default useDocument
