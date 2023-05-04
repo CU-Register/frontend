@@ -21,10 +21,19 @@ dayjs.extend(utc)
 
 const DocumentDraftPage: NextPage = () => {
   const router = useRouter()
-  const { deleteDraftDocument } = useDocument()
+  const { deleteDraftDocument, fetchDocumentForm } = useDocument()
   const { holdingDocuments } = useDocumentStore()
   const [currentDocument, setCurrentDocument] = useState<IDocument | null>(null)
   const [isOpenDeleteDialog, setIsOpenDeleteDialog] = useState<boolean>(false)
+  // const [documentFormBuffer, setDocumentFormBuffer] = useState<Blob | null>(null)
+  const [documentFormBufferUrl, setDocumentFormBufferUrl] = useState<string | null>(null)
+
+  const initDocumentForm = async (docId: string) => {
+    const documentForm = await fetchDocumentForm(docId)
+    if (!documentForm) return
+    // setDocumentFormBuffer(documentForm)
+    setDocumentFormBufferUrl(URL.createObjectURL(documentForm))
+  }
 
   useEffect(() => {
     const pathTokens = router.asPath.split('/')
@@ -34,7 +43,7 @@ const DocumentDraftPage: NextPage = () => {
       router.replace(PROTECTED_ROUTES.DRAFT)
       return
     }
-    setCurrentDocument(document)
+    Promise.all([setCurrentDocument(document), initDocumentForm(document.docId)])
   }, [])
 
   const DeleteDocumentDraftDialog = () => {
@@ -72,12 +81,16 @@ const DocumentDraftPage: NextPage = () => {
       <div tw="text-h1 font-h1 text-black">
         {`${currentDocument?.template.title.th} (จท${currentDocument?.template.templateType})`}
       </div>
-      <div tw="px-4 py-2 flex flex-col flex-1 mb-4">
+      <div tw="px-4 py-2 flex flex-col flex-1 mb-4 gap-4">
         <div tw="flex justify-between text-black text-h2 font-h2">
           <div>กรุณากรอกข้อมูลที่ไม่ถูกสีระบายทับ</div>
           <div>แก้ไขล่าสุด: {`${dayjs(currentDocument?.updatedAt).fromNow()}`}</div>
         </div>
-        <div tw="flex-1 flex justify-center items-center overflow-auto">for document draft pdf</div>
+        <div tw="flex-1 flex justify-center items-center">
+          {documentFormBufferUrl && (
+            <object data={documentFormBufferUrl} type="application/pdf" tw="w-full h-full overflow-auto" />
+          )}
+        </div>
         <div tw="flex justify-end gap-4">
           <NeutralButton
             text="ยกเลิกเอกสาร"

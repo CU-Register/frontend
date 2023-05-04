@@ -39,7 +39,7 @@ const deleteDraftDocument = async (documentId: string) => {
 
 const getDocumentForm = async (documentId: string) => {
   const path = `documents/${documentId}/form`
-  const result = (await axiosInstance.get(path, { responseType: 'arraybuffer' })).data
+  const result: Blob = (await axiosInstance.get(path, { responseType: 'blob' })).data
   return result
 }
 
