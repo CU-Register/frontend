@@ -1,5 +1,6 @@
 import withAuth from 'components/Auth/withAuth'
 import ActionDialog from 'components/Dialogs/ActionDialog'
+import PDFPreviewDialog from 'components/Dialogs/PDFPreviewDialog'
 import VerticalDivider from 'components/Dividers/VerticalDivider'
 import NeutralButton from 'components/NeutralButton'
 import PinkButton from 'components/PinkButton'
@@ -25,6 +26,7 @@ const DocumentDraftPage: NextPage = () => {
   const { holdingDocuments } = useDocumentStore()
   const [currentDocument, setCurrentDocument] = useState<IDocument | null>(null)
   const [isOpenDeleteDialog, setIsOpenDeleteDialog] = useState<boolean>(false)
+  const [isOpenPreviewDialog, setIsOpenPreviewDialog] = useState<boolean>(false)
   // const [documentFormBuffer, setDocumentFormBuffer] = useState<Blob | null>(null)
   const [documentFormBufferUrl, setDocumentFormBufferUrl] = useState<string | null>(null)
 
@@ -71,6 +73,31 @@ const DocumentDraftPage: NextPage = () => {
       />
     )
   }
+
+  const PreviewDocumentDraftDialog = () => {
+    const onCloseDialogHandler = () => {
+      console.log('on close')
+      setIsOpenPreviewDialog(false)
+    }
+    const onRejectDialogHandler = () => {
+      console.log('on reject')
+      setIsOpenPreviewDialog(false)
+    }
+    const forwardDocumentHandler = async () => {
+      console.log('on forward')
+      setIsOpenPreviewDialog(false)
+    }
+    return (
+      <PDFPreviewDialog
+        isOpen={isOpenPreviewDialog}
+        title={'ยืนยันที่จะส่งคำร้อง'}
+        onClose={onCloseDialogHandler}
+        onConfirm={forwardDocumentHandler}
+        onReject={onRejectDialogHandler}
+      />
+    )
+  }
+
   if (!currentDocument) {
     return null
   }
@@ -78,6 +105,7 @@ const DocumentDraftPage: NextPage = () => {
   return (
     <MainLayout header="แก้ไขโครงร่างคำร้อง">
       <DeleteDocumentDraftDialog />
+      <PreviewDocumentDraftDialog />
       <div tw="text-h1 font-h1 text-black">
         {`${currentDocument?.template.title.th} (จท${currentDocument?.template.templateType})`}
       </div>
@@ -99,7 +127,12 @@ const DocumentDraftPage: NextPage = () => {
           />
           <VerticalDivider />
           <NeutralButton text="บันทึกและย้อนกลับ" />
-          <PinkButton text="ไปต่อ" />
+          <PinkButton
+            text="ไปต่อ"
+            onClick={() => {
+              setIsOpenPreviewDialog(true)
+            }}
+          />
         </div>
       </div>
     </MainLayout>
