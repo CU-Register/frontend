@@ -1,5 +1,5 @@
 import withAuth from 'components/Auth/withAuth'
-import ActionDialog from 'components/Dialog/ActionDialog'
+import ActionDialog from 'components/Dialogs/ActionDialog'
 import TemplateCard from 'components/TemplateCard'
 import { PROTECTED_ROUTES } from 'constants/Routes'
 import useDocument from 'hooks/useDocument'

@@ -1,5 +1,5 @@
 import withAuth from 'components/Auth/withAuth'
-import ActionDialog from 'components/Dialog/ActionDialog'
+import ActionDialog from 'components/Dialogs/ActionDialog'
 import VerticalDivider from 'components/Dividers/VerticalDivider'
 import NeutralButton from 'components/NeutralButton'
 import PinkButton from 'components/PinkButton'
