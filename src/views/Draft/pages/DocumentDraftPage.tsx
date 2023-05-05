@@ -26,6 +26,7 @@ const DocumentDraftPage: NextPage = () => {
   const { holdingDocuments } = useDocumentStore()
   const [currentDocument, setCurrentDocument] = useState<IDocument | null>(null)
   const [isOpenDeleteDialog, setIsOpenDeleteDialog] = useState<boolean>(false)
+  const [isOpenSaveDialog, setIsOpenSaveDialog] = useState<boolean>(false)
   const [isOpenPreviewDialog, setIsOpenPreviewDialog] = useState<boolean>(false)
   // const [documentFormBuffer, setDocumentFormBuffer] = useState<Blob | null>(null)
   const [documentFormBufferUrl, setDocumentFormBufferUrl] = useState<string | null>(null)
@@ -74,17 +75,36 @@ const DocumentDraftPage: NextPage = () => {
     )
   }
 
+  const SaveDocumentDraftDialog = () => {
+    const onCloseDialogHandler = () => {
+      setIsOpenSaveDialog(false)
+    }
+    const onRejectDialogHandler = () => {
+      setIsOpenSaveDialog(false)
+    }
+    const saveDocumentHandler = async () => {
+      setIsOpenSaveDialog(false)
+    }
+    return (
+      <PDFPreviewDialog
+        isOpen={isOpenSaveDialog}
+        title="ยืนยันที่จะบันทึกโครงร่างคำร้อง"
+        onClose={onCloseDialogHandler}
+        onConfirm={saveDocumentHandler}
+        onReject={onRejectDialogHandler}
+        pdfUrl={documentFormBufferUrl}
+      />
+    )
+  }
+
   const PreviewDocumentDraftDialog = () => {
     const onCloseDialogHandler = () => {
-      console.log('on close')
       setIsOpenPreviewDialog(false)
     }
     const onRejectDialogHandler = () => {
-      console.log('on reject')
       setIsOpenPreviewDialog(false)
     }
     const forwardDocumentHandler = async () => {
-      console.log('on forward')
       setIsOpenPreviewDialog(false)
     }
     return (
@@ -94,7 +114,8 @@ const DocumentDraftPage: NextPage = () => {
         onClose={onCloseDialogHandler}
         onConfirm={forwardDocumentHandler}
         onReject={onRejectDialogHandler}
-        pdfUrl={documentFormBufferUrl || ''}
+        pdfUrl={documentFormBufferUrl}
+        isToForward={true}
       />
     )
   }
@@ -106,6 +127,7 @@ const DocumentDraftPage: NextPage = () => {
   return (
     <MainLayout header="แก้ไขโครงร่างคำร้อง">
       <DeleteDocumentDraftDialog />
+      <SaveDocumentDraftDialog />
       <PreviewDocumentDraftDialog />
       <div tw="text-h1 font-h1 text-black">
         {`${currentDocument?.template.title.th} (จท${currentDocument?.template.templateType})`}
@@ -127,7 +149,7 @@ const DocumentDraftPage: NextPage = () => {
             onClick={() => setIsOpenDeleteDialog(true)}
           />
           <VerticalDivider />
-          <NeutralButton text="บันทึกและย้อนกลับ" />
+          <NeutralButton text="บันทึกและย้อนกลับ" onClick={() => setIsOpenSaveDialog(true)} />
           <PinkButton
             text="ไปต่อ"
             onClick={() => {

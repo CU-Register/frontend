@@ -9,10 +9,19 @@ interface IPDFPreviewDialogProps {
   onClose: () => void
   onConfirm: () => void
   onReject: () => void
-  pdfUrl?: string
+  pdfUrl?: string | null
+  isToForward?: boolean
 }
 
-const PDFPreviewDialog: FC<IPDFPreviewDialogProps> = ({ isOpen, title, onClose, onConfirm, onReject, pdfUrl }) => {
+const PDFPreviewDialog: FC<IPDFPreviewDialogProps> = ({
+  isOpen,
+  title,
+  onClose,
+  onConfirm,
+  onReject,
+  pdfUrl,
+  isToForward = false,
+}) => {
   return (
     <>
       <Transition appear show={isOpen} as={Fragment}>
@@ -47,10 +56,13 @@ const PDFPreviewDialog: FC<IPDFPreviewDialogProps> = ({ isOpen, title, onClose, 
                     <div tw="flex-1 flex bg-cu-copper">
                       {pdfUrl && <object data={pdfUrl} type="application/pdf" tw="w-full h-full overflow-auto" />}
                     </div>
-                    <div tw="flex flex-col gap-2">
-                      <div tw="flex justify-center text-h2 font-h2 text-black">ส่งคำร้องต่อให้</div>
-                      <div tw="flex justify-center">search combobox</div>
-                    </div>
+                    {/* TODO implement search combobox*/}
+                    {isToForward && (
+                      <div tw="flex flex-col gap-2">
+                        <div tw="flex justify-center text-h2 font-h2 text-black">ส่งคำร้องต่อให้</div>
+                        <div tw="flex justify-center">search combobox</div>
+                      </div>
+                    )}
                     <div tw="flex p-2 gap-2 justify-center">
                       <button tw="text-gray font-h2 text-h2 px-2 py-1" onClick={onReject}>
                         ยกเลิก
