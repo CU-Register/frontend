@@ -94,6 +94,7 @@ const DocumentDraftPage: NextPage = () => {
         onClose={onCloseDialogHandler}
         onConfirm={forwardDocumentHandler}
         onReject={onRejectDialogHandler}
+        pdfUrl={documentFormBufferUrl || ''}
       />
     )
   }

@@ -1,4 +1,5 @@
 import { Dialog, Transition } from '@headlessui/react'
+import VerticalDivider from 'components/Dividers/VerticalDivider'
 import { FC, Fragment } from 'react'
 import 'twin.macro'
 
@@ -8,9 +9,10 @@ interface IPDFPreviewDialogProps {
   onClose: () => void
   onConfirm: () => void
   onReject: () => void
+  pdfUrl?: string
 }
 
-const PDFPreviewDialog: FC<IPDFPreviewDialogProps> = ({ isOpen, title, onClose, onConfirm, onReject }) => {
+const PDFPreviewDialog: FC<IPDFPreviewDialogProps> = ({ isOpen, title, onClose, onConfirm, onReject, pdfUrl }) => {
   return (
     <>
       <Transition appear show={isOpen} as={Fragment}>
@@ -38,17 +40,26 @@ const PDFPreviewDialog: FC<IPDFPreviewDialogProps> = ({ isOpen, title, onClose, 
                 leaveFrom="opacity-100 scale-100"
                 leaveTo="opacity-0 scale-95"
               >
-                <Dialog.Panel className="w-full max-w-md transform overflow-hidden rounded-2xl bg-white text-left align-middle shadow-xl transition-all">
-                  <Dialog.Title tw="py-2 px-3 text-h2 font-h2 text-white bg-cu-pink">{title}</Dialog.Title>
+                <Dialog.Panel tw="w-full max-w-2xl transform overflow-hidden rounded-2xl bg-white text-left align-middle shadow-xl transition-all h-[700px] flex flex-col">
+                  <Dialog.Title tw="py-2 px-3 text-h2 font-h2 text-white bg-cu-pink text-center">{title}</Dialog.Title>
                   {/* <Dialog.Description tw="py-2 px-3 text-h2 font-h2 text-cu-pink ">{description}</Dialog.Description> */}
-                  <div>pdf preview dialog</div>
-                  <div tw="flex p-2 gap-2 justify-end">
-                    <button tw="text-gray font-h2 text-h2 px-2 py-1 hover:text-black" onClick={onReject}>
-                      ยกเลิก
-                    </button>
-                    <button tw="text-white bg-cu-pink font-h2 text-h2 px-2 py-1 rounded" onClick={onConfirm}>
-                      ตกลง
-                    </button>
+                  <div tw="flex h-full flex-col gap-3 py-4 px-12">
+                    <div tw="flex-1 flex bg-cu-copper">
+                      {pdfUrl && <object data={pdfUrl} type="application/pdf" tw="w-full h-full overflow-auto" />}
+                    </div>
+                    <div tw="flex flex-col gap-2">
+                      <div tw="flex justify-center text-h2 font-h2 text-black">ส่งคำร้องต่อให้</div>
+                      <div tw="flex justify-center">search combobox</div>
+                    </div>
+                    <div tw="flex p-2 gap-2 justify-center">
+                      <button tw="text-gray font-h2 text-h2 px-2 py-1" onClick={onReject}>
+                        ยกเลิก
+                      </button>
+                      <VerticalDivider />
+                      <button tw="text-cu-pink font-h2 text-h2 px-2 py-1" onClick={onConfirm}>
+                        ตกลง
+                      </button>
+                    </div>
                   </div>
                 </Dialog.Panel>
               </Transition.Child>
