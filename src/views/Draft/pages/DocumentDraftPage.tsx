@@ -14,9 +14,13 @@ import MainLayout from 'layouts/MainLayout'
 import _ from 'lodash'
 import { NextPage } from 'next'
 import { useRouter } from 'next/router'
-import { useEffect, useState } from 'react'
+import * as pdfjsLib from 'pdfjs-dist'
+import { useEffect, useRef, useState } from 'react'
 import { useDocumentStore } from 'stores/document.store'
 import 'twin.macro'
+
+const workerSrc = require('pdfjs-dist/build/pdf.worker.entry')
+pdfjsLib.GlobalWorkerOptions.workerSrc = workerSrc
 dayjs.extend(relativeTime)
 dayjs.extend(utc)
 
@@ -28,13 +32,14 @@ const DocumentDraftPage: NextPage = () => {
   const [isOpenDeleteDialog, setIsOpenDeleteDialog] = useState<boolean>(false)
   const [isOpenSaveDialog, setIsOpenSaveDialog] = useState<boolean>(false)
   const [isOpenPreviewDialog, setIsOpenPreviewDialog] = useState<boolean>(false)
-  // const [documentFormBuffer, setDocumentFormBuffer] = useState<Blob | null>(null)
+  const [documentFormBuffer, setDocumentFormBuffer] = useState<Blob | null>(null)
   const [documentFormBufferUrl, setDocumentFormBufferUrl] = useState<string | null>(null)
+  const draftDocumentRef = useRef<HTMLDivElement>(null)
 
   const initDocumentForm = async (docId: string) => {
     const documentForm = await fetchDocumentForm(docId)
     if (!documentForm) return
-    // setDocumentFormBuffer(documentForm)
+    setDocumentFormBuffer(documentForm)
     setDocumentFormBufferUrl(URL.createObjectURL(documentForm))
   }
 
@@ -48,6 +53,25 @@ const DocumentDraftPage: NextPage = () => {
     }
     Promise.all([setCurrentDocument(document), initDocumentForm(document.docId)])
   }, [])
+
+  useEffect(() => {
+    async function renderPDF() {
+      const draftDocument = draftDocumentRef.current
+      if (!draftDocument) return
+
+      const PSPDFKit: any = await import('pspdfkit')
+      if (PSPDFKit) {
+        PSPDFKit.unload(draftDocument)
+      }
+      await PSPDFKit.load({
+        container: draftDocument,
+        document: documentFormBufferUrl,
+        baseUrl: `${window.location.protocol}//${window.location.host}/`,
+      })
+    }
+
+    renderPDF()
+  }, [documentFormBufferUrl, draftDocumentRef])
 
   const DeleteDocumentDraftDialog = () => {
     const onCloseDialogHandler = () => {
@@ -138,9 +162,15 @@ const DocumentDraftPage: NextPage = () => {
           <div>แก้ไขล่าสุด: {`${dayjs(currentDocument?.updatedAt).fromNow()}`}</div>
         </div>
         <div tw="flex-1 flex justify-center items-center">
-          {documentFormBufferUrl && (
-            <object data={documentFormBufferUrl} type="application/pdf" tw="w-full h-full overflow-auto" />
-          )}
+          {/* {documentFormBufferUrl && (
+            <object
+              ref={documentRef}
+              data={`${documentFormBufferUrl}`}
+              type="application/pdf"
+              tw="w-full h-full overflow-auto"
+            />
+          )} */}
+          {documentFormBufferUrl && <div ref={draftDocumentRef} tw="w-full h-full" />}
         </div>
         <div tw="flex justify-end gap-4">
           <NeutralButton
@@ -149,7 +179,12 @@ const DocumentDraftPage: NextPage = () => {
             onClick={() => setIsOpenDeleteDialog(true)}
           />
           <VerticalDivider />
-          <NeutralButton text="บันทึกและย้อนกลับ" onClick={() => setIsOpenSaveDialog(true)} />
+          <NeutralButton
+            text="บันทึกและย้อนกลับ"
+            onClick={async () => {
+              setIsOpenSaveDialog(true)
+            }}
+          />
           <PinkButton
             text="ไปต่อ"
             onClick={() => {
