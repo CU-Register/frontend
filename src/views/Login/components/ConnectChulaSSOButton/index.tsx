@@ -6,7 +6,12 @@ import 'twin.macro'
 const ConnectChulaSSOButton: FC = () => {
   const router = useRouter()
   const connectChulaSSOButtonHandler = (event: React.MouseEvent<HTMLButtonElement>) => {
-    router.push(process.env.NEXT_PUBLIC_CUSSO_URL as string)
+    const REDIRECT_URL = new URL(
+      `${window.location.protocol}//${window.location.hostname}:${window.location.port}/redirect`,
+    )
+    const SSO_URL = new URL(process.env.NEXT_PUBLIC_CUSSO_URL as string)
+    SSO_URL.searchParams.append('service', REDIRECT_URL.toString())
+    router.push(SSO_URL)
   }
 
   return (
