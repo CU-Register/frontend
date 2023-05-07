@@ -31,9 +31,21 @@ const createDocument = async (templateType: string) => {
   return result
 }
 
+const updateDocument = async (documentId: string, file: Blob) => {
+  const path = `documents/${documentId}`
+  await axiosInstance.putForm(path, { file })
+}
+
 const deleteDraftDocument = async (documentId: string) => {
   const path = `documents/${documentId}`
   const result = (await axiosInstance.delete(path)).data
+  return result
+}
+
+const getDocumentInfo = async (documentId: string) => {
+  const path = `documents/${documentId}/info`
+  // TODO: declare result interface
+  const result = (await axiosInstance.get(path)).data
   return result
 }
 
@@ -43,17 +55,27 @@ const getDocumentForm = async (documentId: string) => {
   return result
 }
 
-const updateDocument = async (documentId: string, file: Blob) => {
-  const path = `documents/${documentId}`
-  await axiosInstance.putForm(path, { file })
+// TODO: update this
+const getPreviewDocument = async (documentId: string) => {
+  const path = `documents/${documentId}/preview`
+  const result: Blob = (await axiosInstance.get(path, { responseType: 'blob' })).data
+  return result
+}
+
+const forwardDocument = async (documentId: string, targetId: string) => {
+  const path = `documents/${documentId}/forward`
+  await axiosInstance.put(path, { targetId })
 }
 
 const documentService = {
   getHoldingDocuments,
   getHistoryDocuments,
   createDocument,
-  deleteDraftDocument,
-  getDocumentForm,
   updateDocument,
+  deleteDraftDocument,
+  getDocumentInfo,
+  getDocumentForm,
+  getPreviewDocument,
+  forwardDocument,
 }
 export default documentService
