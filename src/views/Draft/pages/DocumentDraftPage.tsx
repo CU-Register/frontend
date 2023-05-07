@@ -14,14 +14,10 @@ import MainLayout from 'layouts/MainLayout'
 import _ from 'lodash'
 import { NextPage } from 'next'
 import { useRouter } from 'next/router'
-import * as pdfjsLib from 'pdfjs-dist'
 import { Instance } from 'pspdfkit'
 import { useEffect, useRef, useState } from 'react'
 import { useDocumentStore } from 'stores/document.store'
 import 'twin.macro'
-
-const workerSrc = require('pdfjs-dist/build/pdf.worker.entry')
-pdfjsLib.GlobalWorkerOptions.workerSrc = workerSrc
 dayjs.extend(relativeTime)
 dayjs.extend(utc)
 
@@ -66,7 +62,7 @@ const DocumentDraftPage: NextPage = () => {
         URL.revokeObjectURL(tmpDocumentFormBufferUrl)
       }
     }
-  }, [])
+  }, [holdingDocuments])
 
   useEffect(() => {
     async function renderPDF() {
@@ -177,6 +173,12 @@ const DocumentDraftPage: NextPage = () => {
     )
   }
 
+  const setupPreviewDraftDocument = async () => {
+    if (!documentPSPDFKitInstance) return
+    const documentBuffer = await documentPSPDFKitInstance.exportPDF()
+    setTmpDocumentFormBufferUrl(URL.createObjectURL(new Blob([documentBuffer], { type: 'application/pdf' })))
+  }
+
   if (!currentDocument) {
     return null
   }
@@ -207,15 +209,14 @@ const DocumentDraftPage: NextPage = () => {
           <NeutralButton
             text="บันทึกและย้อนกลับ"
             onClick={async () => {
-              if (!documentPSPDFKitInstance) return
-              const documentBuffer = await documentPSPDFKitInstance.exportPDF()
-              setTmpDocumentFormBufferUrl(URL.createObjectURL(new Blob([documentBuffer], { type: 'application/pdf' })))
+              await setupPreviewDraftDocument()
               setIsOpenSaveDialog(true)
             }}
           />
           <PinkButton
             text="ไปต่อ"
-            onClick={() => {
+            onClick={async () => {
+              await setupPreviewDraftDocument()
               setIsOpenPreviewDialog(true)
             }}
           />
