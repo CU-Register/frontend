@@ -53,7 +53,7 @@ const PDFPreviewDialog: FC<IPDFPreviewDialogProps> = ({
                   <Dialog.Title tw="py-2 px-3 text-h2 font-h2 text-white bg-cu-pink text-center">{title}</Dialog.Title>
                   {/* <Dialog.Description tw="py-2 px-3 text-h2 font-h2 text-cu-pink ">{description}</Dialog.Description> */}
                   <div tw="flex h-full flex-col gap-3 py-4 px-12">
-                    <div tw="flex-1 flex bg-cu-copper">
+                    <div tw="flex-1 flex">
                       {pdfUrl && <object data={pdfUrl} type="application/pdf" tw="w-full h-full overflow-auto" />}
                     </div>
                     {/* TODO implement search combobox*/}

@@ -15,6 +15,7 @@ import _ from 'lodash'
 import { NextPage } from 'next'
 import { useRouter } from 'next/router'
 import * as pdfjsLib from 'pdfjs-dist'
+import { Instance } from 'pspdfkit'
 import { useEffect, useRef, useState } from 'react'
 import { useDocumentStore } from 'stores/document.store'
 import 'twin.macro'
@@ -26,26 +27,30 @@ dayjs.extend(utc)
 
 const DocumentDraftPage: NextPage = () => {
   const router = useRouter()
-  const { deleteDraftDocument, fetchDocumentForm } = useDocument()
+
+  const { deleteDraftDocument, fetchDocumentForm, updateDocument } = useDocument()
   const { holdingDocuments } = useDocumentStore()
   const [currentDocument, setCurrentDocument] = useState<IDocument | null>(null)
   const [isOpenDeleteDialog, setIsOpenDeleteDialog] = useState<boolean>(false)
   const [isOpenSaveDialog, setIsOpenSaveDialog] = useState<boolean>(false)
   const [isOpenPreviewDialog, setIsOpenPreviewDialog] = useState<boolean>(false)
-  const [documentFormBuffer, setDocumentFormBuffer] = useState<Blob | null>(null)
   const [documentFormBufferUrl, setDocumentFormBufferUrl] = useState<string | null>(null)
+  const [tmpDocumentFormBufferUrl, setTmpDocumentFormBufferUrl] = useState<string | null>(null)
+  const [documentPSPDFKitInstance, setDocumentPSPDFKitInstance] = useState<Instance | null>(null)
   const draftDocumentRef = useRef<HTMLDivElement>(null)
 
   const initDocumentForm = async (docId: string) => {
-    const documentForm = await fetchDocumentForm(docId)
-    if (!documentForm) return
-    setDocumentFormBuffer(documentForm)
-    setDocumentFormBufferUrl(URL.createObjectURL(documentForm))
+    try {
+      const documentForm = await fetchDocumentForm(docId)
+      if (!documentForm) return
+      setDocumentFormBufferUrl(URL.createObjectURL(documentForm))
+    } catch (error) {
+      router.replace(PROTECTED_ROUTES.DRAFT)
+    }
   }
 
   useEffect(() => {
-    const pathTokens = router.asPath.split('/')
-    const docId = pathTokens[pathTokens.length - 1]
+    const docId = router.query.document_id as string
     const document = _.find(holdingDocuments, { docId })
     if (!document) {
       router.replace(PROTECTED_ROUTES.DRAFT)
@@ -63,11 +68,13 @@ const DocumentDraftPage: NextPage = () => {
       if (PSPDFKit) {
         PSPDFKit.unload(draftDocument)
       }
-      await PSPDFKit.load({
+      const instance = await PSPDFKit.load({
         container: draftDocument,
         document: documentFormBufferUrl,
+        locale: 'th',
         baseUrl: `${window.location.protocol}//${window.location.host}/`,
       })
+      setDocumentPSPDFKitInstance(instance)
     }
 
     renderPDF()
@@ -82,10 +89,16 @@ const DocumentDraftPage: NextPage = () => {
     }
     const deleteDocumentHandler = async () => {
       if (!currentDocument) return
-      await deleteDraftDocument(currentDocument.docId)
-      alert('delete document successful')
-      setIsOpenDeleteDialog(false)
-      router.replace(PROTECTED_ROUTES.DRAFT)
+
+      try {
+        await deleteDraftDocument(currentDocument.docId)
+        alert('delete document successful')
+      } catch (error) {
+        alert('delete document unsuccessful')
+      } finally {
+        setIsOpenDeleteDialog(false)
+        router.replace(PROTECTED_ROUTES.DRAFT)
+      }
     }
     return (
       <ActionDialog
@@ -107,7 +120,18 @@ const DocumentDraftPage: NextPage = () => {
       setIsOpenSaveDialog(false)
     }
     const saveDocumentHandler = async () => {
-      setIsOpenSaveDialog(false)
+      if (!documentPSPDFKitInstance || !currentDocument) return
+      const documentBuffer = await documentPSPDFKitInstance.exportPDF()
+      const documentBlob = new Blob([documentBuffer], { type: 'application/pdf' })
+      try {
+        await updateDocument(currentDocument.docId, documentBlob)
+        alert('save document successful')
+      } catch (error) {
+        alert('save document unsuccessful')
+      } finally {
+        router.push(PROTECTED_ROUTES.DRAFT)
+        setIsOpenSaveDialog(false)
+      }
     }
     return (
       <PDFPreviewDialog
@@ -116,7 +140,7 @@ const DocumentDraftPage: NextPage = () => {
         onClose={onCloseDialogHandler}
         onConfirm={saveDocumentHandler}
         onReject={onRejectDialogHandler}
-        pdfUrl={documentFormBufferUrl}
+        pdfUrl={tmpDocumentFormBufferUrl}
       />
     )
   }
@@ -159,17 +183,9 @@ const DocumentDraftPage: NextPage = () => {
       <div tw="px-4 py-2 flex flex-col flex-1 mb-4 gap-4">
         <div tw="flex justify-between text-black text-h2 font-h2">
           <div>กรุณากรอกข้อมูลที่ไม่ถูกสีระบายทับ</div>
-          <div>แก้ไขล่าสุด: {`${dayjs(currentDocument?.updatedAt).fromNow()}`}</div>
+          <div>แก้ไขล่าสุด: {`${dayjs(`${currentDocument?.updatedAt}Z`).fromNow()}`}</div>
         </div>
         <div tw="flex-1 flex justify-center items-center">
-          {/* {documentFormBufferUrl && (
-            <object
-              ref={documentRef}
-              data={`${documentFormBufferUrl}`}
-              type="application/pdf"
-              tw="w-full h-full overflow-auto"
-            />
-          )} */}
           {documentFormBufferUrl && <div ref={draftDocumentRef} tw="w-full h-full" />}
         </div>
         <div tw="flex justify-end gap-4">
@@ -182,6 +198,9 @@ const DocumentDraftPage: NextPage = () => {
           <NeutralButton
             text="บันทึกและย้อนกลับ"
             onClick={async () => {
+              if (!documentPSPDFKitInstance) return
+              const documentBuffer = await documentPSPDFKitInstance.exportPDF()
+              setTmpDocumentFormBufferUrl(URL.createObjectURL(new Blob([documentBuffer], { type: 'application/pdf' })))
               setIsOpenSaveDialog(true)
             }}
           />

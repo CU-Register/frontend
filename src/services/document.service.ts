@@ -43,11 +43,17 @@ const getDocumentForm = async (documentId: string) => {
   return result
 }
 
+const updateDocument = async (documentId: string, file: Blob) => {
+  const path = `documents/${documentId}`
+  await axiosInstance.putForm(path, { file })
+}
+
 const documentService = {
   getHoldingDocuments,
   getHistoryDocuments,
   createDocument,
   deleteDraftDocument,
   getDocumentForm,
+  updateDocument,
 }
 export default documentService

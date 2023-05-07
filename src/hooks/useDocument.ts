@@ -8,8 +8,8 @@ const useDocument = () => {
     try {
       const holdingDocuments = await documentService.getHoldingDocuments()
       documentStore.setHoldingDocuments(holdingDocuments)
-    } catch {
-      console.error('fetchHoldingDocuments error')
+    } catch (error) {
+      throw new Error(`fetchHoldingDocuments error: ${error}`)
     }
   }
 
@@ -17,24 +17,24 @@ const useDocument = () => {
     try {
       const historyDocuments = await documentService.getHistoryDocuments()
       documentStore.setHistoryDocuments(historyDocuments)
-    } catch {
-      console.error('fetchHistoryDocuments error')
+    } catch (error) {
+      throw new Error(`fetchHistoryDocuments error: ${error}`)
     }
   }
 
   const createDocument = async (templateType: string) => {
     try {
       await documentService.createDocument(templateType)
-    } catch {
-      console.error('createDocument error')
+    } catch (error) {
+      throw new Error(`createDocument error: ${error}`)
     }
   }
 
   const deleteDraftDocument = async (documentId: string) => {
     try {
       await documentService.deleteDraftDocument(documentId)
-    } catch {
-      console.error('deleteDraftDocument error')
+    } catch (error) {
+      throw new Error(`deleteDraftDocument error: ${error}`)
     }
   }
 
@@ -42,12 +42,27 @@ const useDocument = () => {
     try {
       const documentForm = await documentService.getDocumentForm(documentId)
       return documentForm
-    } catch {
-      console.error('fetchDocumentForm error')
+    } catch (error) {
+      throw new Error(`fetchDocumentForm error: ${error}`)
     }
   }
 
-  return { fetchHoldingDocuments, fetchHistoryDocuments, createDocument, deleteDraftDocument, fetchDocumentForm }
+  const updateDocument = async (documentId: string, file: Blob) => {
+    try {
+      await documentService.updateDocument(documentId, file)
+    } catch (error) {
+      throw new Error(`updateDocument error: ${error}`)
+    }
+  }
+
+  return {
+    fetchHoldingDocuments,
+    fetchHistoryDocuments,
+    createDocument,
+    deleteDraftDocument,
+    fetchDocumentForm,
+    updateDocument,
+  }
 }
 
 export default useDocument
