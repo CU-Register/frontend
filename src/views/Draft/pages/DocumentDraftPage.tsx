@@ -57,6 +57,15 @@ const DocumentDraftPage: NextPage = () => {
       return
     }
     Promise.all([setCurrentDocument(document), initDocumentForm(document.docId)])
+
+    return () => {
+      if (documentFormBufferUrl) {
+        URL.revokeObjectURL(documentFormBufferUrl)
+      }
+      if (tmpDocumentFormBufferUrl) {
+        URL.revokeObjectURL(tmpDocumentFormBufferUrl)
+      }
+    }
   }, [])
 
   useEffect(() => {
@@ -162,7 +171,7 @@ const DocumentDraftPage: NextPage = () => {
         onClose={onCloseDialogHandler}
         onConfirm={forwardDocumentHandler}
         onReject={onRejectDialogHandler}
-        pdfUrl={documentFormBufferUrl}
+        pdfUrl={tmpDocumentFormBufferUrl}
         isToForward={true}
       />
     )
