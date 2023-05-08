@@ -1,4 +1,4 @@
-import { IDocument } from 'interfaces/Document'
+import { IDocument, IDocumentInfo } from 'interfaces/Document'
 import axiosInstance from 'lib/axios'
 
 const getHoldingDocuments = async () => {
@@ -44,8 +44,7 @@ const deleteDraftDocument = async (documentId: string) => {
 
 const getDocumentInfo = async (documentId: string) => {
   const path = `documents/${documentId}/info`
-  // TODO: declare result interface
-  const result = (await axiosInstance.get(path)).data
+  const result: IDocumentInfo = (await axiosInstance.get(path)).data
   return result
 }
 

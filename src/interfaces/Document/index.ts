@@ -1,4 +1,5 @@
 import { DocumentStatus } from 'enums/Document'
+import { UserRole } from 'enums/UserRole'
 import { ITemplate } from 'interfaces/Template'
 
 interface IDocumentDetail {
@@ -28,4 +29,48 @@ export interface IDocument {
   grantedAt: Date
   updatedAt: Date
   createdAt: Date
+}
+
+interface IDocumentInfoOption {
+  name: IDocumentDetail
+  id: string
+}
+interface IDocumentInfoStakeHolder {
+  uid: string
+  role: UserRole
+  firstname: IDocumentDetail
+  lastname: IDocumentDetail
+  address: string
+  email: string
+  salutation: IDocumentInfoOption
+  faculty: IDocumentInfoOption
+  department: IDocumentInfoOption
+  studentLevel: IDocumentInfoOption
+  academicSystem: IDocumentInfoOption
+  telephone: string
+}
+interface IDocumentInfoTimeline {
+  message: IDocumentDetail
+  actor: {
+    firstname: IDocumentDetail
+    lastname: IDocumentDetail
+    actor_id: string
+  }
+  timestamp: Date
+}
+
+export interface IDocumentInfo {
+  docId: string
+  template: Pick<ITemplate, 'templateType' | 'title' | 'description'>
+  status: DocumentStatus
+  createdAt: Date
+  updatedAt: Date | null
+  deletedAt: Date | null
+  step: {
+    current: number
+    overall: number
+  }
+  creator: IDocumentInfoStakeHolder
+  holder: IDocumentInfoStakeHolder
+  timeline: IDocumentInfoTimeline[]
 }
