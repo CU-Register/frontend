@@ -38,6 +38,15 @@ const useDocument = () => {
     }
   }
 
+  const fetchDocumentInfo = async (documentId: string) => {
+    try {
+      const documentInfo = await documentService.getDocumentInfo(documentId)
+      return documentInfo
+    } catch (error) {
+      throw new Error(`fetchDocumentInfo error: ${error}`)
+    }
+  }
+
   const fetchDocumentForm = async (documentId: string) => {
     try {
       const documentForm = await documentService.getDocumentForm(documentId)
@@ -86,6 +95,7 @@ const useDocument = () => {
     fetchHistoryDocuments,
     createDocument,
     deleteDraftDocument,
+    fetchDocumentInfo,
     fetchDocumentForm,
     updateDocument,
     fetchPreviewDocument,
