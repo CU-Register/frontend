@@ -68,21 +68,45 @@ const DocumentDraftPage: NextPage = () => {
     async function renderPDF() {
       const draftDocument = draftDocumentRef.current
       if (!draftDocument) return
-
       const PSPDFKit: any = await import('pspdfkit')
-      if (PSPDFKit) {
-        PSPDFKit.unload(draftDocument)
-      }
+
       const instance = await PSPDFKit.load({
         container: draftDocument,
         document: documentFormBufferUrl,
         locale: 'th',
         baseUrl: `${window.location.protocol}//${window.location.host}/`,
+      }).then((instance: any) => {
+        const selectMenus = [
+          'pan',
+          'zoom-out',
+          'zoom-in',
+          'zoom-mode',
+          'spacer',
+          'print',
+          'search',
+          'export-pdf',
+          'debug',
+        ]
+        const items = instance.toolbarItems
+        instance.setToolbarItems(items.filter((item: any) => selectMenus.find((menu) => menu === item.type)))
+        if (!documentFormBufferUrl) return
+        // URL.revokeObjectURL(documentFormBufferUrl)
       })
       setDocumentPSPDFKitInstance(instance)
     }
 
     renderPDF()
+    return () => {
+      async function unloadPDF() {
+        const draftDocument = draftDocumentRef.current
+        const PSPDFKit: any = await import('pspdfkit')
+        if (!draftDocument) return
+        if (PSPDFKit) {
+          PSPDFKit.unload(draftDocument)
+        }
+      }
+      unloadPDF()
+    }
   }, [documentFormBufferUrl, draftDocumentRef])
 
   const DeleteDocumentDraftDialog = () => {
