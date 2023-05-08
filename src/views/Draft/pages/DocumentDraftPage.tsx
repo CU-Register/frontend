@@ -22,12 +22,13 @@ dayjs.extend(utc)
 const DocumentDraftPage: NextPage = () => {
   const router = useRouter()
 
-  const { deleteDraftDocument, fetchDocumentForm, updateDocument, fetchDocumentInfo } = useDocument()
+  const { deleteDraftDocument, fetchDocumentForm, updateDocument, fetchDocumentInfo, fetchPreviewDocument } =
+    useDocument()
   const [currentDocumentInfo, setCurrentDocumentInfo] = useState<IDocumentInfo | null>(null)
   const [isOpenDeleteDialog, setIsOpenDeleteDialog] = useState<boolean>(false)
   const [isOpenSaveDialog, setIsOpenSaveDialog] = useState<boolean>(false)
   const [isOpenPreviewDialog, setIsOpenPreviewDialog] = useState<boolean>(false)
-  const [tmpDocumentFormBufferUrl, setTmpDocumentFormBufferUrl] = useState<string | null>(null)
+  const [previewDocumentFormBufferUrl, setPreviewDocumentFormBufferUrl] = useState<string | null>(null)
   const [documentPSPDFKitInstance, setDocumentPSPDFKitInstance] = useState<Instance | null>(null)
   const draftDocumentRef = useRef<HTMLDivElement>(null)
 
@@ -92,6 +93,9 @@ const DocumentDraftPage: NextPage = () => {
         }
       }
       unloadPDF()
+      if (previewDocumentFormBufferUrl) {
+        URL.revokeObjectURL(previewDocumentFormBufferUrl)
+      }
     }
   }, [draftDocumentRef.current])
 
@@ -155,7 +159,7 @@ const DocumentDraftPage: NextPage = () => {
         onClose={onCloseDialogHandler}
         onConfirm={saveDocumentHandler}
         onReject={onRejectDialogHandler}
-        pdfUrl={tmpDocumentFormBufferUrl}
+        pdfUrl={previewDocumentFormBufferUrl}
       />
     )
   }
@@ -177,16 +181,18 @@ const DocumentDraftPage: NextPage = () => {
         onClose={onCloseDialogHandler}
         onConfirm={forwardDocumentHandler}
         onReject={onRejectDialogHandler}
-        pdfUrl={tmpDocumentFormBufferUrl}
+        pdfUrl={previewDocumentFormBufferUrl}
         isToForward={true}
       />
     )
   }
 
   const setupPreviewDraftDocument = async () => {
-    if (!documentPSPDFKitInstance) return
-    const documentBuffer = await documentPSPDFKitInstance.exportPDF()
-    setTmpDocumentFormBufferUrl(URL.createObjectURL(new Blob([documentBuffer], { type: 'application/pdf' })))
+    if (!documentPSPDFKitInstance || !currentDocumentInfo) return
+    const documentArrayBuffer = await documentPSPDFKitInstance.exportPDF()
+    const documentBlob = new Blob([documentArrayBuffer], { type: 'application/pdf' })
+    const previewDocument = await fetchPreviewDocument(currentDocumentInfo?.docId, documentBlob)
+    setPreviewDocumentFormBufferUrl(URL.createObjectURL(previewDocument))
   }
 
   if (!currentDocumentInfo) {
