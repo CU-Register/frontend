@@ -70,16 +70,38 @@ const DocumentDraftPage: NextPage = () => {
       if (!draftDocument) return
 
       const PSPDFKit: any = await import('pspdfkit')
-      if (PSPDFKit) {
-        PSPDFKit.unload(draftDocument)
-      }
       const instance = await PSPDFKit.load({
         container: draftDocument,
         document: documentFormBufferUrl,
         locale: 'th',
         baseUrl: `${window.location.protocol}//${window.location.host}/`,
       })
+      const selectedToolbarItems = [
+        'pan',
+        'zoom-out',
+        'zoom-in',
+        'zoom-mode',
+        'spacer',
+        'print',
+        'search',
+        'export-pdf',
+        'debug',
+      ]
+      const toolbarItems = instance.toolbarItems
+      instance.setToolbarItems(toolbarItems.filter((item: any) => selectedToolbarItems.includes(item.type)))
       setDocumentPSPDFKitInstance(instance)
+
+      return () => {
+        async function unloadPDF() {
+          const draftDocument = draftDocumentRef.current
+          const PSPDFKit: any = await import('pspdfkit')
+          if (!draftDocument) return
+          if (PSPDFKit) {
+            PSPDFKit.unload(draftDocument)
+          }
+        }
+        unloadPDF()
+      }
     }
 
     renderPDF()
