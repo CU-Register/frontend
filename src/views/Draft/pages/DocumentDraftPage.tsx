@@ -9,14 +9,12 @@ import dayjs from 'dayjs'
 import relativeTime from 'dayjs/plugin/relativeTime'
 import utc from 'dayjs/plugin/utc'
 import useDocument from 'hooks/useDocument'
-import { IDocument } from 'interfaces/Document'
+import { IDocumentInfo } from 'interfaces/Document'
 import MainLayout from 'layouts/MainLayout'
-import _ from 'lodash'
 import { NextPage } from 'next'
 import { useRouter } from 'next/router'
 import { Instance } from 'pspdfkit'
 import { useEffect, useRef, useState } from 'react'
-import { useDocumentStore } from 'stores/document.store'
 import 'twin.macro'
 dayjs.extend(relativeTime)
 dayjs.extend(utc)
@@ -24,88 +22,78 @@ dayjs.extend(utc)
 const DocumentDraftPage: NextPage = () => {
   const router = useRouter()
 
-  const { deleteDraftDocument, fetchDocumentForm, updateDocument } = useDocument()
-  const { holdingDocuments } = useDocumentStore()
-  const [currentDocument, setCurrentDocument] = useState<IDocument | null>(null)
+  const { deleteDraftDocument, fetchDocumentForm, updateDocument, fetchDocumentInfo } = useDocument()
+  const [currentDocumentInfo, setCurrentDocumentInfo] = useState<IDocumentInfo | null>(null)
   const [isOpenDeleteDialog, setIsOpenDeleteDialog] = useState<boolean>(false)
   const [isOpenSaveDialog, setIsOpenSaveDialog] = useState<boolean>(false)
   const [isOpenPreviewDialog, setIsOpenPreviewDialog] = useState<boolean>(false)
-  const [documentFormBufferUrl, setDocumentFormBufferUrl] = useState<string | null>(null)
   const [tmpDocumentFormBufferUrl, setTmpDocumentFormBufferUrl] = useState<string | null>(null)
   const [documentPSPDFKitInstance, setDocumentPSPDFKitInstance] = useState<Instance | null>(null)
   const draftDocumentRef = useRef<HTMLDivElement>(null)
 
-  const initDocumentForm = async (docId: string) => {
-    try {
-      const documentForm = await fetchDocumentForm(docId)
-      if (!documentForm) return
-      setDocumentFormBufferUrl(URL.createObjectURL(documentForm))
-    } catch (error) {
-      router.replace(PROTECTED_ROUTES.DRAFT)
-    }
-  }
-
   useEffect(() => {
-    const docId = router.query.document_id as string
-    const document = _.find(holdingDocuments, { docId })
-    if (!document) {
-      router.replace(PROTECTED_ROUTES.DRAFT)
-      return
-    }
-    Promise.all([setCurrentDocument(document), initDocumentForm(document.docId)])
-
-    return () => {
-      if (documentFormBufferUrl) {
-        URL.revokeObjectURL(documentFormBufferUrl)
-      }
-      if (tmpDocumentFormBufferUrl) {
-        URL.revokeObjectURL(tmpDocumentFormBufferUrl)
+    const documentId = router.query.document_id as string
+    const initDocumentInfo = async (documentId: string) => {
+      try {
+        const documentInfo = await fetchDocumentInfo(documentId)
+        if (!documentInfo) router.replace(PROTECTED_ROUTES.DRAFT)
+        setCurrentDocumentInfo(documentInfo)
+      } catch (error) {
+        router.replace(PROTECTED_ROUTES.DRAFT)
       }
     }
-  }, [holdingDocuments])
+    Promise.all([initDocumentInfo(documentId)])
+  }, [])
 
   useEffect(() => {
-    async function renderPDF() {
+    const renderPDF = async () => {
+      const documentId = router.query.document_id as string
       const draftDocument = draftDocumentRef.current
       if (!draftDocument) return
-
-      const PSPDFKit: any = await import('pspdfkit')
-      const instance = await PSPDFKit.load({
-        container: draftDocument,
-        document: documentFormBufferUrl,
-        locale: 'th',
-        baseUrl: `${window.location.protocol}//${window.location.host}/`,
-      })
-      const selectedToolbarItems = [
-        'pan',
-        'zoom-out',
-        'zoom-in',
-        'zoom-mode',
-        'spacer',
-        'print',
-        'search',
-        'export-pdf',
-        'debug',
-      ]
-      const toolbarItems = instance.toolbarItems
-      instance.setToolbarItems(toolbarItems.filter((item: any) => selectedToolbarItems.includes(item.type)))
-      setDocumentPSPDFKitInstance(instance)
+      try {
+        const documentForm = await fetchDocumentForm(documentId)
+        if (!documentForm) router.replace(PROTECTED_ROUTES.DRAFT)
+        const documentFormBufferUrl = URL.createObjectURL(documentForm)
+        const PSPDFKit: any = await import('pspdfkit')
+        const instance = await PSPDFKit.load({
+          container: draftDocument,
+          document: documentFormBufferUrl,
+          locale: 'th',
+          baseUrl: `${window.location.protocol}//${window.location.host}/`,
+        })
+        const selectedToolbarItems = [
+          'pan',
+          'zoom-out',
+          'zoom-in',
+          'zoom-mode',
+          'spacer',
+          'print',
+          'search',
+          'export-pdf',
+          'debug',
+        ]
+        const toolbarItems = instance.toolbarItems
+        instance.setToolbarItems(toolbarItems.filter((item: any) => selectedToolbarItems.includes(item.type)))
+        setDocumentPSPDFKitInstance(instance)
+        URL.revokeObjectURL(documentFormBufferUrl)
+      } catch (error) {
+        router.replace(PROTECTED_ROUTES.DRAFT)
+      }
     }
-
     renderPDF()
 
     return () => {
-      async function unloadPDF() {
+      const unloadPDF = async () => {
         const draftDocument = draftDocumentRef.current
-        const PSPDFKit: any = await import('pspdfkit')
         if (!draftDocument) return
+        const PSPDFKit: any = await import('pspdfkit')
         if (PSPDFKit) {
           PSPDFKit.unload(draftDocument)
         }
       }
       unloadPDF()
     }
-  }, [documentFormBufferUrl, draftDocumentRef])
+  }, [draftDocumentRef.current])
 
   const DeleteDocumentDraftDialog = () => {
     const onCloseDialogHandler = () => {
@@ -115,10 +103,10 @@ const DocumentDraftPage: NextPage = () => {
       setIsOpenDeleteDialog(false)
     }
     const deleteDocumentHandler = async () => {
-      if (!currentDocument) return
+      if (!currentDocumentInfo) return
 
       try {
-        await deleteDraftDocument(currentDocument.docId)
+        await deleteDraftDocument(currentDocumentInfo.docId)
         alert('delete document successful')
       } catch (error) {
         alert('delete document unsuccessful')
@@ -133,7 +121,7 @@ const DocumentDraftPage: NextPage = () => {
         onClose={onCloseDialogHandler}
         onConfirm={deleteDocumentHandler}
         onReject={onRejectDialogHandler}
-        title={`${currentDocument?.template.title.th} จท.${currentDocument?.template.templateType}`}
+        title={`${currentDocumentInfo?.template.title.th} จท.${currentDocumentInfo?.template.templateType}`}
         description="ยืนยันที่จะลบโครงร่างคำร้อง"
       />
     )
@@ -147,11 +135,11 @@ const DocumentDraftPage: NextPage = () => {
       setIsOpenSaveDialog(false)
     }
     const saveDocumentHandler = async () => {
-      if (!documentPSPDFKitInstance || !currentDocument) return
+      if (!documentPSPDFKitInstance || !currentDocumentInfo) return
       const documentBuffer = await documentPSPDFKitInstance.exportPDF()
       const documentBlob = new Blob([documentBuffer], { type: 'application/pdf' })
       try {
-        await updateDocument(currentDocument.docId, documentBlob)
+        await updateDocument(currentDocumentInfo.docId, documentBlob)
         alert('save document successful')
       } catch (error) {
         alert('save document unsuccessful')
@@ -201,7 +189,7 @@ const DocumentDraftPage: NextPage = () => {
     setTmpDocumentFormBufferUrl(URL.createObjectURL(new Blob([documentBuffer], { type: 'application/pdf' })))
   }
 
-  if (!currentDocument) {
+  if (!currentDocumentInfo) {
     return null
   }
 
@@ -211,15 +199,15 @@ const DocumentDraftPage: NextPage = () => {
       <SaveDocumentDraftDialog />
       <PreviewDocumentDraftDialog />
       <div tw="text-h1 font-h1 text-black">
-        {`${currentDocument?.template.title.th} (จท${currentDocument?.template.templateType})`}
+        {`${currentDocumentInfo?.template.title.th} (จท${currentDocumentInfo?.template.templateType})`}
       </div>
       <div tw="px-4 py-2 flex flex-col flex-1 mb-4 gap-4">
         <div tw="flex justify-between text-black text-h2 font-h2">
           <div>กรุณากรอกข้อมูลที่ไม่ถูกสีระบายทับ</div>
-          <div>แก้ไขล่าสุด: {`${dayjs(`${currentDocument?.updatedAt}Z`).fromNow()}`}</div>
+          <div>แก้ไขล่าสุด: {`${dayjs(`${currentDocumentInfo?.updatedAt}Z`).fromNow()}`}</div>
         </div>
         <div tw="flex-1 flex justify-center items-center">
-          {documentFormBufferUrl && <div ref={draftDocumentRef} tw="w-full h-full" />}
+          <div ref={draftDocumentRef} tw="w-full h-full" />
         </div>
         <div tw="flex justify-end gap-4">
           <NeutralButton
