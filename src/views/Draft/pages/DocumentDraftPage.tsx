@@ -90,21 +90,21 @@ const DocumentDraftPage: NextPage = () => {
       const toolbarItems = instance.toolbarItems
       instance.setToolbarItems(toolbarItems.filter((item: any) => selectedToolbarItems.includes(item.type)))
       setDocumentPSPDFKitInstance(instance)
-
-      return () => {
-        async function unloadPDF() {
-          const draftDocument = draftDocumentRef.current
-          const PSPDFKit: any = await import('pspdfkit')
-          if (!draftDocument) return
-          if (PSPDFKit) {
-            PSPDFKit.unload(draftDocument)
-          }
-        }
-        unloadPDF()
-      }
     }
 
     renderPDF()
+
+    return () => {
+      async function unloadPDF() {
+        const draftDocument = draftDocumentRef.current
+        const PSPDFKit: any = await import('pspdfkit')
+        if (!draftDocument) return
+        if (PSPDFKit) {
+          PSPDFKit.unload(draftDocument)
+        }
+      }
+      unloadPDF()
+    }
   }, [documentFormBufferUrl, draftDocumentRef])
 
   const DeleteDocumentDraftDialog = () => {
