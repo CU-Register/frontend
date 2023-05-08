@@ -54,16 +54,21 @@ const getDocumentForm = async (documentId: string) => {
   return result
 }
 
-// TODO: update this
-const getPreviewDocument = async (documentId: string) => {
+const previewDocument = async (documentId: string, file: Blob) => {
   const path = `documents/${documentId}/preview`
+  const result: Blob = (await axiosInstance.postForm(path, { file }, { responseType: 'blob' })).data
+  return result
+}
+
+const getViewDocument = async (documentId: string) => {
+  const path = `documents/${documentId}/view`
   const result: Blob = (await axiosInstance.get(path, { responseType: 'blob' })).data
   return result
 }
 
-const forwardDocument = async (documentId: string, targetId: string) => {
+const forwardDocument = async (documentId: string, targetId: string, file: Blob) => {
   const path = `documents/${documentId}/forward`
-  await axiosInstance.put(path, { targetId })
+  await axiosInstance.putForm(path, { target_id: targetId, file })
 }
 
 const documentService = {
@@ -74,7 +79,8 @@ const documentService = {
   deleteDraftDocument,
   getDocumentInfo,
   getDocumentForm,
-  getPreviewDocument,
+  previewDocument,
+  getViewDocument,
   forwardDocument,
 }
 export default documentService

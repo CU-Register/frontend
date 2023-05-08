@@ -47,9 +47,9 @@ const useDocument = () => {
     }
   }
 
-  const fetchPreviewDocument = async (documentId: string) => {
+  const fetchPreviewDocument = async (documentId: string, file: Blob) => {
     try {
-      const documentPreview = await documentService.getPreviewDocument(documentId)
+      const documentPreview = await documentService.previewDocument(documentId, file)
       return documentPreview
     } catch (error) {
       throw new Error(`previewDocument error: ${error}`)
@@ -64,7 +64,22 @@ const useDocument = () => {
     }
   }
 
-  // const forwardDocument = async (documentId: string, targetId: string) => {}
+  const fetchViewDocument = async (documentId: string) => {
+    try {
+      const documentView = await documentService.getViewDocument(documentId)
+      return documentView
+    } catch (error) {
+      throw new Error(`fetchViewDocument error: ${error}`)
+    }
+  }
+
+  const forwardDocument = async (documentId: string, targetId: string, file: Blob) => {
+    try {
+      await documentService.forwardDocument(documentId, targetId, file)
+    } catch (error) {
+      throw new Error(`forwardDocument error: ${error}`)
+    }
+  }
 
   return {
     fetchHoldingDocuments,
@@ -74,6 +89,8 @@ const useDocument = () => {
     fetchDocumentForm,
     updateDocument,
     fetchPreviewDocument,
+    fetchViewDocument,
+    forwardDocument,
   }
 }
 
