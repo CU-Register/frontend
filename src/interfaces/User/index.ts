@@ -5,7 +5,7 @@ interface IUserDetail {
   en: string
 }
 
-export default interface IUser {
+export interface IUser {
   uid: string
   role: UserRole
   firstname: IUserDetail
