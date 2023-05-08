@@ -1,4 +1,6 @@
+import { IUser } from 'interfaces/User'
 import documentService from 'services/document.service'
+import userService from 'services/user.service'
 import { useDocumentStore } from 'stores/document.store'
 
 const useDocument = () => {
@@ -90,6 +92,18 @@ const useDocument = () => {
     }
   }
 
+  const fetchTargets = async (query: string) => {
+    try {
+      const targets = await userService.getUsers(query || '')
+      documentStore.setTargets(targets)
+    } catch (error) {
+      throw new Error(`fetchTargets error: ${error}`)
+    }
+  }
+  const updateSelectedTarget = (target: IUser) => {
+    documentStore.setSelectedTarget(target)
+  }
+
   return {
     fetchHoldingDocuments,
     fetchHistoryDocuments,
@@ -101,6 +115,8 @@ const useDocument = () => {
     fetchPreviewDocument,
     fetchViewDocument,
     forwardDocument,
+    fetchTargets,
+    updateSelectedTarget,
   }
 }
 

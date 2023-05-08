@@ -6,18 +6,18 @@ interface IDocumentStore {
   holdingDocuments: IDocument[] | null
   historyDocuments: IDocument[] | null
   targets: IUser[] | null
-  selectedTargetToForward: IUser | null
+  selectedTarget: IUser | null
   setHoldingDocuments: (holdingDocuments: IDocument[] | null) => void
   setHistoryDocuments: (historyDocuments: IDocument[] | null) => void
   setTargets: (targets: IUser[] | null) => void
-  setSelectedTargetToForward: (selectedTargetToForward: IUser | null) => void
+  setSelectedTarget: (selectedTarget: IUser | null) => void
 }
 
 const initialState = {
   holdingDocuments: null,
   historyDocuments: null,
   targets: null,
-  selectedTargetToForward: null,
+  selectedTarget: null,
 }
 
 export const useDocumentStore = create<IDocumentStore>((set, get) => ({
@@ -25,5 +25,5 @@ export const useDocumentStore = create<IDocumentStore>((set, get) => ({
   setHoldingDocuments: (holdingDocuments) => set({ holdingDocuments }),
   setHistoryDocuments: (historyDocuments) => set({ historyDocuments }),
   setTargets: (targets) => set({ targets }),
-  setSelectedTargetToForward: (selectedTargetToForward) => set({ selectedTargetToForward }),
+  setSelectedTarget: (selectedTarget) => set({ selectedTarget }),
 }))

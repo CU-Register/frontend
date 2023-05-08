@@ -4,6 +4,7 @@ import PDFPreviewDialog from 'components/Dialogs/PDFPreviewDialog'
 import VerticalDivider from 'components/Dividers/VerticalDivider'
 import NeutralButton from 'components/NeutralButton'
 import PinkButton from 'components/PinkButton'
+import SearchUserComboBox from 'components/SearchUserComboBox'
 import { PROTECTED_ROUTES } from 'constants/Routes'
 import dayjs from 'dayjs'
 import relativeTime from 'dayjs/plugin/relativeTime'
@@ -215,6 +216,7 @@ const DocumentDraftPage: NextPage = () => {
         <div tw="flex-1 flex justify-center items-center">
           <div ref={draftDocumentRef} tw="w-full h-full" />
         </div>
+        <SearchUserComboBox />
         <div tw="flex justify-end gap-4">
           <NeutralButton
             text="ยกเลิกเอกสาร"

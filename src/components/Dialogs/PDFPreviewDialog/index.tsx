@@ -58,9 +58,9 @@ const PDFPreviewDialog: FC<IPDFPreviewDialogProps> = ({
                     </div>
                     {/* TODO implement search combobox*/}
                     {isToForward && (
-                      <div tw="flex flex-col gap-2">
-                        <div tw="flex justify-center text-h2 font-h2 text-black">ส่งคำร้องต่อให้</div>
-                        <div tw="flex justify-center">search combobox</div>
+                      <div tw="flex justify-center items-center gap-2">
+                        <div tw=" text-h2 font-h2 text-black">ส่งคำร้องต่อให้:</div>
+                        <div tw="text-h2 font-h2">name surname</div>
                       </div>
                     )}
                     <div tw="flex p-2 gap-2 justify-center">
