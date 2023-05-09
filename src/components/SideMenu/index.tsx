@@ -3,9 +3,11 @@ import { UserRole } from 'enums/UserRole'
 import useAuth from 'hooks/useAuth'
 import Image from 'next/image'
 import { useRouter } from 'next/router'
-import { FC } from 'react'
+import { FC, SVGProps } from 'react'
 import tw from 'twin.macro'
 import SideMenuButton from './SideMenuButton'
+import { useProfileStore } from 'stores/profile.store'
+import { fullNameFormatterWithoutPlaceholder } from 'utils/formats'
 
 interface ISideMenu {
   isShow?: boolean
@@ -14,6 +16,7 @@ interface ISideMenu {
 const SideMenu: FC<ISideMenu> = (props) => {
   const { logout } = useAuth()
   const router = useRouter()
+  const { userProfile } = useProfileStore()
 
   const hideProtectedRoutesButton = () => {
     return Object.values(COMMON_ROUTES).includes(router.pathname)
@@ -42,15 +45,15 @@ const SideMenu: FC<ISideMenu> = (props) => {
 
   const profilePageButtonHandler = pushToPageHandler('/profile')
 
-  const logoutPageButtonHandler = (event: React.MouseEvent<HTMLButtonElement>) => {
-    event.preventDefault()
+  const logoutPageButtonHandler = () => {
     logout()
   }
 
   const isCommon = isCommonRoutesButton()
-  const isStudent = props.role === UserRole.STUDENT
-  const isStaff = props.role === UserRole.FACULTY
-  const isAdmin = props.role === UserRole.ADMIN
+  const isStudent = userProfile?.role === UserRole.STUDENT
+  const isStaff = userProfile?.role === UserRole.FACULTY
+  const isAdmin = userProfile?.role === UserRole.ADMIN
+  const abbreviationName = (userProfile?.firstname.en.at(0) ?? 'C') + (userProfile?.lastname.en.at(0) ?? 'U')
 
   return (
     <div
@@ -113,13 +116,37 @@ const SideMenu: FC<ISideMenu> = (props) => {
             isFocused={router.pathname.includes(PROTECTED_ROUTES.PROFILE)}
             isShow={isStudent}
           />
-          <SideMenuButton
+          {/* <SideMenuButton
             text="ออกจากระบบ"
             onClick={logoutPageButtonHandler}
             isFocused={router.pathname.includes(PROTECTED_ROUTES.LOGOUT)}
             isShow={isStudent || isStaff || isAdmin}
-          />
+          /> */}
         </div>
+      </div>
+      <div tw="absolute px-6 bottom-6 flex h-12 w-full justify-between items-center text-white">
+        <div tw="flex items-start justify-center">
+          <div tw="w-12 h-12 bg-white mr-2 rounded-xl flex justify-center items-center">
+            <span tw="text-h1 font-h1 text-cu-pinkLd">{abbreviationName}</span>
+          </div>
+          <div>
+            <div tw="text-h2 font-h2">
+              {fullNameFormatterWithoutPlaceholder(userProfile?.firstname.en, userProfile?.lastname.en)}
+            </div>
+            <div tw="text-h3">{userProfile?.uid}</div>
+          </div>
+        </div>
+        {isAdmin ||
+          ((isStudent || isStaff) && (
+            <svg xmlns="http://www.w3.org/2000/svg" tw="w-6 h-6  cursor-pointer" onClick={logoutPageButtonHandler}>
+              <g>
+                <path
+                  fill="#fff"
+                  d="M4 18h2v2h12V4H6v2H4V3a1 1 0 0 1 1-1h14a1 1 0 0 1 1 1v18a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1v-3zm2-7h7v2H6v3l-5-4 5-4v3z"
+                />
+              </g>
+            </svg>
+          ))}
       </div>
       {/* <LanguageToggleSwitch /> */}
     </div>
