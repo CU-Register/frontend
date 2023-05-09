@@ -10,7 +10,6 @@ const HistoryDocumentTable: FC<IHistoryDocumentTableProps> = () => {
   const { historyDocuments, holdingDocuments } = useDocumentStore()
   const { userProfile } = useProfileStore()
   const router = useRouter()
-  const isStudent = userProfile?.role === 'student'
   const isStaff = userProfile?.role === 'faculty'
 
   const pushToPageHandler = (path: string) => {
@@ -48,9 +47,6 @@ const HistoryDocumentTable: FC<IHistoryDocumentTableProps> = () => {
                 <th tw="font-h2 text-h2 text-gray" className="text-start">
                   วันที่ถูกส่งมา
                 </th>
-                <th tw="font-h2 text-h2 text-gray" className="text-start">
-                  วันที่ยื่นคำร้อง
-                </th>
               </tr>
             </thead>
             <tbody tw="overflow-auto cursor-pointer font-h2 text-h2 text-black">
@@ -70,7 +66,6 @@ const HistoryDocumentTable: FC<IHistoryDocumentTableProps> = () => {
                       {historyDocument.creator.firstname.th} {historyDocument.creator.lastname.th}
                     </td>
                     <td tw="">{dateFormatter(historyDocument.grantedAt)}</td>
-                    <td tw="">{dateFormatter(historyDocument.createdAt)}</td>
                   </tr>
                 )
               })}
@@ -94,6 +89,9 @@ const HistoryDocumentTable: FC<IHistoryDocumentTableProps> = () => {
                 ชื่อคำร้อง
               </th>
               <th tw="font-h2 text-h2 text-gray" className="text-start">
+                เลขจท.
+              </th>
+              <th tw="font-h2 text-h2 text-gray" className="text-start">
                 วันที่ยื่นคำร้อง
               </th>
               <th tw="font-h2 text-h2 text-gray" className="text-start">
@@ -101,15 +99,16 @@ const HistoryDocumentTable: FC<IHistoryDocumentTableProps> = () => {
               </th>
             </tr>
           </thead>
-          <tbody tw="overflow-auto cursor-pointer font-h2 text-h2 text-black hover:text-cu-pink">
+          <tbody tw="overflow-auto cursor-pointer font-h2 text-h2 text-black ">
             {historyDocuments.map((historyDocument, index) => {
               return (
                 <tr
                   key={index}
-                  tw=" font-h2 text-h2 text-black"
+                  tw=" font-h2 text-h2 text-black hover:text-cu-pink"
                   onClick={handleClickUserHistory(historyDocument.docId)}
                 >
                   <td tw="">{historyDocument.template.title.th}</td>
+                  <td tw="">{historyDocument.template.templateType}</td>
                   <td tw="">{dateFormatter(historyDocument.createdAt)}</td>
                   <td tw="">{historyDocument.status}</td>
                 </tr>
