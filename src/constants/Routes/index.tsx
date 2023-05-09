@@ -5,6 +5,7 @@ const COMMON_ROUTES = {
 const PROTECTED_ROUTES = {
   HOME: '/',
   REQUEST: '/request',
+  STAFF_REQUEST: '/staff/request',
   LOGOUT: '/logout',
   DRAFT: '/draft',
   STATUS: '/status',

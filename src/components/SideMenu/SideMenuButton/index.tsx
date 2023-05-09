@@ -11,7 +11,11 @@ interface ISideMenuButtonProps {
 const SideMenuButton: FC<ISideMenuButtonProps> = ({ text, onClick, isFocused, isShow }) => {
   return (
     <button
-      css={[tw`font-h2 text-h2 text-white hover:text-cu-pink`, isFocused && tw`text-cu-pink`, !isShow && tw`hidden`]}
+      css={[
+        tw`font-h2 text-h2 px-[50px] text-left w-full text-white hover:text-cu-pink`,
+        isFocused && tw`text-cu-pink`,
+        !isShow && tw`hidden`,
+      ]}
       onClick={onClick}
     >
       {text}

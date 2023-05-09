@@ -23,30 +23,24 @@ const SideMenu: FC<ISideMenu> = (props) => {
     return Object.values(COMMON_ROUTES).includes(router.pathname)
   }
 
-  const homePageButtonHandler = (event: React.MouseEvent<HTMLButtonElement>) => {
-    event.preventDefault()
-    router.push('/')
+  const pushToPageHandler = (path: string) => {
+    return (event: React.MouseEvent<HTMLButtonElement>) => {
+      event.preventDefault()
+      router.push(path)
+    }
   }
 
-  const requestPageButtonHandler = (event: React.MouseEvent<HTMLButtonElement>) => {
-    event.preventDefault()
-    router.push('/request')
-  }
+  const homePageButtonHandler = pushToPageHandler('/')
 
-  const draftPageButtonHandler = (event: React.MouseEvent<HTMLButtonElement>) => {
-    event.preventDefault()
-    router.push('/draft')
-  }
+  const requestPageButtonHandler = pushToPageHandler('/request')
 
-  const statusPageButtonHandler = (event: React.MouseEvent<HTMLButtonElement>) => {
-    event.preventDefault()
-    router.push('/status')
-  }
+  const actionPageButtonHandler = pushToPageHandler('/staff/request')
 
-  const profilePageButtonHandler = (event: React.MouseEvent<HTMLButtonElement>) => {
-    event.preventDefault()
-    router.push('/profile')
-  }
+  const draftPageButtonHandler = pushToPageHandler('/draft')
+
+  const statusPageButtonHandler = pushToPageHandler('/status')
+
+  const profilePageButtonHandler = pushToPageHandler('/profile')
 
   const logoutPageButtonHandler = (event: React.MouseEvent<HTMLButtonElement>) => {
     event.preventDefault()
@@ -55,11 +49,13 @@ const SideMenu: FC<ISideMenu> = (props) => {
 
   const isCommon = isCommonRoutesButton()
   const isStudent = props.role == UserRole.STUDENT
+  const isStaff = props.role == UserRole.FACULTY
+  const isAdmin = props.role == UserRole.ADMIN
 
   return (
     <div
       css={[
-        tw`h-screen w-[280px] transition-all p-[50px] bg-cu-pinkLd shadow-2xl justify-between flex flex-col absolute z-10 md:(relative shadow-none)`,
+        tw`h-screen w-[280px] transition-all py-[50px] bg-cu-pinkLd shadow-2xl justify-between flex flex-col absolute z-10 md:(relative shadow-none)`,
         !props.isShow && tw`-translate-x-full md:(translate-x-0)`,
       ]}
     >
@@ -70,8 +66,7 @@ const SideMenu: FC<ISideMenu> = (props) => {
           </div>
           <div tw="text-h1 font-h1 text-white">CUADRS</div>
         </div>
-        <div tw="mt-8 flex flex-col items-start gap-5">
-          {props.role}
+        <div tw="mt-8 flex flex-col items-start gap-5 min-w-[280px] w-full">
           {/* Common Routes */}
           <SideMenuButton text="เข้าสู่ระบบ" isFocused={router.pathname === COMMON_ROUTES.LOGIN} isShow={isCommon} />
 
@@ -80,13 +75,19 @@ const SideMenu: FC<ISideMenu> = (props) => {
             text="หน้าหลัก"
             onClick={homePageButtonHandler}
             isFocused={router.pathname === '/'}
-            isShow={isStudent}
+            isShow={isStudent || isStaff}
           />
           <SideMenuButton
             text="ยื่นคำร้อง"
             onClick={requestPageButtonHandler}
             isFocused={router.pathname.includes(PROTECTED_ROUTES.REQUEST)}
             isShow={isStudent}
+          />
+          <SideMenuButton
+            text="คำร้องที่รอดำเนินการ"
+            onClick={actionPageButtonHandler}
+            isFocused={router.pathname.includes(PROTECTED_ROUTES.STAFF_REQUEST)}
+            isShow={isStaff}
           />
           <SideMenuButton
             text="โครงร่างคำร้อง"
