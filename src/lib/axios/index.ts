@@ -1,8 +1,9 @@
 import axios from 'axios'
+import { NEXT_PUBLIC_BASE_API_URL } from 'constants/config.json'
 import { useAuthStore } from 'stores/auth.store'
 
 const axiosInstance = axios.create({
-  baseURL: process.env.NEXT_PUBLIC_BASE_API_URL,
+  baseURL: NEXT_PUBLIC_BASE_API_URL,
   withCredentials: true,
 })
 
