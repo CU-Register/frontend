@@ -24,7 +24,7 @@ axiosInstance.interceptors.response.use(
     return response
   },
   async (error) => {
-    console.error('error at interceptor:', error)
+    // console.error('error at interceptor:', error)
 
     // if (error.response?.status === 401) {
     //   try {

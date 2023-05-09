@@ -1,4 +1,4 @@
-import ActionDialog from 'components/Dialog/ActionDialog'
+import ActionDialog from 'components/Dialogs/ActionDialog'
 import TemplateCard from 'components/TemplateCard'
 import useDocument from 'hooks/useDocument'
 import { ITemplate } from 'interfaces/Template'
@@ -35,6 +35,7 @@ const TemplateListSection: FC = () => {
   const onConfirmDialogHandler = async () => {
     if (!selectedTemplate) return
     await createDocument(selectedTemplate.templateType)
+    alert('create document successful')
     setIsOpenDialog(false)
   }
 

@@ -1,3 +1,4 @@
+import { useRouter } from 'next/router'
 import { FC } from 'react'
 import { useDocumentStore } from 'stores/document.store'
 import 'twin.macro'
@@ -6,6 +7,11 @@ import { dateFormatter } from 'utils/formats'
 interface IDocumentDraftTableProps {}
 const DocumentDraftTable: FC<IDocumentDraftTableProps> = () => {
   const { holdingDocuments } = useDocumentStore()
+  const router = useRouter()
+
+  const holdingDocumentClickHandler = (event: React.MouseEvent<HTMLTableRowElement>, docId: string) => {
+    router.push(`/draft/${docId}`)
+  }
 
   return (
     <>
@@ -30,9 +36,7 @@ const DocumentDraftTable: FC<IDocumentDraftTableProps> = () => {
                     key={index}
                     tw="text-black font-h2 text-h2"
                     className="group"
-                    onClick={() => {
-                      console.log('test')
-                    }}
+                    onClick={(event) => holdingDocumentClickHandler(event, holdingDocument.docId)}
                   >
                     <td tw="group-hover:text-cu-pink">{holdingDocument.template.title.th}</td>
                     <td tw="group-hover:text-cu-pink">{holdingDocument.template.templateType}</td>
