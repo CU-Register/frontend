@@ -1,4 +1,3 @@
-import PinkButton from 'components/PinkButton'
 import PreAuthLayout from 'layouts/PreAuthLayout'
 import { NextPage } from 'next'
 import 'twin.macro'
@@ -13,9 +12,9 @@ const LoginPage: NextPage<ILoginPageProps> = () => {
   return (
     <PreAuthLayout>
       <div tw="flex flex-col min-h-full">
-        <div>
+        {/* <div>
           <PinkButton text={'ข้อกำหนด'} onClick={policyButtonHandler} />
-        </div>
+        </div> */}
         <div tw="mt-12">
           <div tw="p-6 w-full flex flex-col justify-center items-center gap-20">
             <div tw="text-h1 font-h1 text-black">เข้าสู่ระบบการยื่นคำร้องเพื่อขอเอกสารสำคัญทางการศึกษา</div>
