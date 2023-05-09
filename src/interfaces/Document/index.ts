@@ -2,6 +2,13 @@ import { DocumentStatus } from 'enums/Document'
 import { UserRole } from 'enums/UserRole'
 import { ITemplate } from 'interfaces/Template'
 
+export interface IDocumentSummary {
+  incoming: number
+  approved: number
+  declined: number
+  overall: number
+}
+
 interface IDocumentDetail {
   th: string
   en: string
@@ -49,13 +56,14 @@ interface IDocumentInfoStakeHolder {
   academicSystem: IDocumentInfoOption
   telephone: string
 }
-interface IDocumentInfoTimeline {
+export interface IDocumentInfoTimeline {
   message: IDocumentDetail
   actor: {
     firstname: IDocumentDetail
     lastname: IDocumentDetail
     actor_id: string
   }
+  step: number
   timestamp: Date
 }
 
@@ -73,4 +81,8 @@ export interface IDocumentInfo {
   creator: IDocumentInfoStakeHolder
   holder: IDocumentInfoStakeHolder
   timeline: IDocumentInfoTimeline[]
+}
+
+export interface ICreateDocumentResponseDTO {
+  docId: string
 }

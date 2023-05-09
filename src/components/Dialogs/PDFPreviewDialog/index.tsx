@@ -11,6 +11,7 @@ interface IPDFPreviewDialogProps {
   onReject: () => void
   pdfUrl?: string | null
   isToForward?: boolean
+  isToApprove?: boolean
   selectedTargetFullName?: string
 }
 
@@ -22,6 +23,7 @@ const PDFPreviewDialog: FC<IPDFPreviewDialogProps> = ({
   onReject,
   pdfUrl,
   isToForward = false,
+  isToApprove = false,
   selectedTargetFullName,
 }) => {
   return (
@@ -62,6 +64,9 @@ const PDFPreviewDialog: FC<IPDFPreviewDialogProps> = ({
                         <div tw=" text-h2 font-h2 text-black">ส่งคำร้องต่อให้:</div>
                         <div tw="text-h2 font-h2">{selectedTargetFullName}</div>
                       </div>
+                    )}
+                    {isToApprove && (
+                      <div tw=" text-h2 font-h2 text-black flex justify-center">อนุมัติและจบการดำเนินการ</div>
                     )}
                     <div tw="flex p-2 gap-2 justify-center">
                       <button tw="text-gray font-h2 text-h2 px-2 py-1" onClick={onReject}>

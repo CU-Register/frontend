@@ -1,4 +1,5 @@
 import { COMMON_ROUTES, PROTECTED_ROUTES } from 'constants/Routes'
+import { UserRole } from 'enums/UserRole'
 import useAuth from 'hooks/useAuth'
 import Image from 'next/image'
 import { useRouter } from 'next/router'
@@ -8,6 +9,7 @@ import SideMenuButton from './SideMenuButton'
 
 interface ISideMenu {
   isShow?: boolean
+  role?: UserRole
 }
 const SideMenu: FC<ISideMenu> = (props) => {
   const { logout } = useAuth()
@@ -17,44 +19,43 @@ const SideMenu: FC<ISideMenu> = (props) => {
     return Object.values(COMMON_ROUTES).includes(router.pathname)
   }
 
-  const hideCommonRoutesButton = () => {
-    return !Object.values(COMMON_ROUTES).includes(router.pathname)
+  const isCommonRoutesButton = () => {
+    return Object.values(COMMON_ROUTES).includes(router.pathname)
   }
 
-  const homePageButtonHandler = (event: React.MouseEvent<HTMLButtonElement>) => {
-    event.preventDefault()
-    router.push('/')
+  const pushToPageHandler = (path: string) => {
+    return (event: React.MouseEvent<HTMLButtonElement>) => {
+      event.preventDefault()
+      router.push(path)
+    }
   }
 
-  const requestPageButtonHandler = (event: React.MouseEvent<HTMLButtonElement>) => {
-    event.preventDefault()
-    router.push('/request')
-  }
+  const homePageButtonHandler = pushToPageHandler('/')
 
-  const draftPageButtonHandler = (event: React.MouseEvent<HTMLButtonElement>) => {
-    event.preventDefault()
-    router.push('/draft')
-  }
+  const requestPageButtonHandler = pushToPageHandler('/request')
 
-  const statusPageButtonHandler = (event: React.MouseEvent<HTMLButtonElement>) => {
-    event.preventDefault()
-    router.push('/status')
-  }
+  const actionPageButtonHandler = pushToPageHandler('/staff/request')
 
-  const profilePageButtonHandler = (event: React.MouseEvent<HTMLButtonElement>) => {
-    event.preventDefault()
-    router.push('/profile')
-  }
+  const draftPageButtonHandler = pushToPageHandler('/draft')
+
+  const statusPageButtonHandler = pushToPageHandler('/status')
+
+  const profilePageButtonHandler = pushToPageHandler('/profile')
 
   const logoutPageButtonHandler = (event: React.MouseEvent<HTMLButtonElement>) => {
     event.preventDefault()
     logout()
   }
 
+  const isCommon = isCommonRoutesButton()
+  const isStudent = props.role === UserRole.STUDENT
+  const isStaff = props.role === UserRole.FACULTY
+  const isAdmin = props.role === UserRole.ADMIN
+
   return (
     <div
       css={[
-        tw`h-screen w-[280px] transition-all p-[50px] bg-cu-pinkLd shadow-2xl justify-between flex flex-col absolute z-10 md:(relative shadow-none)`,
+        tw`h-screen w-[280px] transition-all py-[50px] bg-cu-pinkLd shadow-2xl justify-between flex flex-col absolute z-10 md:(relative shadow-none)`,
         !props.isShow && tw`-translate-x-full md:(translate-x-0)`,
       ]}
     >
@@ -65,50 +66,58 @@ const SideMenu: FC<ISideMenu> = (props) => {
           </div>
           <div tw="text-h1 font-h1 text-white">CUADRS</div>
         </div>
-        <div tw="mt-8 flex flex-col items-start gap-5">
+        <div tw="mt-8 flex flex-col items-start gap-5 min-w-[280px] w-full">
           {/* Common Routes */}
-          <SideMenuButton
-            text="เข้าสู่ระบบ"
-            isFocused={router.pathname === COMMON_ROUTES.LOGIN}
-            hidden={hideCommonRoutesButton()}
-          />
+          <SideMenuButton text="เข้าสู่ระบบ" isFocused={router.pathname === COMMON_ROUTES.LOGIN} isShow={isCommon} />
 
           {/* Protected Routes */}
           <SideMenuButton
             text="หน้าหลัก"
             onClick={homePageButtonHandler}
             isFocused={router.pathname === '/'}
-            hidden={hideProtectedRoutesButton()}
+            isShow={isStudent || isStaff}
           />
           <SideMenuButton
-            text="ยิื่นคำร้อง"
+            text="ยื่นคำร้อง"
             onClick={requestPageButtonHandler}
             isFocused={router.pathname.includes(PROTECTED_ROUTES.REQUEST)}
-            hidden={hideProtectedRoutesButton()}
+            isShow={isStudent}
+          />
+          <SideMenuButton
+            text="คำร้องที่รอดำเนินการ"
+            onClick={actionPageButtonHandler}
+            isFocused={router.pathname.includes(PROTECTED_ROUTES.STAFF_REQUEST)}
+            isShow={isStaff}
           />
           <SideMenuButton
             text="โครงร่างคำร้อง"
             onClick={draftPageButtonHandler}
             isFocused={router.pathname.includes(PROTECTED_ROUTES.DRAFT)}
-            hidden={hideProtectedRoutesButton()}
+            isShow={isStudent}
           />
           <SideMenuButton
             text="ตรวจสอบสถานะ"
             onClick={statusPageButtonHandler}
             isFocused={router.pathname.includes(PROTECTED_ROUTES.STATUS)}
-            hidden={hideProtectedRoutesButton()}
+            isShow={isStudent}
+          />
+          <SideMenuButton
+            text="ประวัติคำร้อง"
+            onClick={statusPageButtonHandler}
+            isFocused={router.pathname.includes(PROTECTED_ROUTES.STATUS)}
+            isShow={isStaff}
           />
           <SideMenuButton
             text="ข้อมูลผู้ใช้"
             onClick={profilePageButtonHandler}
             isFocused={router.pathname.includes(PROTECTED_ROUTES.PROFILE)}
-            hidden={hideProtectedRoutesButton()}
+            isShow={isStudent}
           />
           <SideMenuButton
             text="ออกจากระบบ"
             onClick={logoutPageButtonHandler}
             isFocused={router.pathname.includes(PROTECTED_ROUTES.LOGOUT)}
-            hidden={hideProtectedRoutesButton()}
+            isShow={isStudent || isStaff || isAdmin}
           />
         </div>
       </div>

@@ -6,6 +6,15 @@ import { useDocumentStore } from 'stores/document.store'
 const useDocument = () => {
   const documentStore = useDocumentStore()
 
+  const fetchDocumentSummary = async () => {
+    try {
+      const documentSummary = await documentService.getDocumentSummary()
+      documentStore.setSummaryDocuments(documentSummary)
+    } catch (error) {
+      throw new Error(`fetchSummaryDocuments error: ${error}`)
+    }
+  }
+
   const fetchHoldingDocuments = async () => {
     try {
       const holdingDocuments = await documentService.getHoldingDocuments()
@@ -26,7 +35,8 @@ const useDocument = () => {
 
   const createDocument = async (templateType: string) => {
     try {
-      await documentService.createDocument(templateType)
+      const result = await documentService.createDocument(templateType)
+      return result
     } catch (error) {
       throw new Error(`createDocument error: ${error}`)
     }
@@ -117,6 +127,7 @@ const useDocument = () => {
     forwardDocument,
     fetchTargets,
     updateSelectedTarget,
+    fetchDocumentSummary,
   }
 }
 
