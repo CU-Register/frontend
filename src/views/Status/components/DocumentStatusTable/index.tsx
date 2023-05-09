@@ -5,8 +5,8 @@ import { useProfileStore } from 'stores/profile.store'
 import 'twin.macro'
 import { dateFormatter, fullNameFormatter } from 'utils/formats'
 
-interface IRequestStatusTableProps {}
-const RequestStatusTable: FC<IRequestStatusTableProps> = () => {
+interface IDocumentStatusTableProps {}
+const DocumentStatusTable: FC<IDocumentStatusTableProps> = () => {
   const { historyDocuments } = useDocumentStore()
   const { userProfile } = useProfileStore()
 
@@ -53,4 +53,4 @@ const RequestStatusTable: FC<IRequestStatusTableProps> = () => {
   )
 }
 
-export default RequestStatusTable
+export default DocumentStatusTable
