@@ -226,12 +226,19 @@ const DocumentDraftPage: NextPage = () => {
       <DeleteDocumentDraftDialog />
       <SaveDocumentDraftDialog />
       <PreviewDocumentDraftDialog />
-      <div tw="text-h1 font-h1 text-black">
-        {`${currentDocumentInfo?.template.title.th} (จท${currentDocumentInfo?.template.templateType})`}
+      <div tw="flex justify-between items-center">
+        <div tw="text-h1 font-h1 text-black">
+          {`${currentDocumentInfo?.template.title.th} (จท${currentDocumentInfo?.template.templateType})`}
+        </div>
+        <div>
+          <div tw="flex justify-between text-black text-h2 font-h2">
+            ผู้ส่งคำร้อง: {currentDocumentInfo?.creator.firstname.th} {currentDocumentInfo?.creator.lastname.th}
+          </div>
+        </div>
       </div>
       <div tw="px-4 py-2 flex flex-col flex-1 mb-4 gap-4">
         <div tw="flex justify-between text-black text-h2 font-h2">
-          <div>กรุณากรอกข้อมูลที่ไม่ถูกสีระบายทับ</div>
+          <div>กรุณากรอกข้อมูลในพื้นที่ที่ถูกล้อมรอบด้วยสีน้ำเงิน</div>
           <div>แก้ไขล่าสุด: {`${dayjs(`${currentDocumentInfo?.updatedAt}Z`).fromNow()}`}</div>
         </div>
         <div tw="flex-1 flex justify-center items-center">
