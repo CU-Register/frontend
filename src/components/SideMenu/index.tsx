@@ -1,11 +1,11 @@
 import { COMMON_ROUTES, PROTECTED_ROUTES } from 'constants/Routes'
+import { UserRole } from 'enums/UserRole'
 import useAuth from 'hooks/useAuth'
 import Image from 'next/image'
 import { useRouter } from 'next/router'
 import { FC } from 'react'
 import tw from 'twin.macro'
 import SideMenuButton from './SideMenuButton'
-import { UserRole } from 'enums/UserRole'
 
 interface ISideMenu {
   isShow?: boolean
@@ -48,9 +48,9 @@ const SideMenu: FC<ISideMenu> = (props) => {
   }
 
   const isCommon = isCommonRoutesButton()
-  const isStudent = props.role == UserRole.STUDENT
-  const isStaff = props.role == UserRole.FACULTY
-  const isAdmin = props.role == UserRole.ADMIN
+  const isStudent = props.role === UserRole.STUDENT
+  const isStaff = props.role === UserRole.FACULTY
+  const isAdmin = props.role === UserRole.ADMIN
 
   return (
     <div
@@ -117,7 +117,7 @@ const SideMenu: FC<ISideMenu> = (props) => {
             text="ออกจากระบบ"
             onClick={logoutPageButtonHandler}
             isFocused={router.pathname.includes(PROTECTED_ROUTES.LOGOUT)}
-            isShow={isStudent}
+            isShow={isStudent || isStaff || isAdmin}
           />
         </div>
       </div>
