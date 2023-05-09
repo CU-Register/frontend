@@ -37,7 +37,7 @@ const CheckStatusPage: NextPage = () => {
 
   return (
     <MainLayout header="ตรวจสอบสถานะการยื่นคำร้อง">
-      <div tw="flex w-full overflow-auto gap-5 mb-2">
+      <div tw="flex w-full overflow-auto gap-5 mb-2 flex-1">
         <div tw="flex flex-col max-w-[70%]">
           {documentInfo && (
             <div tw="font-h1 text-h1 text-black">{`${documentInfo?.template.title.th} (จท ${documentInfo?.template.templateType})`}</div>
@@ -55,7 +55,7 @@ const CheckStatusPage: NextPage = () => {
               <div>การดำเนินการคำร้องของท่าน</div>
               <div tw="text-cu-pink flex flex-col gap-1 overflow-auto">
                 {userTimeline.map((tl, index) => {
-                  return <div key={index}>{`(${tl.step}) ${tl.message.th}`}</div>
+                  return <div key={index}>{`(${tl.step + 1}) ${tl.message.th}`}</div>
                 })}
               </div>
             </div>

@@ -41,6 +41,7 @@ const DocumentDraftPage: NextPage = () => {
   const [previewDocumentFormBufferUrl, setPreviewDocumentFormBufferUrl] = useState<string | null>(null)
   const [documentPSPDFKitInstance, setDocumentPSPDFKitInstance] = useState<Instance | null>(null)
   const draftDocumentRef = useRef<HTMLDivElement>(null)
+  console.log(currentDocumentInfo)
 
   useEffect(() => {
     const documentId = router.query.document_id as string
@@ -182,11 +183,18 @@ const DocumentDraftPage: NextPage = () => {
       setIsOpenPreviewDialog(false)
     }
     const forwardDocumentHandler = async () => {
-      if (!documentPSPDFKitInstance || !currentDocumentInfo || !selectedTarget) return
+      if (
+        !documentPSPDFKitInstance ||
+        !currentDocumentInfo ||
+        (!selectedTarget && currentDocumentInfo?.step.current != currentDocumentInfo?.step.overall)
+      )
+        return
       const documentBuffer = await documentPSPDFKitInstance.exportPDF()
       const documentBlob = new Blob([documentBuffer], { type: 'application/pdf' })
+      console.log('log')
+
       try {
-        await forwardDocument(currentDocumentInfo.docId, selectedTarget.uid, documentBlob)
+        await forwardDocument(currentDocumentInfo.docId, selectedTarget?.uid || '', documentBlob)
         alert('submit document successful')
       } catch (error) {
         alert('submit document unsuccessful')
@@ -198,12 +206,17 @@ const DocumentDraftPage: NextPage = () => {
     return (
       <PDFPreviewDialog
         isOpen={isOpenPreviewDialog}
-        title={'ยืนยันที่จะส่งคำร้อง'}
+        title={
+          currentDocumentInfo?.step.current == currentDocumentInfo?.step.overall
+            ? 'ยืนยันการอนุมัติเอกสาร'
+            : 'ยืนยันที่จะส่งคำร้อง'
+        }
         onClose={onCloseDialogHandler}
         onConfirm={forwardDocumentHandler}
         onReject={onRejectDialogHandler}
         pdfUrl={previewDocumentFormBufferUrl}
-        isToForward={true}
+        isToForward={currentDocumentInfo?.step.current != currentDocumentInfo?.step.overall}
+        isToApprove={currentDocumentInfo?.step.current == currentDocumentInfo?.step.overall}
         selectedTargetFullName={fullNameFormatter(selectedTarget?.firstname.th, selectedTarget?.lastname.th)}
       />
     )
@@ -261,17 +274,30 @@ const DocumentDraftPage: NextPage = () => {
             />
           </div>
           <div tw="flex gap-5 items-center">
-            <div tw="w-[280px]">
-              <SearchUserComboBox />
-            </div>
-            <PinkButton
-              text="ไปต่อ"
-              onClick={async () => {
-                await setupPreviewDraftDocument()
-                setIsOpenPreviewDialog(true)
-              }}
-              disabled={!selectedTarget}
-            />
+            {currentDocumentInfo.step.current != currentDocumentInfo.step.overall && (
+              <>
+                <div tw="w-[280px]">
+                  <SearchUserComboBox />
+                </div>
+                <PinkButton
+                  text="ไปต่อ"
+                  onClick={async () => {
+                    await setupPreviewDraftDocument()
+                    setIsOpenPreviewDialog(true)
+                  }}
+                  disabled={!selectedTarget}
+                />
+              </>
+            )}
+            {currentDocumentInfo.step.current == currentDocumentInfo.step.overall && (
+              <PinkButton
+                text="ไปต่อ"
+                onClick={async () => {
+                  await setupPreviewDraftDocument()
+                  setIsOpenPreviewDialog(true)
+                }}
+              />
+            )}
           </div>
         </div>
       </div>
