@@ -102,6 +102,12 @@ const SideMenu: FC<ISideMenu> = (props) => {
             isShow={isStudent}
           />
           <SideMenuButton
+            text="ประวัติคำร้อง"
+            onClick={statusPageButtonHandler}
+            isFocused={router.pathname.includes(PROTECTED_ROUTES.STATUS)}
+            isShow={isStaff}
+          />
+          <SideMenuButton
             text="ข้อมูลผู้ใช้"
             onClick={profilePageButtonHandler}
             isFocused={router.pathname.includes(PROTECTED_ROUTES.PROFILE)}
