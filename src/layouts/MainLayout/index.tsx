@@ -21,7 +21,7 @@ const MainLayout: FC<IMainLayoutProps> = ({ children, header }) => {
   }
   return (
     <div tw="h-screen flex">
-      <SideMenu isShow={showMenu} />
+      <SideMenu isShow={showMenu} role={userProfile?.role} />
       {!showMenu && (
         <div onClick={handleClick} tw="md:invisible fixed top-4 left-4 w-16 h-16 cursor-pointer">
           <svg height="32px" id="Layer_1" version="1.1" viewBox="0 0 32 32" width="32px">
