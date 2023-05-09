@@ -3,7 +3,7 @@ import useDocument from 'hooks/useDocument'
 import MainLayout from 'layouts/MainLayout'
 import { NextPage } from 'next'
 import { useEffect } from 'react'
-import DocumentDraftSection from '../sections/DocumentDraftSection'
+import StaffRequestsTable from '../sections/DocumentDraftSection'
 
 const DraftPage: NextPage = () => {
   const { fetchHoldingDocuments } = useDocument()
@@ -14,7 +14,7 @@ const DraftPage: NextPage = () => {
   return (
     <MainLayout header="คำร้องที่รอดำเนินการ">
       {/* <SearchAndQuerySection /> */}
-      <DocumentDraftSection />
+      <StaffRequestsTable />
     </MainLayout>
   )
 }

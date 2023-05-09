@@ -10,7 +10,7 @@ const DocumentDraftTable: FC<IDocumentDraftTableProps> = () => {
   const router = useRouter()
 
   const holdingDocumentClickHandler = (event: React.MouseEvent<HTMLTableRowElement>, docId: string) => {
-    router.push(`/draft/${docId}`)
+    router.push(`/staff/request/${docId}`)
   }
 
   return (
@@ -24,8 +24,9 @@ const DocumentDraftTable: FC<IDocumentDraftTableProps> = () => {
             <tr tw="text-gray font-h2 text-h2">
               <th className="text-start">ชื่อคำร้อง</th>
               <th className="text-start">เลขที่จท.</th>
-              <th className="text-start">แก้ไขล่าสุด</th>
-              <th className="text-start">วันที่สร้างคำร้อง</th>
+              <th className="text-start">ส่งมาจาก</th>
+              <th className="text-start">ผู้เขียนคำร้อง</th>
+              <th className="text-start">วันที่ถูกส่งมา</th>
             </tr>
           </thead>
           {
@@ -40,8 +41,13 @@ const DocumentDraftTable: FC<IDocumentDraftTableProps> = () => {
                   >
                     <td tw="group-hover:text-cu-pink">{holdingDocument.template.title.th}</td>
                     <td tw="group-hover:text-cu-pink">{holdingDocument.template.templateType}</td>
-                    <td tw="group-hover:text-cu-pink">{dateFormatter(holdingDocument.updatedAt)}</td>
-                    <td tw="group-hover:text-cu-pink">{dateFormatter(holdingDocument.createdAt)}</td>
+                    <td tw="group-hover:text-cu-pink">
+                      {holdingDocument.granter.firstname.th} {holdingDocument.granter.lastname.th}
+                    </td>
+                    <td tw="group-hover:text-cu-pink">
+                      {holdingDocument.creator.firstname.th} {holdingDocument.creator.lastname.th}
+                    </td>
+                    <td tw="group-hover:text-cu-pink">{dateFormatter(holdingDocument.grantedAt)}</td>
                   </tr>
                 )
               })}
