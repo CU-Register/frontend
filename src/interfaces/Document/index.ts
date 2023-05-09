@@ -56,6 +56,7 @@ export interface IDocumentInfoTimeline {
     lastname: IDocumentDetail
     actor_id: string
   }
+  step: number
   timestamp: Date
 }
 

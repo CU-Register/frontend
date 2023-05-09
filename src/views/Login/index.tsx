@@ -5,9 +5,9 @@ import ConnectChulaSSOButton from './components/ConnectChulaSSOButton'
 
 interface ILoginPageProps {}
 const LoginPage: NextPage<ILoginPageProps> = () => {
-  const policyButtonHandler = (event: React.MouseEvent<HTMLButtonElement>) => {
-    console.log('policy button clicked')
-  }
+  // const policyButtonHandler = (event: React.MouseEvent<HTMLButtonElement>) => {
+  //   console.log('policy button clicked')
+  // }
 
   return (
     <PreAuthLayout>

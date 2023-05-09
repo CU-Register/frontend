@@ -11,7 +11,6 @@ interface IStatusStepperProps {
 }
 const StatusStepper: FC<IStatusStepperProps> = ({ timeline, totalSteps, currentSteps }) => {
   const remainingSteps = totalSteps - currentSteps
-  console.log('remaining steps', remainingSteps)
 
   return (
     <div>
