@@ -22,11 +22,11 @@ const HomePage: NextPage = () => {
   const router = useRouter()
   const { fetchTemplates } = useTemplate()
   const { templates } = useTemplateStore()
-  const { fetchHistoryDocuments, createDocument, fetchDocumentSummary } = useDocument()
+  const { fetchHistoryDocuments, createDocument, fetchDocumentSummary, fetchHoldingDocuments } = useDocument()
   const { summaryDocuments } = useDocumentStore()
   const { userProfile } = useProfileStore()
   useEffect(() => {
-    Promise.all([fetchTemplates(), fetchHistoryDocuments(), fetchDocumentSummary()])
+    Promise.all([fetchTemplates(), fetchHistoryDocuments(), fetchHoldingDocuments(), fetchDocumentSummary()])
   }, [])
 
   const otherRequestButtonHandler = (event: React.MouseEvent<HTMLButtonElement>) => {
@@ -34,6 +34,9 @@ const HomePage: NextPage = () => {
   }
   const otherStatusButtonHandler = (event: React.MouseEvent<HTMLButtonElement>) => {
     router.push(PROTECTED_ROUTES.STATUS)
+  }
+  const otherHoldingButtonHandler = (event: React.MouseEvent<HTMLButtonElement>) => {
+    router.push(PROTECTED_ROUTES.STAFF_REQUEST)
   }
   const templateCardHandler = (event: React.MouseEvent<HTMLButtonElement>) => {
     const selectedTitle = _.find(templates, { templateType: event.currentTarget.value })?.title
@@ -60,7 +63,6 @@ const HomePage: NextPage = () => {
     setIsOpenDialog(false)
   }
 
-  const isStudent = userProfile?.role === 'student'
   const isStaff = userProfile?.role === 'faculty'
 
   if (isStaff) {
@@ -91,10 +93,10 @@ const HomePage: NextPage = () => {
             </div>
           </div>
           <div tw="flex flex-col gap-3">
-            <div tw="font-h1 text-h1 text-cu-pink">คำร้องที่รอดำเนินการ</div>
+            <div tw="font-h1 text-h2">คำร้องที่รอดำเนินการ</div>
             <HistoryDocumentTable />
             <div>
-              <button tw="font-h2 text-h2 text-cu-pink" onClick={otherStatusButtonHandler}>
+              <button tw="font-h2 text-h2 text-cu-pink" onClick={otherHoldingButtonHandler}>
                 {'ดูคำร้องอื่น ๆ >>'}
               </button>
             </div>
