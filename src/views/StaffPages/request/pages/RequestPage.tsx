@@ -1,7 +1,5 @@
 import withAuth from 'components/Auth/withAuth'
-import ActionDialog from 'components/Dialogs/ActionDialog'
 import PDFPreviewDialog from 'components/Dialogs/PDFPreviewDialog'
-import VerticalDivider from 'components/Dividers/VerticalDivider'
 import NeutralButton from 'components/NeutralButton'
 import PinkButton from 'components/PinkButton'
 import SearchUserComboBox from 'components/SearchUserComboBox'
@@ -110,37 +108,37 @@ const DocumentDraftPage: NextPage = () => {
     }
   }, [draftDocumentRef.current])
 
-  const DeleteDocumentDraftDialog = () => {
-    const onCloseDialogHandler = () => {
-      setIsOpenDeleteDialog(false)
-    }
-    const onRejectDialogHandler = () => {
-      setIsOpenDeleteDialog(false)
-    }
-    const deleteDocumentHandler = async () => {
-      if (!currentDocumentInfo) return
+  // const DeleteDocumentDraftDialog = () => {
+  //   const onCloseDialogHandler = () => {
+  //     setIsOpenDeleteDialog(false)
+  //   }
+  //   const onRejectDialogHandler = () => {
+  //     setIsOpenDeleteDialog(false)
+  //   }
+  //   const deleteDocumentHandler = async () => {
+  //     if (!currentDocumentInfo) return
 
-      try {
-        await deleteDraftDocument(currentDocumentInfo.docId)
-        alert('delete document successful')
-      } catch (error) {
-        alert('delete document unsuccessful')
-      } finally {
-        setIsOpenDeleteDialog(false)
-        router.replace(PROTECTED_ROUTES.STAFF_REQUEST)
-      }
-    }
-    return (
-      <ActionDialog
-        isOpen={isOpenDeleteDialog}
-        onClose={onCloseDialogHandler}
-        onConfirm={deleteDocumentHandler}
-        onReject={onRejectDialogHandler}
-        title={`${currentDocumentInfo?.template.title.th} จท.${currentDocumentInfo?.template.templateType}`}
-        description="ยืนยันที่จะลบโครงร่างคำร้อง"
-      />
-    )
-  }
+  //     try {
+  //       await deleteDraftDocument(currentDocumentInfo.docId)
+  //       alert('delete document successful')
+  //     } catch (error) {
+  //       alert('delete document unsuccessful')
+  //     } finally {
+  //       setIsOpenDeleteDialog(false)
+  //       router.replace(PROTECTED_ROUTES.STAFF_REQUEST)
+  //     }
+  //   }
+  //   return (
+  //     <ActionDialog
+  //       isOpen={isOpenDeleteDialog}
+  //       onClose={onCloseDialogHandler}
+  //       onConfirm={deleteDocumentHandler}
+  //       onReject={onRejectDialogHandler}
+  //       title={`${currentDocumentInfo?.template.title.th} จท.${currentDocumentInfo?.template.templateType}`}
+  //       description="ยืนยันที่จะลบโครงร่างคำร้อง"
+  //     />
+  //   )
+  // }
 
   const SaveDocumentDraftDialog = () => {
     const onCloseDialogHandler = () => {
@@ -236,7 +234,7 @@ const DocumentDraftPage: NextPage = () => {
 
   return (
     <MainLayout header="แก้ไขโครงร่างคำร้อง">
-      <DeleteDocumentDraftDialog />
+      {/* <DeleteDocumentDraftDialog /> */}
       <SaveDocumentDraftDialog />
       <PreviewDocumentDraftDialog />
       <div tw="flex justify-between items-center">
@@ -259,12 +257,12 @@ const DocumentDraftPage: NextPage = () => {
         </div>
         <div tw="flex justify-between gap-4">
           <div tw="flex">
-            <NeutralButton
+            {/* <NeutralButton
               text="ยกเลิกเอกสาร"
               iconSrc="/assets/delete-document-icon.png"
               onClick={() => setIsOpenDeleteDialog(true)}
             />
-            <VerticalDivider />
+            <VerticalDivider /> */}
             <NeutralButton
               text="บันทึกและย้อนกลับ"
               onClick={async () => {
