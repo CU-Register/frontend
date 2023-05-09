@@ -1,61 +1,57 @@
-import Image from 'next/image'
+import { IDocumentInfoTimeline } from 'interfaces/Document'
 import { FC } from 'react'
 import 'twin.macro'
+import tw from 'twin.macro'
+import { formatDateTimeFromDate, fullNameFormatter } from 'utils/formats'
 
-const StatusStepper: FC = () => {
+interface IStatusStepperProps {
+  timeline: IDocumentInfoTimeline[]
+  totalSteps: number
+  currentSteps: number
+}
+const StatusStepper: FC<IStatusStepperProps> = ({ timeline, totalSteps, currentSteps }) => {
+  const remainingSteps = totalSteps - currentSteps
+  console.log('remaining steps', remainingSteps)
+
   return (
     <div>
-      <div tw="bg-cu-copper">
-        <div tw="flex gap-10 items-center">
-          <div tw="bg-cu-pink w-10 h-10 rounded-full" />
-          <div tw="font-h2 text-h2 text-cu-pink">เจ้าหน้าที่ทะเบียน</div>
-        </div>
-        <div tw="ml-[calc(1.25rem - 1px)] border-l-2 border-cu-pink  pl-[calc(5rem - 1.25rem)] min-h-[70px]">
-          <div tw="font-h3 text-h3 text-cu-grey">พ้่นธุ์ธัช ศิริวัน</div>
-          <div tw="font-h3 text-h3 text-cu-grey">ส่งเมื่อ: 12/12/2023, 23:00</div>
-        </div>
-      </div>
-      <div tw="bg-cu-gold">
-        <div tw="flex gap-10 items-center">
-          <div tw="bg-cu-pink w-10 h-10 rounded-full" />
-          <div tw="font-h2 text-h2 text-cu-pink">อาจารย์ที่ปรึกษา</div>
-        </div>
-        <div tw="ml-[calc(1.25rem - 1px)] border-l-2 border-cu-pink  pl-[calc(5rem - 1.25rem)] min-h-[70px]">
-          <div tw="font-h3 text-h3 text-cu-grey">ศ. ปิยะพัทธ์ ภิญโญ</div>
-          <div tw="font-h3 text-h3 text-cu-grey">ส่งเมื่อ: 12/12/2023, 23:00</div>
-        </div>
-      </div>
-      <div>
-        <div tw="flex gap-10 items-center">
-          <div tw="bg-cu-pink w-10 h-10 rounded-full" />
-          <div tw="font-h2 text-h2 text-cu-pink">คณบตี</div>
-        </div>
-        <div tw="ml-[calc(1.25rem - 1px)] border-l-2 border-cu-pink  pl-[calc(5rem - 1.25rem)] min-h-[70px]">
-          <div tw="font-h3 text-h3 text-cu-grey">ศ. รัชชานนท์ วัฒนทวีกุล</div>
-          <div tw="font-h3 text-h3 text-cu-grey">ส่งเมื่อ: 12/12/2023, 23:00</div>
-        </div>
-      </div>
-      <div>
-        <div tw="flex gap-10 items-center">
-          <div tw="bg-cu-pink w-10 h-10 rounded-full" />
-          <div tw="font-h2 text-h2 text-cu-pink">อธิการบติ</div>
-        </div>
-        <div tw="ml-[calc(1.25rem - 1px)] border-l-2 border-cu-pink  pl-[calc(5rem - 1.25rem)] min-h-[80px]">
-          <div tw="font-h3 text-h3 text-cu-grey">พ้่นธุ์ธัช ศิริวัน</div>
-          <div tw="font-h3 text-h3 text-cu-grey">ส่งเมื่อ: 12/12/2023, 23:00</div>
-        </div>
-      </div>
-      <div>
-        <div tw="flex gap-10 items-center">
-          <div tw="bg-cu-pink w-10 h-10 rounded-full relative flex justify-center items-center">
-            <Image src="/assets/checkmark.png" width={25} height={(25 * 28) / 37} alt="chula-icon" />
+      {timeline.map((tl, index) => {
+        return (
+          <div key={index}>
+            <div tw="flex gap-10 items-center">
+              <div tw="bg-cu-pink w-7 h-7 rounded-full" />
+              <div tw="font-h2 text-h2 text-cu-pink">
+                {fullNameFormatter(tl.actor.firstname.th, tl.actor.lastname.th)}
+              </div>
+            </div>
+            <div
+              css={[
+                tw`ml-[calc(14px - 1px)] border-l-2 border-cu-pink  pl-[calc(5rem - 1.25rem)] min-h-[40px]`,
+                index === remainingSteps - 1 && tw`border-0`,
+              ]}
+            >
+              <div tw="font-h3 text-h3 text-cu-grey">{formatDateTimeFromDate(`${tl.timestamp}Z`)}</div>
+            </div>
           </div>
-          <div tw="font-h2 text-h2 text-cu-pink">ดำเนินการเสร็จสิ้น</div>
-        </div>
-        <div tw="ml-[calc(1.25rem - 1px)]  pl-[calc(5rem - 1.25rem)] min-h-[70px]">
-          <div tw="font-h3 text-h3 text-cu-grey">อนุมัติเมื่อ: 12/12/2023, 23:00</div>
-        </div>
-      </div>
+        )
+      })}
+      {Array(remainingSteps)
+        .fill(0)
+        .map((_, index) => {
+          return (
+            <div key={index}>
+              <div tw="flex gap-10 items-center">
+                <div tw="bg-gray w-7 h-7 rounded-full" />
+              </div>
+              <div
+                css={[
+                  tw`ml-[calc(14px - 1px)] border-l-2 border-gray  pl-[calc(5rem - 1.25rem)] min-h-[40px]`,
+                  index === remainingSteps - 1 && tw`border-0`,
+                ]}
+              />
+            </div>
+          )
+        })}
     </div>
   )
 }

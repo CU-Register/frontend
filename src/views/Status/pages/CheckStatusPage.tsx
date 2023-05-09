@@ -60,7 +60,13 @@ const CheckStatusPage: NextPage = () => {
           </div>
         </div>
         <div tw="flex flex-col w-[30%]">
-          <StatusStepper />
+          {documentInfo && (
+            <StatusStepper
+              timeline={documentInfo?.timeline}
+              totalSteps={documentInfo.step.overall + 1}
+              currentSteps={documentInfo.step.current}
+            />
+          )}
         </div>
       </div>
     </MainLayout>
