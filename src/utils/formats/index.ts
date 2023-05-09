@@ -17,4 +17,8 @@ const fullNameFormatter = (firstName?: string | null, lastName?: string | null) 
   return `${firstName} ${lastName}`
 }
 
-export { dateFormatter, jsonToString, stringToJson, fullNameFormatter }
+const fullNameFormatterWithoutPlaceholder = (firstName?: string | null, lastName?: string | null) => {
+  if (!firstName || !lastName) return ''
+  return `${firstName} ${lastName}`
+}
+export { dateFormatter, jsonToString, stringToJson, fullNameFormatter, fullNameFormatterWithoutPlaceholder }

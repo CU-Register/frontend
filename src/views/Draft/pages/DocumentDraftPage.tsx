@@ -16,7 +16,9 @@ import { NextPage } from 'next'
 import { useRouter } from 'next/router'
 import { Instance } from 'pspdfkit'
 import { useEffect, useRef, useState } from 'react'
+import { useDocumentStore } from 'stores/document.store'
 import 'twin.macro'
+import { fullNameFormatter } from 'utils/formats'
 dayjs.extend(relativeTime)
 dayjs.extend(utc)
 
@@ -25,6 +27,7 @@ const DocumentDraftPage: NextPage = () => {
 
   const { deleteDraftDocument, fetchDocumentForm, updateDocument, fetchDocumentInfo, fetchPreviewDocument } =
     useDocument()
+  const { selectedTarget } = useDocumentStore()
   const [currentDocumentInfo, setCurrentDocumentInfo] = useState<IDocumentInfo | null>(null)
   const [isOpenDeleteDialog, setIsOpenDeleteDialog] = useState<boolean>(false)
   const [isOpenSaveDialog, setIsOpenSaveDialog] = useState<boolean>(false)
@@ -184,6 +187,7 @@ const DocumentDraftPage: NextPage = () => {
         onReject={onRejectDialogHandler}
         pdfUrl={previewDocumentFormBufferUrl}
         isToForward={true}
+        selectedTargetFullName={fullNameFormatter(selectedTarget?.firstname.th, selectedTarget?.lastname.th)}
       />
     )
   }
@@ -216,28 +220,35 @@ const DocumentDraftPage: NextPage = () => {
         <div tw="flex-1 flex justify-center items-center">
           <div ref={draftDocumentRef} tw="w-full h-full" />
         </div>
-        <SearchUserComboBox />
-        <div tw="flex justify-end gap-4">
-          <NeutralButton
-            text="ยกเลิกเอกสาร"
-            iconSrc="/assets/delete-document-icon.png"
-            onClick={() => setIsOpenDeleteDialog(true)}
-          />
-          <VerticalDivider />
-          <NeutralButton
-            text="บันทึกและย้อนกลับ"
-            onClick={async () => {
-              await setupPreviewDraftDocument()
-              setIsOpenSaveDialog(true)
-            }}
-          />
-          <PinkButton
-            text="ไปต่อ"
-            onClick={async () => {
-              await setupPreviewDraftDocument()
-              setIsOpenPreviewDialog(true)
-            }}
-          />
+        <div tw="flex justify-between gap-4">
+          <div tw="flex">
+            <NeutralButton
+              text="ยกเลิกเอกสาร"
+              iconSrc="/assets/delete-document-icon.png"
+              onClick={() => setIsOpenDeleteDialog(true)}
+            />
+            <VerticalDivider />
+            <NeutralButton
+              text="บันทึกและย้อนกลับ"
+              onClick={async () => {
+                await setupPreviewDraftDocument()
+                setIsOpenSaveDialog(true)
+              }}
+            />
+          </div>
+          <div tw="flex gap-5 items-center">
+            <div tw="w-[280px]">
+              <SearchUserComboBox />
+            </div>
+            <PinkButton
+              text="ไปต่อ"
+              onClick={async () => {
+                await setupPreviewDraftDocument()
+                setIsOpenPreviewDialog(true)
+              }}
+              disabled={!selectedTarget}
+            />
+          </div>
         </div>
       </div>
     </MainLayout>

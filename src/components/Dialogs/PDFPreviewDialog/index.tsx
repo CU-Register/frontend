@@ -11,6 +11,7 @@ interface IPDFPreviewDialogProps {
   onReject: () => void
   pdfUrl?: string | null
   isToForward?: boolean
+  selectedTargetFullName?: string
 }
 
 const PDFPreviewDialog: FC<IPDFPreviewDialogProps> = ({
@@ -21,6 +22,7 @@ const PDFPreviewDialog: FC<IPDFPreviewDialogProps> = ({
   onReject,
   pdfUrl,
   isToForward = false,
+  selectedTargetFullName,
 }) => {
   return (
     <>
@@ -51,16 +53,14 @@ const PDFPreviewDialog: FC<IPDFPreviewDialogProps> = ({
               >
                 <Dialog.Panel tw="w-full max-w-2xl transform overflow-hidden rounded-2xl bg-white text-left align-middle shadow-xl transition-all h-[700px] flex flex-col">
                   <Dialog.Title tw="py-2 px-3 text-h2 font-h2 text-white bg-cu-pink text-center">{title}</Dialog.Title>
-                  {/* <Dialog.Description tw="py-2 px-3 text-h2 font-h2 text-cu-pink ">{description}</Dialog.Description> */}
                   <div tw="flex h-full flex-col gap-3 py-4 px-12">
                     <div tw="flex-1 flex">
                       {pdfUrl && <object data={pdfUrl} type="application/pdf" tw="w-full h-full overflow-auto" />}
                     </div>
-                    {/* TODO implement search combobox*/}
                     {isToForward && (
                       <div tw="flex justify-center items-center gap-2">
                         <div tw=" text-h2 font-h2 text-black">ส่งคำร้องต่อให้:</div>
-                        <div tw="text-h2 font-h2">name surname</div>
+                        <div tw="text-h2 font-h2">{selectedTargetFullName}</div>
                       </div>
                     )}
                     <div tw="flex p-2 gap-2 justify-center">

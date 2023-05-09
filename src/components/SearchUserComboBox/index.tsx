@@ -5,6 +5,7 @@ import _ from 'lodash'
 import { FC, useState } from 'react'
 import { useDocumentStore } from 'stores/document.store'
 import 'twin.macro'
+import { fullNameFormatterWithoutPlaceholder } from 'utils/formats'
 
 interface ISearchUserComboBoxProps {}
 const SearchUserComboBox: FC<ISearchUserComboBoxProps> = ({}) => {
@@ -15,11 +16,10 @@ const SearchUserComboBox: FC<ISearchUserComboBoxProps> = ({}) => {
   const inputQueryOnChangeHandler = async (event: React.ChangeEvent<HTMLInputElement>) => {
     setLoadingTargets(true)
     const query = event.target.value.trim()
-    fetchTargets(query)
+    await fetchTargets(query)
     setLoadingTargets(false)
   }
   const debouncedInputQueryOnChangeHandler = _.debounce(inputQueryOnChangeHandler, 300)
-  console.log(selectedTarget)
 
   return (
     <Combobox
@@ -30,24 +30,22 @@ const SearchUserComboBox: FC<ISearchUserComboBoxProps> = ({}) => {
       }}
     >
       <Combobox.Input
-        displayValue={(target: IUser) => target.firstname.th}
+        displayValue={(target: IUser) => fullNameFormatterWithoutPlaceholder(target?.firstname.th, target?.lastname.th)}
         onChange={async (event) => {
           debouncedInputQueryOnChangeHandler(event)
         }}
-        tw="w-full border border-black rounded-md py-1 px-2 flex"
-        placeholder="รายชื่อบุคคลากรทางการศึกษา"
+        tw="w-full border border-black rounded-md px-2 py-1 flex"
+        placeholder="กรุณาเลือกผู้ที่คุณต้องการส่งเอกสารต่อ"
       />
-      <Combobox.Options>
-        {/* <div css={[targets && targets.length > 0 && tw`p-4 bg-white rounded-lg`]}> */}
+      <Combobox.Options tw="absolute z-10 border border-cu-pink rounded-md mt-2 bg-white max-h-[120px] overflow-auto">
         {!loadingTargets &&
           targets &&
           targets.length > 0 &&
           targets.map((target, index) => (
-            <Combobox.Option key={index} value={target}>
-              {target.firstname.th}
+            <Combobox.Option key={index} value={target} tw="py-1 p-2 w-[200px] hover:bg-cu-pinkLight cursor-pointer">
+              {`${target.firstname.th} ${target.lastname.th}`}
             </Combobox.Option>
           ))}
-        {/* </div> */}
       </Combobox.Options>
     </Combobox>
   )
