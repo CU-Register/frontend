@@ -191,7 +191,7 @@ const DocumentDraftPage: NextPage = () => {
       } catch (error) {
         alert('submit document unsuccessful')
       } finally {
-        router.push(PROTECTED_ROUTES.STATUS)
+        router.replace(PROTECTED_ROUTES.STATUS)
         setIsOpenPreviewDialog(false)
       }
     }
