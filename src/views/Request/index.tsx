@@ -1,16 +1,24 @@
+import withAuth from 'components/Auth/withAuth'
+import useTemplate from 'hooks/useTemplate'
 import MainLayout from 'layouts/MainLayout'
 import type { NextPage } from 'next'
+import { useEffect } from 'react'
 import 'twin.macro'
-import RequestListSection from './sections/RequestListSection'
-import SearchAndQuerySection from './sections/SearchAndQuerySection'
+import TemplateListSection from './sections/TemplateListSection'
 
 const RequestPage: NextPage = () => {
+  const { fetchTemplates } = useTemplate()
+
+  useEffect(() => {
+    fetchTemplates()
+  }, [])
+
   return (
-    <MainLayout header="ยื่นคำร้องเพื่อขอเอกสารสำคัญทางการศึกษา" studentId="6231354721">
-      <SearchAndQuerySection />
-      <RequestListSection />
+    <MainLayout header="ยื่นคำร้องเพื่อขอเอกสารสำคัญทางการศึกษา">
+      {/* <SearchAndQuerySection /> */}
+      <TemplateListSection />
     </MainLayout>
   )
 }
 
-export default RequestPage
+export default withAuth(RequestPage)

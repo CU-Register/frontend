@@ -1,3 +1,3 @@
-import DraftPage from 'views/Draft'
+import DraftPage from 'views/Draft/pages'
 
 export default DraftPage

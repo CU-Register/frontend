@@ -6,11 +6,13 @@ import { useEffect } from 'react'
 const CUSSORedirectPage: NextPage = () => {
   const router = useRouter()
   const { login } = useAuth()
+  const ticket = router.query.ticket
 
   useEffect(() => {
-    const ticket = router.query.ticket
-    login(ticket as string)
-  })
+    if (ticket) {
+      login(ticket as string)
+    }
+  }, [ticket])
 
   return <div tw="h-screen flex">Redirecting...</div>
 }

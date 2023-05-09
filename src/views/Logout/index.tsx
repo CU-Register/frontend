@@ -1,3 +1,4 @@
+import withAuth from 'components/Auth/withAuth'
 import PinkButton from 'components/PinkButton'
 import PreAuthLayout from 'layouts/PreAuthLayout'
 import { NextPage } from 'next'
@@ -9,7 +10,7 @@ const LogoutPage: NextPage = () => {
 
   const toLoginPageButtonHandler = (event: React.MouseEvent<HTMLButtonElement>) => {
     event.preventDefault()
-    router.push('/login')
+    router.replace('/login')
   }
 
   return (
@@ -24,4 +25,4 @@ const LogoutPage: NextPage = () => {
   )
 }
 
-export default LogoutPage
+export default withAuth(LogoutPage)

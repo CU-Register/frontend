@@ -1,10 +1,11 @@
+import withAuth from 'components/Auth/withAuth'
 import Stepper from 'components/Stepper'
 import MainLayout from 'layouts/MainLayout'
 import { NextPage } from 'next'
 import 'twin.macro'
 const CheckStatusPage: NextPage = () => {
   return (
-    <MainLayout header="ตรวจสอบสถานะการยื่นคำร้อง" studentId="6231354721">
+    <MainLayout header="ตรวจสอบสถานะการยื่นคำร้อง">
       <div tw="flex w-full">
         <div tw="flex flex-col gap-10 w-[75%]">
           <div tw="font-h1 text-h1 text-black">คำร้องที่ขอเข้าสังกัดหรือเปลี่ยนสังกัด (จท12)</div>
@@ -37,4 +38,4 @@ const CheckStatusPage: NextPage = () => {
   )
 }
 
-export default CheckStatusPage
+export default withAuth(CheckStatusPage)
