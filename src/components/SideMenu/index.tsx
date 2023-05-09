@@ -5,9 +5,11 @@ import { useRouter } from 'next/router'
 import { FC } from 'react'
 import tw from 'twin.macro'
 import SideMenuButton from './SideMenuButton'
+import { UserRole } from 'enums/UserRole'
 
 interface ISideMenu {
   isShow?: boolean
+  role?: UserRole
 }
 const SideMenu: FC<ISideMenu> = (props) => {
   const { logout } = useAuth()
@@ -17,8 +19,8 @@ const SideMenu: FC<ISideMenu> = (props) => {
     return Object.values(COMMON_ROUTES).includes(router.pathname)
   }
 
-  const hideCommonRoutesButton = () => {
-    return !Object.values(COMMON_ROUTES).includes(router.pathname)
+  const isCommonRoutesButton = () => {
+    return Object.values(COMMON_ROUTES).includes(router.pathname)
   }
 
   const homePageButtonHandler = (event: React.MouseEvent<HTMLButtonElement>) => {
@@ -51,6 +53,9 @@ const SideMenu: FC<ISideMenu> = (props) => {
     logout()
   }
 
+  const isCommon = isCommonRoutesButton()
+  const isStudent = props.role == UserRole.STUDENT
+
   return (
     <div
       css={[
@@ -66,49 +71,46 @@ const SideMenu: FC<ISideMenu> = (props) => {
           <div tw="text-h1 font-h1 text-white">CUADRS</div>
         </div>
         <div tw="mt-8 flex flex-col items-start gap-5">
+          {props.role}
           {/* Common Routes */}
-          <SideMenuButton
-            text="เข้าสู่ระบบ"
-            isFocused={router.pathname === COMMON_ROUTES.LOGIN}
-            hidden={hideCommonRoutesButton()}
-          />
+          <SideMenuButton text="เข้าสู่ระบบ" isFocused={router.pathname === COMMON_ROUTES.LOGIN} isShow={isCommon} />
 
           {/* Protected Routes */}
           <SideMenuButton
             text="หน้าหลัก"
             onClick={homePageButtonHandler}
             isFocused={router.pathname === '/'}
-            hidden={hideProtectedRoutesButton()}
+            isShow={isStudent}
           />
           <SideMenuButton
-            text="ยิื่นคำร้อง"
+            text="ยื่นคำร้อง"
             onClick={requestPageButtonHandler}
             isFocused={router.pathname.includes(PROTECTED_ROUTES.REQUEST)}
-            hidden={hideProtectedRoutesButton()}
+            isShow={isStudent}
           />
           <SideMenuButton
             text="โครงร่างคำร้อง"
             onClick={draftPageButtonHandler}
             isFocused={router.pathname.includes(PROTECTED_ROUTES.DRAFT)}
-            hidden={hideProtectedRoutesButton()}
+            isShow={isStudent}
           />
           <SideMenuButton
             text="ตรวจสอบสถานะ"
             onClick={statusPageButtonHandler}
             isFocused={router.pathname.includes(PROTECTED_ROUTES.STATUS)}
-            hidden={hideProtectedRoutesButton()}
+            isShow={isStudent}
           />
           <SideMenuButton
             text="ข้อมูลผู้ใช้"
             onClick={profilePageButtonHandler}
             isFocused={router.pathname.includes(PROTECTED_ROUTES.PROFILE)}
-            hidden={hideProtectedRoutesButton()}
+            isShow={isStudent}
           />
           <SideMenuButton
             text="ออกจากระบบ"
             onClick={logoutPageButtonHandler}
             isFocused={router.pathname.includes(PROTECTED_ROUTES.LOGOUT)}
-            hidden={hideProtectedRoutesButton()}
+            isShow={isStudent}
           />
         </div>
       </div>

@@ -9,6 +9,7 @@ const PROTECTED_ROUTES = {
   DRAFT: '/draft',
   STATUS: '/status',
   PROFILE: '/profile',
+  STAFF: '/staff',
 }
 
 export { COMMON_ROUTES, PROTECTED_ROUTES }
