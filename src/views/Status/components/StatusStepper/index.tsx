@@ -2,10 +2,10 @@ import Image from 'next/image'
 import { FC } from 'react'
 import 'twin.macro'
 
-const Stepper: FC = () => {
+const StatusStepper: FC = () => {
   return (
     <div>
-      <div>
+      <div tw="bg-cu-copper">
         <div tw="flex gap-10 items-center">
           <div tw="bg-cu-pink w-10 h-10 rounded-full" />
           <div tw="font-h2 text-h2 text-cu-pink">เจ้าหน้าที่ทะเบียน</div>
@@ -15,7 +15,7 @@ const Stepper: FC = () => {
           <div tw="font-h3 text-h3 text-cu-grey">ส่งเมื่อ: 12/12/2023, 23:00</div>
         </div>
       </div>
-      <div>
+      <div tw="bg-cu-gold">
         <div tw="flex gap-10 items-center">
           <div tw="bg-cu-pink w-10 h-10 rounded-full" />
           <div tw="font-h2 text-h2 text-cu-pink">อาจารย์ที่ปรึกษา</div>
@@ -60,4 +60,4 @@ const Stepper: FC = () => {
   )
 }
 
-export default Stepper
+export default StatusStepper

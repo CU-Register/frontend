@@ -9,7 +9,7 @@ import { useRouter } from 'next/router'
 import { useEffect, useState } from 'react'
 import 'twin.macro'
 import { dateFormatter } from 'utils/formats'
-import Stepper from 'views/Status/components/Stepper'
+import StatusStepper from 'views/Status/components/StatusStepper'
 const CheckStatusPage: NextPage = () => {
   const { fetchDocumentInfo } = useDocument()
   const [documentInfo, setDocumentInfo] = useState<IDocumentInfo | null>(null)
@@ -60,7 +60,7 @@ const CheckStatusPage: NextPage = () => {
           </div>
         </div>
         <div tw="flex flex-col w-[30%]">
-          <Stepper />
+          <StatusStepper />
         </div>
       </div>
     </MainLayout>
