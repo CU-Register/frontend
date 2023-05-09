@@ -2,6 +2,13 @@ import { DocumentStatus } from 'enums/Document'
 import { UserRole } from 'enums/UserRole'
 import { ITemplate } from 'interfaces/Template'
 
+export interface IDocumentSummary {
+  incoming: number
+  approved: number
+  declined: number
+  overall: number
+}
+
 interface IDocumentDetail {
   th: string
   en: string

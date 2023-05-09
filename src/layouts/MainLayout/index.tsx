@@ -33,10 +33,7 @@ const MainLayout: FC<IMainLayoutProps> = ({ children, header }) => {
         css={[tw`flex flex-col w-full h-screen p-[50px]`, showMenu && tw`blur-sm md:blur-none`]}
         onClick={handleClose}
       >
-        <div css={[tw`mb-8`]}>
-          {header && <div tw="text-h1 font-h1 text-cu-pink">{header}</div>}
-          <div tw="mt-2 text-h2 font-h2 text-black pl-4">{`เลขประจำตัว: ${userProfile?.uid || '-'}`}</div>
-        </div>
+        <div>{header && <div tw="text-h1 font-h1 text-cu-pink">{header}</div>}</div>
         <div className="flex flex-col flex-1 overflow-auto">{children}</div>
         <MainFooter />
       </div>

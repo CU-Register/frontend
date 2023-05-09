@@ -127,7 +127,7 @@ const DocumentDraftPage: NextPage = () => {
         alert('delete document unsuccessful')
       } finally {
         setIsOpenDeleteDialog(false)
-        router.replace(PROTECTED_ROUTES.DRAFT)
+        router.replace(PROTECTED_ROUTES.STAFF_REQUEST)
       }
     }
     return (
@@ -159,7 +159,7 @@ const DocumentDraftPage: NextPage = () => {
       } catch (error) {
         alert('save document unsuccessful')
       } finally {
-        router.push(PROTECTED_ROUTES.DRAFT)
+        router.push(PROTECTED_ROUTES.STAFF_REQUEST)
         setIsOpenSaveDialog(false)
       }
     }
@@ -199,7 +199,7 @@ const DocumentDraftPage: NextPage = () => {
       } catch (error) {
         alert('submit document unsuccessful')
       } finally {
-        router.push(PROTECTED_ROUTES.STATUS)
+        router.replace(PROTECTED_ROUTES.STAFF_REQUEST)
         setIsOpenPreviewDialog(false)
       }
     }
