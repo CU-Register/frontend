@@ -1,0 +1,22 @@
+import withAuth from 'components/Auth/withAuth'
+import useDocument from 'hooks/useDocument'
+import MainLayout from 'layouts/MainLayout'
+import { NextPage } from 'next'
+import { useEffect } from 'react'
+import DocumentDraftSection from '../sections/DocumentDraftSection'
+
+const DraftPage: NextPage = () => {
+  const { fetchHoldingDocuments } = useDocument()
+
+  useEffect(() => {
+    fetchHoldingDocuments()
+  }, [])
+  return (
+    <MainLayout header="คำร้องที่รอดำเนินการ">
+      {/* <SearchAndQuerySection /> */}
+      <DocumentDraftSection />
+    </MainLayout>
+  )
+}
+
+export default withAuth(DraftPage)

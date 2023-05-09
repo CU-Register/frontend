@@ -1,4 +1,4 @@
-import StaffHomePage from 'views/StaffHome'
+import StaffHomePage from 'views/StaffPages/request/pages/index'
 export default () => {
   return <StaffHomePage />
 }
