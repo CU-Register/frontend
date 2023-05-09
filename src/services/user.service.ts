@@ -1,4 +1,4 @@
-import IUser from 'interfaces/User'
+import { IUser } from 'interfaces/User'
 import axiosInstance from 'lib/axios'
 
 const getUsers = async (query: string) => {
