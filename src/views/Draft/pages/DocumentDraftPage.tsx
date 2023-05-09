@@ -25,8 +25,14 @@ dayjs.extend(utc)
 const DocumentDraftPage: NextPage = () => {
   const router = useRouter()
 
-  const { deleteDraftDocument, fetchDocumentForm, updateDocument, fetchDocumentInfo, fetchPreviewDocument } =
-    useDocument()
+  const {
+    deleteDraftDocument,
+    fetchDocumentForm,
+    updateDocument,
+    fetchDocumentInfo,
+    fetchPreviewDocument,
+    forwardDocument,
+  } = useDocument()
   const { selectedTarget } = useDocumentStore()
   const [currentDocumentInfo, setCurrentDocumentInfo] = useState<IDocumentInfo | null>(null)
   const [isOpenDeleteDialog, setIsOpenDeleteDialog] = useState<boolean>(false)
@@ -176,7 +182,18 @@ const DocumentDraftPage: NextPage = () => {
       setIsOpenPreviewDialog(false)
     }
     const forwardDocumentHandler = async () => {
-      setIsOpenPreviewDialog(false)
+      if (!documentPSPDFKitInstance || !currentDocumentInfo || !selectedTarget) return
+      const documentBuffer = await documentPSPDFKitInstance.exportPDF()
+      const documentBlob = new Blob([documentBuffer], { type: 'application/pdf' })
+      try {
+        await forwardDocument(currentDocumentInfo.docId, selectedTarget.uid, documentBlob)
+        alert('submit document successful')
+      } catch (error) {
+        alert('submit document unsuccessful')
+      } finally {
+        router.push(PROTECTED_ROUTES.STATUS)
+        setIsOpenPreviewDialog(false)
+      }
     }
     return (
       <PDFPreviewDialog
