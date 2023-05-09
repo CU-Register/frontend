@@ -26,7 +26,8 @@ const useDocument = () => {
 
   const createDocument = async (templateType: string) => {
     try {
-      await documentService.createDocument(templateType)
+      const result = await documentService.createDocument(templateType)
+      return result
     } catch (error) {
       throw new Error(`createDocument error: ${error}`)
     }

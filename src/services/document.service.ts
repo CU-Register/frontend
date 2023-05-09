@@ -1,4 +1,4 @@
-import { IDocument, IDocumentInfo } from 'interfaces/Document'
+import { ICreateDocumentResponseDTO, IDocument, IDocumentInfo } from 'interfaces/Document'
 import axiosInstance from 'lib/axios'
 
 const getHoldingDocuments = async () => {
@@ -27,7 +27,7 @@ const getHistoryDocuments = async () => {
 
 const createDocument = async (templateType: string) => {
   const path = 'documents'
-  const result = (await axiosInstance.post(path, { templateType })).data
+  const result: ICreateDocumentResponseDTO = (await axiosInstance.post(path, { templateType })).data
   return result
 }
 

@@ -1,8 +1,10 @@
 import ActionDialog from 'components/Dialogs/ActionDialog'
 import TemplateCard from 'components/TemplateCard'
+import { PROTECTED_ROUTES } from 'constants/Routes'
 import useDocument from 'hooks/useDocument'
 import { ITemplate } from 'interfaces/Template'
 import _ from 'lodash'
+import { useRouter } from 'next/router'
 import { FC, useState } from 'react'
 import { useTemplateStore } from 'stores/template.store'
 import 'twin.macro'
@@ -12,6 +14,7 @@ const TemplateListSection: FC = () => {
   const [selectedTemplate, setSelectedTemplate] = useState<Pick<ITemplate, 'templateType' | 'title'> | null>(null)
   const { templates } = useTemplateStore()
   const { createDocument } = useDocument()
+  const router = useRouter()
 
   const templateCardHandler = (event: React.MouseEvent<HTMLButtonElement>) => {
     const selectedTitle = _.find(templates, { templateType: event.currentTarget.value })?.title
@@ -34,9 +37,15 @@ const TemplateListSection: FC = () => {
 
   const onConfirmDialogHandler = async () => {
     if (!selectedTemplate) return
-    await createDocument(selectedTemplate.templateType)
-    alert('create document successful')
-    setIsOpenDialog(false)
+    try {
+      const newDocumentId = (await createDocument(selectedTemplate.templateType)).docId
+      alert('create document successful')
+      router.push(`${PROTECTED_ROUTES.DRAFT}/${newDocumentId}`)
+    } catch (error) {
+      alert('create document failed')
+    } finally {
+      setIsOpenDialog(false)
+    }
   }
 
   return (

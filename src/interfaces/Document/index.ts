@@ -75,3 +75,7 @@ export interface IDocumentInfo {
   holder: IDocumentInfoStakeHolder
   timeline: IDocumentInfoTimeline[]
 }
+
+export interface ICreateDocumentResponseDTO {
+  docId: string
+}
