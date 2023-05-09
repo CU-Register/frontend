@@ -49,13 +49,14 @@ interface IDocumentInfoStakeHolder {
   academicSystem: IDocumentInfoOption
   telephone: string
 }
-interface IDocumentInfoTimeline {
+export interface IDocumentInfoTimeline {
   message: IDocumentDetail
   actor: {
     firstname: IDocumentDetail
     lastname: IDocumentDetail
     actor_id: string
   }
+  step: number
   timestamp: Date
 }
 
