@@ -55,7 +55,7 @@ const CheckStatusPage: NextPage = () => {
               <div>การดำเนินการคำร้องของท่าน</div>
               <div tw="text-cu-pink flex flex-col gap-1 overflow-auto">
                 {userTimeline.map((tl, index) => {
-                  return <div key={index}>{`(${tl.step + 1}) ${tl.message.th}`}</div>
+                  return <div key={index}>{`(${tl.step}) ${tl.message.th}`}</div>
                 })}
               </div>
             </div>
