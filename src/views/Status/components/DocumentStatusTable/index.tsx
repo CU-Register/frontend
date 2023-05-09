@@ -1,4 +1,6 @@
+import { PROTECTED_ROUTES } from 'constants/Routes'
 import { UserRole } from 'enums/UserRole'
+import { useRouter } from 'next/router'
 import { FC } from 'react'
 import { useDocumentStore } from 'stores/document.store'
 import { useProfileStore } from 'stores/profile.store'
@@ -9,6 +11,11 @@ interface IDocumentStatusTableProps {}
 const DocumentStatusTable: FC<IDocumentStatusTableProps> = () => {
   const { historyDocuments } = useDocumentStore()
   const { userProfile } = useProfileStore()
+  const router = useRouter()
+
+  const toDocumentStatusClickHandler = (event: React.MouseEvent<HTMLTableRowElement>, documentId: string) => {
+    router.push(`${PROTECTED_ROUTES.STATUS}/${documentId}`)
+  }
 
   return (
     <>
@@ -30,7 +37,12 @@ const DocumentStatusTable: FC<IDocumentStatusTableProps> = () => {
           <tbody tw="overflow-auto cursor-pointer">
             {historyDocuments.map((historyDocument, index) => {
               return (
-                <tr key={index} tw="text-black font-h2 text-h2" className="group">
+                <tr
+                  key={index}
+                  tw="text-black font-h2 text-h2"
+                  className="group"
+                  onClick={(event) => toDocumentStatusClickHandler(event, historyDocument.docId)}
+                >
                   <td tw="group-hover:text-cu-pink">{historyDocument.template.title.th}</td>
                   <td tw="group-hover:text-cu-pink">{historyDocument.template.templateType}</td>
                   {userProfile?.role !== UserRole.STUDENT && (
