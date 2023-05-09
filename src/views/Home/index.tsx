@@ -10,11 +10,11 @@ import _ from 'lodash'
 import { NextPage } from 'next'
 import { useRouter } from 'next/router'
 import { useEffect, useState } from 'react'
+import { useDocumentStore } from 'stores/document.store'
+import { useProfileStore } from 'stores/profile.store'
 import { useTemplateStore } from 'stores/template.store'
 import 'twin.macro'
 import HistoryDocumentTable from './components/HistoryDocumentTable'
-import { useProfileStore } from 'stores/profile.store'
-import { useDocumentStore } from 'stores/document.store'
 
 const HomePage: NextPage = () => {
   const [isOpenDialog, setIsOpenDialog] = useState<boolean>(false)
@@ -59,8 +59,15 @@ const HomePage: NextPage = () => {
 
   const onConfirmDialogHandler = async () => {
     if (!selectedTemplate) return
-    await createDocument(selectedTemplate.templateType)
-    setIsOpenDialog(false)
+    try {
+      const newDocumentId = (await createDocument(selectedTemplate.templateType)).docId
+      alert('create document successful')
+      router.push(`${PROTECTED_ROUTES.DRAFT}/${newDocumentId}`)
+    } catch (error) {
+      alert('create document failed')
+    } finally {
+      setIsOpenDialog(false)
+    }
   }
 
   const isStaff = userProfile?.role === 'faculty'
