@@ -6,12 +6,16 @@ interface ISideMenuButtonProps {
   text: string
   onClick?: (event: React.MouseEvent<HTMLButtonElement>) => void
   isFocused: boolean
-  hidden: boolean
+  isShow: boolean
 }
-const SideMenuButton: FC<ISideMenuButtonProps> = ({ text, onClick, isFocused, hidden }) => {
+const SideMenuButton: FC<ISideMenuButtonProps> = ({ text, onClick, isFocused, isShow }) => {
   return (
     <button
-      css={[tw`font-h2 text-h2 text-white hover:text-cu-pink`, isFocused && tw`text-cu-pink`, hidden && tw`hidden`]}
+      css={[
+        tw`font-h2 text-h2 px-[50px] text-left w-full text-white hover:text-cu-pink`,
+        isFocused && tw`text-cu-pink`,
+        !isShow && tw`hidden`,
+      ]}
       onClick={onClick}
     >
       {text}
