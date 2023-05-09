@@ -1,2 +1,2 @@
-import StaffHomePage from 'views/StaffPages/request/pages/index'
-export default StaffHomePage
+import StaffRequestsPage from 'views/StaffPages/request/pages/index'
+export default StaffRequestsPage

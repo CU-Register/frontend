@@ -6,6 +6,15 @@ import { useDocumentStore } from 'stores/document.store'
 const useDocument = () => {
   const documentStore = useDocumentStore()
 
+  const fetchDocumentSummary = async () => {
+    try {
+      const documentSummary = await documentService.getDocumentSummary()
+      documentStore.setSummaryDocuments(documentSummary)
+    } catch (error) {
+      throw new Error(`fetchSummaryDocuments error: ${error}`)
+    }
+  }
+
   const fetchHoldingDocuments = async () => {
     try {
       const holdingDocuments = await documentService.getHoldingDocuments()
@@ -118,6 +127,7 @@ const useDocument = () => {
     forwardDocument,
     fetchTargets,
     updateSelectedTarget,
+    fetchDocumentSummary,
   }
 }
 

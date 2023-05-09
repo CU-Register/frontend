@@ -13,6 +13,8 @@ import { useEffect, useState } from 'react'
 import { useTemplateStore } from 'stores/template.store'
 import 'twin.macro'
 import HistoryDocumentTable from './components/HistoryDocumentTable'
+import { useProfileStore } from 'stores/profile.store'
+import { useDocumentStore } from 'stores/document.store'
 
 const HomePage: NextPage = () => {
   const [isOpenDialog, setIsOpenDialog] = useState<boolean>(false)
@@ -20,10 +22,11 @@ const HomePage: NextPage = () => {
   const router = useRouter()
   const { fetchTemplates } = useTemplate()
   const { templates } = useTemplateStore()
-  const { fetchHistoryDocuments, createDocument } = useDocument()
-
+  const { fetchHistoryDocuments, createDocument, fetchDocumentSummary } = useDocument()
+  const { summaryDocuments } = useDocumentStore()
+  const { userProfile } = useProfileStore()
   useEffect(() => {
-    Promise.all([fetchTemplates(), fetchHistoryDocuments()])
+    Promise.all([fetchTemplates(), fetchHistoryDocuments(), fetchDocumentSummary()])
   }, [])
 
   const otherRequestButtonHandler = (event: React.MouseEvent<HTMLButtonElement>) => {
@@ -57,33 +60,79 @@ const HomePage: NextPage = () => {
     setIsOpenDialog(false)
   }
 
+  const isStudent = userProfile?.role === 'student'
+  const isStaff = userProfile?.role === 'faculty'
+
+  if (isStaff) {
+    return (
+      <MainLayout header="ระบบการยื่นคำร้องเพื่อขอเอกสารสำคัญทางการศึกษา">
+        <div tw="flex flex-col gap-9">
+          <div tw="flex flex-col gap-2">
+            <div tw="flex justify-between items-end  text-h1 font-h1 ">
+              <div tw="flex flex-col text-cu-pink">
+                <div>คำร้องที่รอดำเนินการ</div>
+                <span tw="text-[70px]">{summaryDocuments?.incoming}</span>
+              </div>
+              <div tw="flex flex-col items-center">
+                <div>อนุมัติแล้ว</div>
+                <div tw="text-[70px] ">{summaryDocuments?.approved}</div>
+              </div>
+              <div tw="flex flex-col items-center">
+                <div>ยกเลิกแล้ว</div>
+                <div tw="text-[70px] ">{summaryDocuments?.declined}</div>
+              </div>
+              <div tw="flex items-end justify-between gap-6">
+                <div tw="flex flex-col justify-between h-full items-center">
+                  <div>รวมทั้งหมด</div>
+                  <div tw="text-[70px]">{summaryDocuments?.overall}</div>
+                </div>
+                <span tw="ml-4 text-h1 font-h1 mb-4">คำร้อง</span>
+              </div>
+            </div>
+          </div>
+          <div tw="flex flex-col gap-3">
+            <div tw="font-h1 text-h1 text-cu-pink">คำร้องที่รอดำเนินการ</div>
+            <HistoryDocumentTable />
+            <div>
+              <button tw="font-h2 text-h2 text-cu-pink" onClick={otherStatusButtonHandler}>
+                {'ดูคำร้องอื่น ๆ >>'}
+              </button>
+            </div>
+          </div>
+        </div>
+      </MainLayout>
+    )
+  }
+
   return (
     <MainLayout header="ระบบการยื่นคำร้องเพื่อขอเอกสารสำคัญทางการศึกษา">
       <div tw="flex flex-col gap-9">
         <div tw="flex flex-col gap-2">
-          <div tw="font-h2 text-h2 text-black">คลิ้กเพื่อยื่นคำร้อง</div>
-          <ActionDialog
-            isOpen={isOpenDialog}
-            onClose={onCloseDialogHandler}
-            onReject={onRejectDialogHandler}
-            onConfirm={onConfirmDialogHandler}
-            title={`${selectedTemplate?.title.th} จท.${selectedTemplate?.templateType}`}
-            description="ยืนยันที่จะสร้างโครงร่างคำร้อง"
-          />
           {templates && templates.length > 0 && (
-            <div tw="grid grid-cols-1 gap-5 grid-flow-row md:(grid-cols-2)">
-              {templates.map((template, index) => {
-                return (
-                  <TemplateCard
-                    key={index}
-                    title={template.title.th}
-                    templateType={template.templateType}
-                    onClick={(event) => templateCardHandler(event)}
-                  />
-                )
-              })}
-              <TemplateCard title="เขียนคำร้องอื่น ๆ" onClick={otherRequestButtonHandler} />
-            </div>
+            <>
+              <div tw="font-h2 text-h2 text-black">คลิ้กเพื่อยื่นคำร้อง</div>
+              <ActionDialog
+                isOpen={isOpenDialog}
+                onClose={onCloseDialogHandler}
+                onReject={onRejectDialogHandler}
+                onConfirm={onConfirmDialogHandler}
+                title={`${selectedTemplate?.title.th} จท.${selectedTemplate?.templateType}`}
+                description="ยืนยันที่จะสร้างโครงร่างคำร้อง"
+              />
+              <div tw="grid grid-cols-1 gap-5 grid-flow-row md:(grid-cols-2)">
+                {templates.map((template, index) => {
+                  return (
+                    <TemplateCard
+                      key={index}
+                      title={template.title.th}
+                      templateType={template.templateType}
+                      onClick={(event) => templateCardHandler(event)}
+                    />
+                  )
+                })}
+                <TemplateCard title="เขียนคำร้องอื่น ๆ" onClick={otherRequestButtonHandler} />
+              </div>
+            </>
           )}
         </div>
         <div tw="flex flex-col gap-3">

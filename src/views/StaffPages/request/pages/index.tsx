@@ -5,7 +5,7 @@ import { NextPage } from 'next'
 import { useEffect } from 'react'
 import StaffRequestsTable from '../sections/DocumentDraftSection'
 
-const DraftPage: NextPage = () => {
+const RequestsPage: NextPage = () => {
   const { fetchHoldingDocuments } = useDocument()
 
   useEffect(() => {
@@ -19,4 +19,4 @@ const DraftPage: NextPage = () => {
   )
 }
 
-export default withAuth(DraftPage)
+export default withAuth(RequestsPage)
