@@ -1,7 +1,13 @@
 import dayjs from 'dayjs'
+import localizedFormat from 'dayjs/plugin/localizedFormat'
+dayjs.extend(localizedFormat)
 
 const dateFormatter = (date: Date) => {
   return dayjs(date).format('DD/MM/YYYY')
+}
+
+const getTimeFromDate = (date: Date) => {
+  return dayjs(date).format('LT')
 }
 
 const jsonToString = (json: Object) => {
@@ -21,4 +27,11 @@ const fullNameFormatterWithoutPlaceholder = (firstName?: string | null, lastName
   if (!firstName || !lastName) return ''
   return `${firstName} ${lastName}`
 }
-export { dateFormatter, jsonToString, stringToJson, fullNameFormatter, fullNameFormatterWithoutPlaceholder }
+export {
+  dateFormatter,
+  getTimeFromDate,
+  jsonToString,
+  stringToJson,
+  fullNameFormatter,
+  fullNameFormatterWithoutPlaceholder,
+}
