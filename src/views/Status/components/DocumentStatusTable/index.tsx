@@ -27,7 +27,7 @@ const RequestStatusTable: FC<IRequestStatusTableProps> = () => {
               <th className="text-start">สถานะ</th>
             </tr>
           </thead>
-          <tbody>
+          <tbody tw="overflow-auto cursor-pointer">
             {historyDocuments.map((historyDocument, index) => {
               return (
                 <tr key={index} tw="text-black font-h2 text-h2" className="group">

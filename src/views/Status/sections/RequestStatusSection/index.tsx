@@ -1,6 +1,6 @@
 import { FC } from 'react'
 import 'twin.macro'
-import RequestStatusTable from 'views/Status/components/RequestStatusTable'
+import RequestStatusTable from 'views/Status/components/DocumentStatusTable'
 const RequestStatusSection: FC = () => {
   return (
     <div tw="my-6 flex flex-col gap-5 flex-1 overflow-auto">
