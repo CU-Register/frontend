@@ -3,13 +3,31 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import withAuth from 'components/Auth/withAuth'
 import TemplateCard from 'components/TemplateCard'
 import { PROTECTED_ROUTES } from 'constants/Routes'
+import useAdmin from 'hooks/useAdmin'
+import { IAdminTemplate } from 'interfaces/Template'
 import MainLayout from 'layouts/MainLayout'
 import { NextPage } from 'next'
 import { useRouter } from 'next/router'
+import { useEffect, useState } from 'react'
 import 'twin.macro'
 
 const AdminHomePage: NextPage = () => {
   const router = useRouter()
+  const [adminTemplates, setAdminTemplates] = useState<IAdminTemplate[] | null>(null)
+  const { fetchTemplateForAdmin } = useAdmin()
+
+  const initAdminTemplates = async () => {
+    try {
+      const adminTeplates = await fetchTemplateForAdmin()
+      setAdminTemplates(adminTeplates)
+    } catch (error) {
+      console.error(error)
+    }
+  }
+  useEffect(() => {
+    Promise.all([initAdminTemplates()])
+  }, [])
+
   const createNewTemplateHandler = (event: React.MouseEvent<HTMLDivElement>) => {
     router.push(PROTECTED_ROUTES.ADMIN_TEMPLATE_CREATE)
   }
@@ -25,19 +43,13 @@ const AdminHomePage: NextPage = () => {
         <div tw="flex flex-col gap-4">
           <div tw="text-h2 font-h2 text-black">เทมเพลตทั้งหมด:</div>
           <div tw="grid grid-cols-1 gap-5 grid-flow-row md:(grid-cols-2)">
-            {/* {templates.map((template, index) => {
-              return (
-                <TemplateCard
-                  key={index}
-                  title={template.title.th}
-                  templateType={template.templateType}
-                  onClick={(event) => templateCardHandler(event)}
-                />
+            {adminTemplates &&
+              adminTemplates.length > 0 &&
+              adminTemplates.map((adminTemplate, index) => {
+                return (
+                  <TemplateCard key={index} title={adminTemplate.title.th} templateType={adminTemplate.templateType} />
                 )
-              })} */}
-            <TemplateCard title="คำร้องท่ี 1" templateType="1" />
-            <TemplateCard title="คำร้องท่ี 2" templateType="2" />
-            <TemplateCard title="คำร้องท่ี 3" templateType="2" />
+              })}
           </div>
         </div>
       </div>

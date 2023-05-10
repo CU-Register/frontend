@@ -15,8 +15,6 @@ const useAuth = () => {
     try {
       const result = await authService.loginWithChulaSSOToken(ticket)
       const { accessToken, refreshToken } = result
-      console.log(accessToken)
-
       authStore.setAccessToken(accessToken)
       localStorage.setItem('cuadrs-refreshToken', refreshToken)
 
