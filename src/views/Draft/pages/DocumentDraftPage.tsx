@@ -65,11 +65,11 @@ const DocumentDraftPage: NextPage = () => {
       try {
         const documentForm = await fetchDocumentForm(documentId)
         if (!documentForm) router.replace(PROTECTED_ROUTES.DRAFT)
-        const documentFormBufferUrl = URL.createObjectURL(documentForm)
         PSPDFKit = await import('pspdfkit')
         if (PSPDFKit) {
           PSPDFKit.unload(container)
         }
+        const documentFormBufferUrl = URL.createObjectURL(documentForm)
         const instance = await PSPDFKit.load({
           container,
           document: documentFormBufferUrl,
