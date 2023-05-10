@@ -93,7 +93,7 @@ const DocumentDraftPage: NextPage = () => {
     }
     renderPDF()
 
-    return () => PSPDFKit && PSPDFKit.unload(draftDocumentRef)
+    return () => PSPDFKit && PSPDFKit.unload(draftDocumentRef.current)
   }, [draftDocumentRef.current])
 
   // const DeleteDocumentDraftDialog = () => {
