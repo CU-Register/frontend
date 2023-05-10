@@ -1,3 +1,5 @@
+import DocumentHistoryAction from 'components/DocumentHistroy/action'
+import DocumentHistoryStatus from 'components/DocumentHistroy/status'
 import { PROTECTED_ROUTES } from 'constants/Routes'
 import { UserRole } from 'enums/UserRole'
 import { useRouter } from 'next/router'
@@ -52,9 +54,13 @@ const DocumentStatusTable: FC<IDocumentStatusTableProps> = () => {
                   )}
                   <td tw="group-hover:text-cu-pink">{dateFormatter(historyDocument.grantedAt)}</td>
                   {userProfile?.role !== UserRole.STUDENT && (
-                    <td tw="group-hover:text-cu-pink">{historyDocument.action}</td>
+                    <td tw="group-hover:text-cu-pink">
+                      <DocumentHistoryAction action={historyDocument.action} />
+                    </td>
                   )}
-                  <td tw="group-hover:text-cu-pink">{historyDocument.status}</td>
+                  <td tw="group-hover:text-cu-pink">
+                    <DocumentHistoryStatus status={historyDocument.status} />
+                  </td>
                 </tr>
               )
             })}
