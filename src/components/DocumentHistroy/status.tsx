@@ -5,10 +5,13 @@ interface IDocumentHistoryStatus {
   status?: DocumentStatus
 }
 const DocumentHistoryStatus: FC<IDocumentHistoryStatus> = ({ status }) => {
-  const statusMapper = new Map<DocumentStatus, string>()
-  statusMapper.set(DocumentStatus.SUCCESS, 'เสร็จสิ้น')
-  statusMapper.set(DocumentStatus.IN_PROGRESS, 'รอดำเนินการ')
-  statusMapper.set(DocumentStatus.DECLINED, 'ถูกยกเลิก')
+  const statusMapper: Record<DocumentStatus, string> = {
+    [DocumentStatus.CREATED]: 'สร้างเอกสาร',
+    [DocumentStatus.SUCCESS]: 'เสร็จสิ้น',
+    [DocumentStatus.IN_PROGRESS]: 'รอดำเนินการ',
+    [DocumentStatus.DECLINED]: 'ถูกยกเลิก',
+    [DocumentStatus.DELETED]: 'เอกสารถูกลบ',
+  }
   return (
     <div
       css={[
@@ -17,7 +20,7 @@ const DocumentHistoryStatus: FC<IDocumentHistoryStatus> = ({ status }) => {
         status === DocumentStatus.SUCCESS && tw`text-cu-pink`,
       ]}
     >
-      {status && statusMapper.get(status)}
+      {status && statusMapper[status]}
     </div>
   )
 }

@@ -6,13 +6,15 @@ interface IDocumentHistoryAction {
   action?: DocumentHistoryActionEnum
 }
 const DocumentHistoryAction: FC<IDocumentHistoryAction> = ({ action: status }) => {
-  const statusMapper = new Map<DocumentHistoryActionEnum, string>()
-  statusMapper.set(DocumentHistoryActionEnum.CREATED, 'สร้างเอกสาร')
-  statusMapper.set(DocumentHistoryActionEnum.APPROVED, 'ส่งต่อ')
-  statusMapper.set(DocumentHistoryActionEnum.DECLINED, 'ยกเลิก')
+  const statusMapper: Record<DocumentHistoryActionEnum, string> = {
+    [DocumentHistoryActionEnum.APPROVED]: 'สร้างเอกสาร',
+    [DocumentHistoryActionEnum.CREATED]: 'ส่งต่อ',
+    [DocumentHistoryActionEnum.DECLINED]: 'ยกเลิก',
+  }
+
   return (
     <div css={[`text-black`, status === DocumentHistoryActionEnum.DECLINED && tw`text-cu-grey`]}>
-      {status && statusMapper.get(status)}
+      {status && statusMapper[status]}
     </div>
   )
 }
