@@ -16,3 +16,11 @@ export interface IAdminTemplate extends ITemplate {
   updatedBy: string | null
   createdBy: string | null
 }
+
+export interface ICreateTemplateRequestDTO extends Omit<ITemplate, 'createdAt' | 'updatedAt'> {
+  fileId: string
+}
+
+export interface IUploadPDFFileResponseDTO {
+  fileId: string
+}
