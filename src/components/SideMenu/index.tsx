@@ -47,6 +47,10 @@ const SideMenu: FC<ISideMenu> = (props) => {
 
   const profilePageButtonHandler = pushToPageHandler('/profile')
 
+  const adminHomePageButtonHandler = pushToPageHandler('/admin')
+
+  const adminCreateTemplatePageButtonHandler = pushToPageHandler('/admin/template/create')
+
   const logoutPageButtonHandler = () => {
     logout()
   }
@@ -76,6 +80,8 @@ const SideMenu: FC<ISideMenu> = (props) => {
           <SideMenuButton text="เข้าสู่ระบบ" isFocused={router.pathname === COMMON_ROUTES.LOGIN} isShow={isCommon} />
 
           {/* Protected Routes */}
+
+          {/* student and faculty */}
           <SideMenuButton
             text="หน้าหลัก"
             onClick={homePageButtonHandler}
@@ -118,12 +124,20 @@ const SideMenu: FC<ISideMenu> = (props) => {
             isFocused={router.pathname.includes(PROTECTED_ROUTES.PROFILE)}
             isShow={isStudent}
           />
-          {/* <SideMenuButton
-            text="ออกจากระบบ"
-            onClick={logoutPageButtonHandler}
-            isFocused={router.pathname.includes(PROTECTED_ROUTES.LOGOUT)}
-            isShow={isStudent || isStaff || isAdmin}
-          /> */}
+
+          {/* admin */}
+          <SideMenuButton
+            text="หน้าหลัก"
+            onClick={adminHomePageButtonHandler}
+            isFocused={router.pathname === PROTECTED_ROUTES.ADMIN_HOME}
+            isShow={isAdmin}
+          />
+          <SideMenuButton
+            text="เพิ่มเทมเพลตเอกสาร"
+            onClick={adminCreateTemplatePageButtonHandler}
+            isFocused={router.pathname === PROTECTED_ROUTES.ADMIN_TEMPLATE_CREATE}
+            isShow={isAdmin}
+          />
         </div>
       </div>
       <div tw="absolute px-6 bottom-6 flex h-12 w-full justify-between items-center text-white">

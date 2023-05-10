@@ -12,7 +12,7 @@ const PROTECTED_ROUTES = {
   PROFILE: '/profile',
   STAFF: '/staff',
   ADMIN_HOME: '/admin',
-  ADMIN_TEMPLATE: '/admin/template',
+  ADMIN_TEMPLATE_CREATE: '/admin/template/create',
 }
 
 export { COMMON_ROUTES, PROTECTED_ROUTES }
