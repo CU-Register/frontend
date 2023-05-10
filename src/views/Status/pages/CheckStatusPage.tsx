@@ -38,7 +38,7 @@ const CheckStatusPage: NextPage = () => {
   return (
     <MainLayout header="ตรวจสอบสถานะการยื่นคำร้อง">
       <div tw="flex w-full overflow-auto gap-5 mb-2 flex-1">
-        <div tw="flex flex-col max-w-[70%]">
+        <div tw="flex flex-col w-[70%]">
           {documentInfo && (
             <div tw="font-h1 text-h1 text-black">{`${documentInfo?.template.title.th} (จท ${documentInfo?.template.templateType})`}</div>
           )}
@@ -65,7 +65,7 @@ const CheckStatusPage: NextPage = () => {
             </div>
           </div>
         </div>
-        <div tw="flex flex-col max-w-[30%] overflow-auto">
+        <div tw="flex flex-col w-[30%] overflow-auto">
           {documentInfo && (
             <StatusStepper
               timeline={documentInfo?.timeline}

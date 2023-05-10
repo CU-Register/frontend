@@ -1,4 +1,6 @@
 import { COMMON_ROUTES, PROTECTED_ROUTES } from 'constants/Routes'
+import { UserRole } from 'enums/UserRole'
+import jwt_decode from 'jwt-decode'
 import { useRouter } from 'next/router'
 import authService from 'services/auth.service'
 import { useAuthStore } from 'stores/auth.store'
@@ -13,9 +15,18 @@ const useAuth = () => {
     try {
       const result = await authService.loginWithChulaSSOToken(ticket)
       const { accessToken, refreshToken } = result
+      console.log(accessToken)
+
       authStore.setAccessToken(accessToken)
       localStorage.setItem('cuadrs-refreshToken', refreshToken)
-      router.push(PROTECTED_ROUTES.HOME)
+
+      const decodedToken: Record<any, any> = jwt_decode(accessToken)
+      const { role } = decodedToken
+      if (role === UserRole.ADMIN) {
+        router.push(PROTECTED_ROUTES.ADMIN_HOME)
+      } else {
+        router.push(PROTECTED_ROUTES.HOME)
+      }
     } catch (error) {
       console.error('login error:', error)
       alert('Login failed')

@@ -1,13 +1,15 @@
+import { faRightFromBracket } from '@fortawesome/free-solid-svg-icons'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { COMMON_ROUTES, PROTECTED_ROUTES } from 'constants/Routes'
 import { UserRole } from 'enums/UserRole'
 import useAuth from 'hooks/useAuth'
 import Image from 'next/image'
 import { useRouter } from 'next/router'
-import { FC, SVGProps } from 'react'
-import tw from 'twin.macro'
-import SideMenuButton from './SideMenuButton'
+import { FC } from 'react'
 import { useProfileStore } from 'stores/profile.store'
+import tw from 'twin.macro'
 import { fullNameFormatterWithoutPlaceholder } from 'utils/formats'
+import SideMenuButton from './SideMenuButton'
 
 interface ISideMenu {
   isShow?: boolean
@@ -136,17 +138,11 @@ const SideMenu: FC<ISideMenu> = (props) => {
             <div tw="text-h3">{userProfile?.uid}</div>
           </div>
         </div>
-        {isAdmin ||
-          ((isStudent || isStaff) && (
-            <svg xmlns="http://www.w3.org/2000/svg" tw="w-6 h-6  cursor-pointer" onClick={logoutPageButtonHandler}>
-              <g>
-                <path
-                  fill="#fff"
-                  d="M4 18h2v2h12V4H6v2H4V3a1 1 0 0 1 1-1h14a1 1 0 0 1 1 1v18a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1v-3zm2-7h7v2H6v3l-5-4 5-4v3z"
-                />
-              </g>
-            </svg>
-          ))}
+        {userProfile && (
+          <div tw="text-[24px]">
+            <FontAwesomeIcon icon={faRightFromBracket} onClick={logoutPageButtonHandler} />
+          </div>
+        )}
       </div>
       {/* <LanguageToggleSwitch /> */}
     </div>

@@ -11,6 +11,8 @@ const PROTECTED_ROUTES = {
   STATUS: '/status',
   PROFILE: '/profile',
   STAFF: '/staff',
+  ADMIN_HOME: '/admin',
+  ADMIN_TEMPLATE: '/admin/template',
 }
 
 export { COMMON_ROUTES, PROTECTED_ROUTES }
