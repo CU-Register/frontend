@@ -10,3 +10,9 @@ export interface ITemplate {
   createdAt: Date
   updatedAt: Date | null
 }
+
+export interface IAdminTemplate extends ITemplate {
+  fileId: string
+  updatedBy: string | null
+  createdBy: string | null
+}

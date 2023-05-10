@@ -1,8 +1,9 @@
+import { IAdminTemplate } from 'interfaces/Template'
 import axiosInstance from 'lib/axios'
 
 const getTemplateForAdmin = async () => {
   const path = 'admin/templates'
-  const result = (await axiosInstance.get(path)).data
+  const result: IAdminTemplate = (await axiosInstance.get(path)).data
   return result
 }
 
