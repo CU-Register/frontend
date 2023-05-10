@@ -57,18 +57,21 @@ const DocumentDraftPage: NextPage = () => {
   }, [])
 
   useEffect(() => {
+    const container = draftDocumentRef.current
     let PSPDFKit: any
     const renderPDF = async () => {
       const documentId = router.query.document_id as string
-      const draftDocument = draftDocumentRef.current
-      if (!draftDocument) return
+      if (!container) return
       try {
         const documentForm = await fetchDocumentForm(documentId)
-        PSPDFKit = await import('pspdfkit')
         if (!documentForm) router.replace(PROTECTED_ROUTES.DRAFT)
         const documentFormBufferUrl = URL.createObjectURL(documentForm)
+        PSPDFKit = await import('pspdfkit')
+        if (PSPDFKit) {
+          PSPDFKit.unload(container)
+        }
         const instance = await PSPDFKit.load({
-          container: draftDocument,
+          container,
           document: documentFormBufferUrl,
           locale: 'th',
           baseUrl: `${window.location.protocol}//${window.location.host}/`,
@@ -94,7 +97,7 @@ const DocumentDraftPage: NextPage = () => {
     }
     renderPDF()
 
-    return () => PSPDFKit && PSPDFKit.unload(draftDocumentRef)
+    return () => PSPDFKit && container && PSPDFKit.unload(container)
   }, [draftDocumentRef.current])
 
   const DeleteDocumentDraftDialog = () => {
