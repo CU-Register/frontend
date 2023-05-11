@@ -1,4 +1,4 @@
-import { NEXT_PUBLIC_CUSSO_URL } from 'constants/config.json'
+import { NEXT_PUBLIC_CUSSO_URL } from 'constants/config'
 import Image from 'next/image'
 import { useRouter } from 'next/router'
 import { FC } from 'react'

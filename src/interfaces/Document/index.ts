@@ -1,4 +1,4 @@
-import { DocumentStatus } from 'enums/Document'
+import { DocumentHistoryActionEnum, DocumentStatus } from 'enums/Document'
 import { UserRole } from 'enums/UserRole'
 import { ITemplate } from 'interfaces/Template'
 
@@ -29,7 +29,7 @@ export interface IDocument {
   status: DocumentStatus
 
   // TODO: create action enums and update the type
-  action: any //nullable
+  action?: DocumentHistoryActionEnum //nullable
 
   actionAt: Date | null
   grantedStep: number

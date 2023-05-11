@@ -6,4 +6,10 @@ export enum DocumentStatus {
   DELETED = 'deleted',
 }
 
+export enum DocumentHistoryActionEnum {
+  CREATED = 'created',
+  APPROVED = 'approved',
+  DECLINED = 'declined',
+}
+
 export enum DocumentAction {}

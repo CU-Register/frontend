@@ -1,10 +1,14 @@
 import { COMMON_ROUTES, PROTECTED_ROUTES } from 'constants/Routes'
+import { UserRole } from 'enums/UserRole'
+import jwt_decode from 'jwt-decode'
 import { useRouter } from 'next/router'
 import authService from 'services/auth.service'
 import { useAuthStore } from 'stores/auth.store'
+import { useProfileStore } from 'stores/profile.store'
 
 const useAuth = () => {
   const authStore = useAuthStore()
+  const profileStore = useProfileStore()
   const router = useRouter()
 
   const login = async (ticket: string) => {
@@ -13,7 +17,14 @@ const useAuth = () => {
       const { accessToken, refreshToken } = result
       authStore.setAccessToken(accessToken)
       localStorage.setItem('cuadrs-refreshToken', refreshToken)
-      router.push(PROTECTED_ROUTES.HOME)
+
+      const decodedToken: Record<any, any> = jwt_decode(accessToken)
+      const { role } = decodedToken
+      if (role === UserRole.ADMIN) {
+        router.push(PROTECTED_ROUTES.ADMIN_HOME)
+      } else {
+        router.push(PROTECTED_ROUTES.HOME)
+      }
     } catch (error) {
       console.error('login error:', error)
       alert('Login failed')
@@ -36,6 +47,7 @@ const useAuth = () => {
   const logout = () => {
     localStorage.removeItem('cuadrs-refreshToken')
     authStore.setAccessToken(null)
+    profileStore.setUserProfile(null)
     router.replace(PROTECTED_ROUTES.LOGOUT)
     alert('Logout success')
   }

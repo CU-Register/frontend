@@ -1,5 +1,5 @@
 import axios from 'axios'
-import { NEXT_PUBLIC_BASE_API_URL } from 'constants/config.json'
+import { NEXT_PUBLIC_BASE_API_URL } from 'constants/config'
 import { useAuthStore } from 'stores/auth.store'
 
 const axiosInstance = axios.create({
