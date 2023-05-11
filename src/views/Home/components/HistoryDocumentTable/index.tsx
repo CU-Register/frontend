@@ -1,5 +1,6 @@
+import DocumentHistoryStatus from 'components/DocumentHistroy/status'
 import { useRouter } from 'next/router'
-import { DetailedHTMLProps, FC, HTMLAttributes } from 'react'
+import { FC } from 'react'
 import { useDocumentStore } from 'stores/document.store'
 import { useProfileStore } from 'stores/profile.store'
 import 'twin.macro'
@@ -110,7 +111,9 @@ const HistoryDocumentTable: FC<IHistoryDocumentTableProps> = () => {
                   <td tw="">{historyDocument.template.title.th}</td>
                   <td tw="">{historyDocument.template.templateType}</td>
                   <td tw="">{dateFormatter(historyDocument.createdAt)}</td>
-                  <td tw="">{historyDocument.status}</td>
+                  <td tw="">
+                    <DocumentHistoryStatus status={historyDocument.status} />
+                  </td>
                 </tr>
               )
             })}
