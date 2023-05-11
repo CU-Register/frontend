@@ -15,7 +15,7 @@ const DocumentHistoryStatus: FC<IDocumentHistoryStatus> = ({ status }) => {
   return (
     <div
       css={[
-        `text-black`,
+        tw`text-black group-hover:text-cu-pink`,
         status === DocumentStatus.DECLINED && tw`text-cu-grey`,
         status === DocumentStatus.SUCCESS && tw`text-cu-pink`,
       ]}

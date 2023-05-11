@@ -61,6 +61,7 @@ const DocumentDraftPage: NextPage = () => {
     let PSPDFKit: any
     const renderPDF = async () => {
       const documentId = router.query.document_id as string
+
       if (!container) return
       try {
         const documentForm = await fetchDocumentForm(documentId)
@@ -98,7 +99,7 @@ const DocumentDraftPage: NextPage = () => {
     renderPDF()
 
     return () => PSPDFKit && container && PSPDFKit.unload(container)
-  }, [draftDocumentRef.current])
+  }, [draftDocumentRef, currentDocumentInfo])
 
   const DeleteDocumentDraftDialog = () => {
     const onCloseDialogHandler = () => {

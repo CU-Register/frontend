@@ -42,7 +42,7 @@ interface IDocumentInfoOption {
   name: IDocumentDetail
   id: string
 }
-interface IDocumentInfoStakeHolder {
+export interface IDocumentInfoStakeHolder {
   uid: string
   role: UserRole
   firstname: IDocumentDetail
@@ -65,6 +65,7 @@ export interface IDocumentInfoTimeline {
   }
   step: number
   timestamp: Date
+  action: DocumentHistoryActionEnum
 }
 
 export interface IDocumentInfo {

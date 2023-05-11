@@ -13,7 +13,9 @@ const DocumentHistoryAction: FC<IDocumentHistoryAction> = ({ action: status }) =
   }
 
   return (
-    <div css={[`text-black`, status === DocumentHistoryActionEnum.DECLINED && tw`text-cu-grey`]}>
+    <div
+      css={[tw`text-black group-hover:text-cu-pink`, status === DocumentHistoryActionEnum.DECLINED && tw`text-cu-grey`]}
+    >
       {status && statusMapper[status]}
     </div>
   )
