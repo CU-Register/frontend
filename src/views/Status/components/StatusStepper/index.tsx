@@ -28,7 +28,8 @@ const StatusStepper: FC<IStatusStepperProps> = ({ timeline, totalSteps, currentS
               <div
                 css={[
                   tw`bg-cu-pink w-7 h-7 rounded-full text-h2 text-white text-center`,
-                  isCurrentStepDeclined && tw`bg-gray`,
+                  isCurrentStepDeclined && tw`bg-gray scale-[1.35]`,
+                  isCurrentStepApproved && tw`scale-[1.35]`,
                 ]}
               >
                 {isCurrentStepDeclined && <FontAwesomeIcon icon={faXmark} />}
@@ -62,7 +63,7 @@ const StatusStepper: FC<IStatusStepperProps> = ({ timeline, totalSteps, currentS
                   <div
                     css={[
                       tw`bg-gray w-7 h-7 rounded-full text-white text-center flex items-center justify-center`,
-                      isCurrentStep && tw`scale-125`,
+                      isCurrentStep && tw`scale-[1.35]`,
                     ]}
                   >
                     {isCurrentStep && <FontAwesomeIcon icon={faSpinner} />}
