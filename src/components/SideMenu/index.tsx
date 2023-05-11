@@ -153,7 +153,7 @@ const SideMenu: FC<ISideMenu> = (props) => {
           </div>
         </div>
         {userProfile && (
-          <div tw="text-[24px]">
+          <div tw="text-[24px] rotate-180 cursor-pointer hover:text-cu-pink/20">
             <FontAwesomeIcon icon={faRightFromBracket} onClick={logoutPageButtonHandler} />
           </div>
         )}

@@ -1,4 +1,5 @@
 import withAuth from 'components/Auth/withAuth'
+import DocumentHistoryStatus from 'components/DocumentHistroy/status'
 import { PROTECTED_ROUTES } from 'constants/Routes'
 import dayjs from 'dayjs'
 import useDocument from 'hooks/useDocument'
@@ -61,7 +62,9 @@ const CheckStatusPage: NextPage = () => {
             </div>
             <div tw="grid grid-cols-2">
               <div>สถานะเอกสารปัจจุบัน</div>
-              <div>{documentInfo?.status}</div>
+              <div>
+                <DocumentHistoryStatus status={documentInfo?.status} />
+              </div>
             </div>
           </div>
         </div>
@@ -71,6 +74,7 @@ const CheckStatusPage: NextPage = () => {
               timeline={documentInfo?.timeline}
               totalSteps={documentInfo.step.overall + 1}
               currentSteps={documentInfo.step.current}
+              holder={documentInfo.holder}
             />
           )}
         </div>
