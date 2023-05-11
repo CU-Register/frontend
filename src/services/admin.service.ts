@@ -12,9 +12,9 @@ const createTemplate = async (createTemplateDTO: ICreateTemplateRequestDTO) => {
   await axiosInstance.post(path, { ...createTemplateDTO })
 }
 
-const uploadPDFFile = async (file: Blob) => {
+const uploadPDFFile = async (file: File) => {
   const path = 'admin/templates/file'
-  const result: IUploadPDFFileResponseDTO = (await axiosInstance.post(path, file)).data
+  const result: IUploadPDFFileResponseDTO = (await axiosInstance.postForm(path, { file })).data
   return result
 }
 
