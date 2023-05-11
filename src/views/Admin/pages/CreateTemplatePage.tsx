@@ -5,6 +5,7 @@ import withAuth from 'components/Auth/withAuth'
 import NeutralButton from 'components/NeutralButton'
 import PinkButton from 'components/PinkButton'
 import { PROTECTED_ROUTES } from 'constants/Routes'
+import useAdmin from 'hooks/useAdmin'
 import { ICreateTemplateRequestDTO } from 'interfaces/Template'
 import MainLayout from 'layouts/MainLayout'
 import _ from 'lodash'
@@ -31,9 +32,7 @@ const AdminCreateTemplatePage: NextPage = () => {
     fileId: '',
   })
   const router = useRouter()
-  // console.log(createTemplateRequestData)
-  // console.log(uploadedFile)
-
+  const { createNewTemplate } = useAdmin()
   const uploadFileHandler = (event: React.ChangeEvent<HTMLInputElement>) => {
     if (!event.target.files) return
     const file = event.target.files[0]
@@ -76,10 +75,12 @@ const AdminCreateTemplatePage: NextPage = () => {
   const debouncedUpdateEnglishDescriptionHandler = _.debounce(updateEnglishDescriptionHandler, 300)
 
   const createTemplateHandler = async () => {
+    if (!uploadedFile || !createTemplateRequestData) return
     try {
-      alert('สร้างเทมเพลตสำเร็จ')
+      await createNewTemplate(uploadedFile, createTemplateRequestData)
+      alert('create template success')
     } catch (error) {
-      alert('สร้างเทมเพลตไม่สำเร็จ')
+      alert('create template failed')
     } finally {
       router.push(PROTECTED_ROUTES.ADMIN_HOME)
     }
