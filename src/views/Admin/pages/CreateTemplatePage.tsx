@@ -4,9 +4,12 @@ import { Switch } from '@headlessui/react'
 import withAuth from 'components/Auth/withAuth'
 import NeutralButton from 'components/NeutralButton'
 import PinkButton from 'components/PinkButton'
+import { PROTECTED_ROUTES } from 'constants/Routes'
 import { ICreateTemplateRequestDTO } from 'interfaces/Template'
 import MainLayout from 'layouts/MainLayout'
+import _ from 'lodash'
 import { NextPage } from 'next'
+import { useRouter } from 'next/router'
 import { useState } from 'react'
 import 'twin.macro'
 import tw from 'twin.macro'
@@ -27,6 +30,7 @@ const AdminCreateTemplatePage: NextPage = () => {
     isLocked: false,
     fileId: '',
   })
+  const router = useRouter()
   // console.log(createTemplateRequestData)
   // console.log(uploadedFile)
 
@@ -35,21 +39,91 @@ const AdminCreateTemplatePage: NextPage = () => {
     const file = event.target.files[0]
     setUploadedFile(file)
   }
+  const updateTemplateTypeHandler = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setCreateTemplateRequestData((prevState) => ({
+      ...prevState,
+      templateType: event.target.value,
+    }))
+  }
+  const updateThaiTitleHandler = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setCreateTemplateRequestData((prevState) => ({
+      ...prevState,
+      title: { ...prevState.title, th: event.target.value },
+    }))
+  }
+  const updateEnglishTitleHandler = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setCreateTemplateRequestData((prevState) => ({
+      ...prevState,
+      title: { ...prevState.title, en: event.target.value },
+    }))
+  }
+  const updateThaiDescriptionHandler = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setCreateTemplateRequestData((prevState) => ({
+      ...prevState,
+      description: { ...prevState.description, th: event.target.value },
+    }))
+  }
+  const updateEnglishDescriptionHandler = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setCreateTemplateRequestData((prevState) => ({
+      ...prevState,
+      description: { ...prevState.description, en: event.target.value },
+    }))
+  }
+  const debouncedUpdateTemplateTypeHandler = _.debounce(updateTemplateTypeHandler, 300)
+  const debouncedUpdateThaiTitleHandler = _.debounce(updateThaiTitleHandler, 300)
+  const debouncedUpdateEnglishTitleHandler = _.debounce(updateEnglishTitleHandler, 300)
+  const debouncedUpdateThaiDescriptionHandler = _.debounce(updateThaiDescriptionHandler, 300)
+  const debouncedUpdateEnglishDescriptionHandler = _.debounce(updateEnglishDescriptionHandler, 300)
+
+  const createTemplateHandler = async () => {
+    try {
+      alert('สร้างเทมเพลตสำเร็จ')
+    } catch (error) {
+      alert('สร้างเทมเพลตไม่สำเร็จ')
+    } finally {
+      router.push(PROTECTED_ROUTES.ADMIN_HOME)
+    }
+  }
 
   return (
     <MainLayout header="เพิ่มเทมเพลตเอกสาร">
-      <div tw="mt-5 ml-10 flex-1 mb-3 overflow-auto flex flex-col gap-3">
-        <div tw="grid grid-cols-[3fr 1fr] gap-2">
+      <div tw="mt-1 ml-10 flex-1 mb-3 overflow-auto flex flex-col gap-3">
+        <div tw="grid grid-cols-[4fr 1fr] gap-2">
           <div tw="flex flex-col gap-2">
-            <TemplateInput label="เลขที่จท. เอกสาร" />
-            <TemplateInput label="ชื่อเอกสารภาษาไทย" />
-            <TemplateInput label="ชื่อเอกสารภาษาอังกฤษ" />
-            <TemplateInput label="คำอธิบายภาษาไทย" />
-            <TemplateInput label="คำอธิบายภาษาอังกฤษ" />
+            <TemplateInput
+              label="เลขที่จท."
+              onChange={(event) => {
+                debouncedUpdateTemplateTypeHandler(event)
+              }}
+            />
+            <TemplateInput
+              label="ชื่อเอกสารภาษาไทย"
+              onChange={(event) => {
+                debouncedUpdateThaiTitleHandler(event)
+              }}
+            />
+            <TemplateInput
+              label="ชื่อเอกสารภาษาอังกฤษ"
+              onChange={(event) => {
+                debouncedUpdateEnglishTitleHandler(event)
+              }}
+            />
+            <TemplateInput
+              label="คำอธิบายภาษาไทย"
+              onChange={(event) => {
+                debouncedUpdateThaiDescriptionHandler(event)
+              }}
+            />
+            <TemplateInput
+              label="คำอธิบายภาษาอังกฤษ"
+              onChange={(event) => {
+                debouncedUpdateEnglishDescriptionHandler(event)
+              }}
+            />
           </div>
           <div tw="flex justify-end">
             <div tw="flex flex-col justify-end gap-1">
-              <div tw="font-h2 text-h2 text-black">เปิดการใช้งาน :</div>
+              <div tw="font-h3 text-h3 xl:(font-h2 text-h2) text-black">เปิดการใช้งาน :</div>
               <div tw="flex items-center justify-end">
                 <Switch
                   checked={createTemplateRequestData.isLocked}
@@ -74,31 +148,64 @@ const AdminCreateTemplatePage: NextPage = () => {
           </div>
         </div>
         <div tw="flex-1 flex flex-col">
-          <div tw="bg-cu-pink rounded-t-xl p-2 text-white text-h3 font-h3 flex items-center gap-2">
+          <div tw="bg-cu-pink rounded-t-xl py-1 px-2 text-white text-h3 font-h3 flex items-center gap-2">
             <div tw="text-[24px]">
               <FontAwesomeIcon icon={faFilePdf} />
             </div>
             {uploadedFile?.name ?? 'เลือกไฟล์'}
           </div>
           <div tw="bg-white flex-1 rounded-b-xl p-2 flex justify-center items-center flex-col gap-2 border border-cu-pink">
-            <input
-              type="file"
-              accept=".pdf"
-              tw="hidden"
-              id="file-input"
-              onChange={(event) => {
-                uploadFileHandler(event)
-              }}
-            />
-            <label tw="bg-cu-pink py-2 px-4 rounded cursor-pointer text-white text-h3 font-h3" htmlFor="file-input">
-              กรุณาเลือกไฟล์ที่จะอัพโหลด
-            </label>
-            <div tw="font-body text-body text-gray">ขนาดไฟล์จำกัดที่ 5 mb</div>
+            {!uploadedFile && (
+              <>
+                <input
+                  type="file"
+                  accept=".pdf"
+                  tw="hidden"
+                  id="file-input"
+                  onChange={(event) => {
+                    uploadFileHandler(event)
+                  }}
+                />
+                <label tw="bg-cu-pink py-2 px-4 rounded cursor-pointer text-white text-h3 font-h3" htmlFor="file-input">
+                  กรุณาเลือกไฟล์ที่จะอัพโหลด
+                </label>
+                <div tw="font-body text-body text-gray">ขนาดไฟล์จำกัดที่ 5 mb</div>
+              </>
+            )}
+            {uploadedFile && (
+              <>
+                <object
+                  data={URL.createObjectURL(uploadedFile)}
+                  type="application/pdf"
+                  tw="w-full h-full overflow-auto"
+                />
+                <input
+                  type="file"
+                  accept=".pdf"
+                  tw="hidden"
+                  id="file-update"
+                  onChange={(event) => {
+                    uploadFileHandler(event)
+                  }}
+                />
+                <label
+                  tw="bg-cu-pink py-2 px-4 rounded cursor-pointer text-white text-h3 font-h3"
+                  htmlFor="file-update"
+                >
+                  เลือกไฟล์ใหม่
+                </label>
+              </>
+            )}
           </div>
         </div>
         <div tw="flex justify-end gap-2">
-          <NeutralButton text="ยกเลิก" />
-          <PinkButton text="ตกลง" />
+          <NeutralButton
+            text="ยกเลิก"
+            onClick={() => {
+              router.push(PROTECTED_ROUTES.ADMIN_HOME)
+            }}
+          />
+          <PinkButton text="ตกลง" disabled={!uploadedFile} onClick={createTemplateHandler} />
         </div>
       </div>
     </MainLayout>
