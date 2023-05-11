@@ -1,7 +1,6 @@
 import MainFooter from 'components/Footers/MainFooter'
 import SideMenu from 'components/SideMenu'
 import { FC, useState } from 'react'
-import { useProfileStore } from 'stores/profile.store'
 import 'twin.macro'
 import tw from 'twin.macro'
 interface IMainLayoutProps {
@@ -11,7 +10,6 @@ interface IMainLayoutProps {
 
 const MainLayout: FC<IMainLayoutProps> = ({ children, header }) => {
   const [showMenu, setShowMenu] = useState(false)
-  const { userProfile } = useProfileStore()
   const handleClick = () => {
     setShowMenu((isShow) => !isShow)
   }
