@@ -1,4 +1,4 @@
-import { faSpinner } from '@fortawesome/free-solid-svg-icons'
+import { faCheck, faSpinner } from '@fortawesome/free-solid-svg-icons'
 import { faXmark } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { DocumentHistoryActionEnum } from 'enums/Document'
@@ -21,6 +21,7 @@ const StatusStepper: FC<IStatusStepperProps> = ({ timeline, totalSteps, currentS
     <div tw="ml-2">
       {timeline.map((tl, index) => {
         const isCurrentStepDeclined = currentSteps === index && tl.action === DocumentHistoryActionEnum.DECLINED
+        const isCurrentStepApproved = currentSteps === index && tl.action === DocumentHistoryActionEnum.APPROVED
         return (
           <div key={index}>
             <div tw="flex gap-10 items-center">
@@ -31,6 +32,7 @@ const StatusStepper: FC<IStatusStepperProps> = ({ timeline, totalSteps, currentS
                 ]}
               >
                 {isCurrentStepDeclined && <FontAwesomeIcon icon={faXmark} />}
+                {isCurrentStepApproved && <FontAwesomeIcon icon={faCheck} />}
               </div>
               <div css={[tw`font-h2 text-h2 text-cu-pink`, isCurrentStepDeclined && tw`text-gray`]}>
                 {fullNameFormatter(tl.actor.firstname.th, tl.actor.lastname.th)}
