@@ -97,7 +97,7 @@ const DocumentDraftPage: NextPage = () => {
     renderPDF()
 
     return () => PSPDFKit && container && PSPDFKit.unload(container)
-  }, [draftDocumentRef.current])
+  }, [draftDocumentRef.current, currentDocumentInfo])
 
   // const DeleteDocumentDraftDialog = () => {
   //   const onCloseDialogHandler = () => {
