@@ -1,5 +1,9 @@
+import { faFilePdf } from '@fortawesome/free-solid-svg-icons'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { Switch } from '@headlessui/react'
 import withAuth from 'components/Auth/withAuth'
+import NeutralButton from 'components/NeutralButton'
+import PinkButton from 'components/PinkButton'
 import MainLayout from 'layouts/MainLayout'
 import { NextPage } from 'next'
 import { useState } from 'react'
@@ -9,9 +13,11 @@ import TemplateInput from '../components/TemplateInput'
 
 const AdminCreateTemplatePage: NextPage = () => {
   const [enabled, setEnabled] = useState(false)
+  const [uploadedFileName, setUploadedFileName] = useState<string | null>(null)
+
   return (
     <MainLayout header="เพิ่มเทมเพลตเอกสาร">
-      <div tw="mt-5 ml-10 flex-1 mb-3 overflow-auto">
+      <div tw="mt-5 ml-10 flex-1 mb-3 overflow-auto flex flex-col gap-3">
         <div tw="grid grid-cols-[3fr 1fr] gap-2">
           <div tw="flex flex-col gap-2">
             <TemplateInput label="ชื่อเอกสารภาษาไทย" />
@@ -42,6 +48,35 @@ const AdminCreateTemplatePage: NextPage = () => {
               </div>
             </div>
           </div>
+        </div>
+        <div tw="flex-1 flex flex-col">
+          <div tw="bg-cu-pink rounded-t-xl p-2 text-white text-h3 font-h3 flex items-center gap-2">
+            <div tw="text-[24px]">
+              <FontAwesomeIcon icon={faFilePdf} />
+            </div>
+            {uploadedFileName ?? 'เลือกไฟล์'}
+          </div>
+          <div tw="bg-white flex-1 rounded-b-xl p-2 flex justify-center items-center flex-col gap-2 border border-cu-pink">
+            <input
+              type="file"
+              accept=".pdf"
+              tw="hidden"
+              id="file-input"
+              onChange={(event: any) => {
+                console.log(event)
+                const fileName = event.target.files[0].name
+                setUploadedFileName(fileName)
+              }}
+            />
+            <label tw="bg-cu-pink py-2 px-4 rounded cursor-pointer text-white text-h3 font-h3" htmlFor="file-input">
+              กรุณาเลือกไฟล์ที่จะอัพโหลด
+            </label>
+            <div tw="font-body text-body text-gray">ขนาดไฟล์จำกัดที่ 5 mb</div>
+          </div>
+        </div>
+        <div tw="flex justify-end gap-2">
+          <NeutralButton text="ยกเลิก" />
+          <PinkButton text="ตกลง" />
         </div>
       </div>
     </MainLayout>
