@@ -140,8 +140,8 @@ const SideMenu: FC<ISideMenu> = (props) => {
           />
         </div>
       </div>
-      <div tw="absolute px-6 bottom-6 flex h-12 w-full justify-between items-center text-white">
-        <div tw="flex items-start justify-center">
+      <div tw="fixed px-6 bottom-6 flex w-full justify-between items-center text-white">
+        <div tw="flex items-center justify-center gap-1">
           <div tw="w-12 h-12 bg-white mr-2 rounded-xl flex justify-center items-center">
             <span tw="text-h1 font-h1 text-cu-pinkLd">{abbreviationName}</span>
           </div>
