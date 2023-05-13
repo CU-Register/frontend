@@ -51,6 +51,8 @@ const SideMenu: FC<ISideMenu> = (props) => {
 
   const adminCreateTemplatePageButtonHandler = pushToPageHandler('/admin/template/create')
 
+  const adminMonitoringButtonHandler = pushToPageHandler('https://grafana.piyaphat.com')
+
   const logoutPageButtonHandler = () => {
     logout()
   }
@@ -138,6 +140,7 @@ const SideMenu: FC<ISideMenu> = (props) => {
             isFocused={router.pathname === PROTECTED_ROUTES.ADMIN_TEMPLATE_CREATE}
             isShow={isAdmin}
           />
+          <SideMenuButton text="Grafana" onClick={adminMonitoringButtonHandler} isFocused={false} isShow={isAdmin} />
         </div>
       </div>
       <div tw="fixed px-6 bottom-6 flex w-full justify-between items-center text-white">

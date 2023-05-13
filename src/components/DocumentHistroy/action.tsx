@@ -7,8 +7,8 @@ interface IDocumentHistoryAction {
 }
 const DocumentHistoryAction: FC<IDocumentHistoryAction> = ({ action: status }) => {
   const statusMapper: Record<DocumentHistoryActionEnum, string> = {
-    [DocumentHistoryActionEnum.APPROVED]: 'สร้างเอกสาร',
-    [DocumentHistoryActionEnum.CREATED]: 'ส่งต่อ',
+    [DocumentHistoryActionEnum.CREATED]: 'สร้างเอกสาร',
+    [DocumentHistoryActionEnum.APPROVED]: 'ส่งต่อ',
     [DocumentHistoryActionEnum.DECLINED]: 'ยกเลิก',
   }
 
